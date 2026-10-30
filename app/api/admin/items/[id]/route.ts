@@ -5,6 +5,7 @@ import { museumItemPatch } from "@/lib/validation";
 import { MuseumItem } from "@/models/MuseumItem";
 import { toAdminItem } from "@/lib/admin-items";
 import { invalidateHome } from "@/lib/home";
+import { invalidateMuseum } from "@/lib/museum";
 
 const isId = (s: string) => /^[a-f0-9]{24}$/i.test(s);
 // Editing any of these means the owner is now writing their own content, so a sample stops being a sample.
@@ -42,6 +43,7 @@ export async function PATCH(request: Request, ctx: RouteContext<"/api/admin/item
   const d = await MuseumItem.findByIdAndUpdate(id, { $set }, { returnDocument: "after", runValidators: true }).lean();
   if (!d) return Response.json({ error: "Not found." }, { status: 404 });
   invalidateHome();
+  invalidateMuseum();
   return Response.json({ item: toAdminItem(d) }, { headers: { "Cache-Control": "no-store" } });
 }
 
@@ -57,6 +59,7 @@ export async function DELETE(request: Request, ctx: RouteContext<"/api/admin/ite
   const d = await MuseumItem.findByIdAndDelete(id).lean();
   if (!d) return Response.json({ error: "Not found." }, { status: 404 });
   invalidateHome();
+  invalidateMuseum();
   await audit("delete", true, request.headers, `item ${d.type}`);
   return Response.json({ ok: true });
 }

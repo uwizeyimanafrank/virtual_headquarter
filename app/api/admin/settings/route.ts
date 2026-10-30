@@ -4,6 +4,7 @@ import { audit } from "@/lib/audit";
 import { SAMPLE_PROFILE } from "@/lib/samples-data";
 import { getSettingsView } from "@/lib/admin-settings";
 import { invalidateHome } from "@/lib/home";
+import { invalidateMuseum } from "@/lib/museum";
 import { getSettings } from "@/lib/settings";
 import { settingsPatch } from "@/lib/validation";
 import { Settings } from "@/models/Settings";
@@ -41,6 +42,7 @@ export async function PATCH(request: Request) {
     await Settings.updateOne({ key: "main" }, { $set: { "onboarding.profileIsSample": stillSample } });
   }
   invalidateHome();
+  invalidateMuseum();
   await audit("settings_change", true, request.headers, Object.keys($set).map((k) => k.split(".")[0]).filter((v, i, a) => a.indexOf(v) === i).join(","));
   return Response.json(await getSettingsView(), { headers: { "Cache-Control": "no-store" } });
 }

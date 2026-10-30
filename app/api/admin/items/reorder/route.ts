@@ -2,6 +2,7 @@ import { z } from "zod";
 import { connectDb } from "@/lib/db";
 import { adminApi } from "@/lib/auth-guard";
 import { invalidateHome } from "@/lib/home";
+import { invalidateMuseum } from "@/lib/museum";
 import { MuseumItem } from "@/models/MuseumItem";
 
 const body = z.object({ ids: z.array(z.string().regex(/^[a-f0-9]{24}$/i)).min(1).max(200) });
@@ -17,5 +18,6 @@ export async function POST(request: Request) {
   await connectDb();
   await MuseumItem.bulkWrite(parsed.data.ids.map((id, order) => ({ updateOne: { filter: { _id: id }, update: { $set: { order } } } })));
   invalidateHome();
+  invalidateMuseum();
   return Response.json({ ok: true });
 }

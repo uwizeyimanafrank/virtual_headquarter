@@ -21,7 +21,7 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 | P02b | First-run guide, sample content, Config Doctor | done |
 | P03 | Content manager, image uploads, messages inbox, settings | done |
 | P04 | Public Home page (hero, Canvas CV, tilt cards, gate) | done |
-| P05 | The Museum (sideways storytelling) | **next** |
+| P05 | The Museum (sideways storytelling) | **in progress** (data layer done, layouts next) |
 | P06 | Connect page | planned |
 | P07 | AI Twin (Gemini) | planned |
 | P08 | Developer tab (monitor Atlas, Cloudinary, Render...) | planned |
@@ -30,11 +30,18 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 
 The live details (current task, what is waiting on you, known gaps) are always in **`STATE.md`**.
 
+### Latest handoff (2026-10-31, Kimi → next tool)
+
+- **Done this session:** P05-T01 — the Museum's data layer. New file `lib/museum.ts` (`getMuseumData()`, cached like the home data) groups published items into the four chapters — About, Certificates, Projects, Library — with titles from Settings, ready for both planned layouts. `app/(site)/museum/page.tsx` now renders that data as a simple grid (temporary look). All Office save/delete/reorder/sample routes now also refresh the Museum cache (`invalidateMuseum()` next to every `invalidateHome()`).
+- **Where it stopped:** P05-T01 complete and verified (lint, URL guard, typecheck, build, HTTP smoke test). Nothing half-done.
+- **Next task:** P05-T02 — build `components/museum/VerticalTimeline.tsx` (mobile-first, IntersectionObserver staggered reveal) using `getMuseumData()`. This is the fallback under 768px and for reduced motion; the GSAP horizontal track comes after (P05-T04).
+- **Heads up:** run the project on **Node 22** — the lockfile's jsdom/undici need Node 22 APIs, so on Node 20 the component tests (`npm test`) cannot start. Build, lint and the lib tests work on both.
+
 ---
 
 ## Quick start (on your own computer)
 
-You need **Node.js 20.9 or newer** and a free **MongoDB Atlas** database.
+You need **Node.js 22** (the app itself runs on Node 20.9+, but the test suite needs 22) and a free **MongoDB Atlas** database.
 
 ```bash
 git clone <this repository's address>

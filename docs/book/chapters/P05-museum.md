@@ -4,7 +4,7 @@
 
 Tick each task `[x]` when done. Do them in order.
 
-### [ ] P05-T01 — Museum data and chapters
+### [x] P05-T01 — Museum data and chapters
 **Do:**
 - Server component fetches published items grouped into chapters: About, Certificates, Projects, Books and References. Chapter titles from settings.
 **Files:** app/museum/page.tsx, lib/museum.ts
