@@ -1,0 +1,17 @@
+# Security checklist (final review in P10)
+- [ ] No secrets in the repo or git history; `.env` ignored.
+- [ ] `npm run check:urls` passes; no hardcoded origins.
+- [ ] Every `/api/admin/*` route calls `requireAdmin()`; every office page does too.
+- [ ] Step-up required for vault, service credentials, deletes, security settings.
+- [ ] Login: rate limit + lockout + identical errors + audit logging.
+- [ ] Sessions: hashed in DB, httpOnly + Secure + SameSite=Strict cookie, idle 10 min, absolute 12 h, revocable.
+- [ ] 2FA enforced; recovery codes hashed and one-time.
+- [ ] CSP, HSTS, nosniff, referrer policy, frame blocking set; no CSP errors.
+- [ ] All inputs validated with zod and length-capped; messages rendered as plain text.
+- [ ] Uploads: signed, type- and size-limited.
+- [ ] AI twin context contains only counts/sizes/statuses.
+- [ ] Vault: only ciphertext on server; tampered ciphertext fails; no passphrase persisted.
+- [ ] Service credentials never returned by any API.
+- [ ] `/api/health` returns booleans only.
+- [ ] `npm audit` reviewed; dependencies pinned.
+- [ ] Panic and sign-out-everywhere tested.
