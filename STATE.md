@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P05 — Museum
-- **Current task:** P05-T01
-- **Status:** not started (P04 done; passkeys T07 deferred; P00-T07 still waiting on Frank)
+- **Current task:** P05-T04
+- **Status:** in progress (P05-T01..T03 done: Museum data, mobile vertical timeline, pop-up). Passkeys T07 deferred; P00-T07 still waiting on Frank
 - **Last worker:** Claude (chat), 2026-10-28
-- **Next action (one sentence):** Build the Museum data and chapters (P05-T01). Read docs/book/02-design.md first; build the mobile vertical timeline BEFORE the horizontal GSAP track.
+- **Next action (one sentence):** Build the sideways GSAP track for large screens (P05-T04); read the notes at the end of docs/book/chapters/P05-museum.md first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -20,7 +20,7 @@ Update this after EVERY task. Keep it short.
 | P02b | Newcomer guide and samples | done |
 | P03 | Content manager and inbox | done |
 | P04 | Home page | done |
-| P05 | Museum | not started |
+| P05 | Museum | in progress (T01-T03 done) |
 | P06 | Connect page | not started |
 | P07 | AI Twin | not started |
 | P08 | Developer tab | not started |
@@ -53,7 +53,8 @@ Status words: not started / in progress / done.
 - P04 verified over HTTP (49 checks) and with 41 unit/component tests in a simulated browser (jsdom). Not verified in a real browser: visual look, animation smoothness, real touch behaviour. Lighthouse could not run in the sandbox.
 - Home page JavaScript is 176 KB gzipped (React + Next about 150 KB; our own code about 20 KB).
 - Home is cached for 5 minutes and refreshed immediately when you save anything in the Office. If the server restarts on the same build it serves the last saved copy until the next refresh. If the database is unreachable while BUILDING, the build bakes in default wording that is replaced within about 5 minutes of the first visit once the database is reachable.
-- `/museum` and `/connect` are temporary placeholder pages (replaced in P05 and P06).
+- `/connect` is a temporary placeholder page (replaced in P06). `/museum` now works with the vertical layout on every screen size; the sideways desktop track is still to do (P05-T04..T07).
+- P05-T01..T03 verified with 15 new component/unit tests and 33 HTTP checks (chapters in order, edits appear immediately, drafts hidden, text escaped). Not verified in a real browser: how the timeline and pop-up look and feel.
 - P03 server logic tested over HTTP (87 checks). The browser parts (Uploader drag and drop and its direct upload to Cloudinary, ContentManager, ItemForm preview, MessagesInbox, SettingsForm) are type-checked and server-rendered only. The Cloudinary upload itself could not be run in the sandbox: the signature was verified against an independent calculation, but a real upload is untested.
 - Deleting an item does not delete its image from Cloudinary (the asset stays in your media library). Fine for now; a cleanup tool can come later in the Developer tab (P08).
 - A "not found" edit page (unknown item id) shows the not-found screen but with HTTP status 200 because the response had already started streaming. No content leaks and it is noindex.

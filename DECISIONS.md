@@ -79,3 +79,9 @@
 - Motion: only transform/opacity, CSS keyframes in globals.css (drift, float, fadeUp, curtain), always `motion-safe:`. Card tilt only with a real mouse (`(hover: hover) and (pointer: fine)`) and not under reduced motion; touch devices get a gentle float instead. The Gate fade is skipped under reduced motion and for ctrl/cmd/shift/alt/middle clicks.
 - Testing tools added: vitest, @vitejs/plugin-react, jsdom, @testing-library/react, @testing-library/user-event, @testing-library/jest-dom (devDependencies), `@types/node` pinned to ^22 (Vitest needs it). Run `npm test`. Config: vitest.config.mts, vitest.setup.ts, helper tests/media-query.ts. Test files (`*.test.ts(x)`) and the `tests/` folder are ignored by the no-hardcoded-address guard because they hold example data.
 - Size budget: first-load JS for Home is measured in the integration test with a 200 KB gzipped ceiling (React + Next are about 150 KB of that).
+
+## P05 notes (2026-10-30)
+- Museum chapters: story -> "about", certificate -> "certificates", project -> "projects", book and reference -> "library". Empty chapters are left out. Inside a chapter: your own `order`, then newest first. Each chapter has its own colour (teal, amber, indigo, emerald) set through a CSS variable.
+- `getMuseumData()` uses the same cache tag as Home, so `invalidateHome()` refreshes both pages.
+- Reveal animation (`useReveal`): content is visible in server HTML and without JavaScript; only after hydration, and only without reduced motion, items start hidden and fade up as they enter the viewport (staggered delay by index, once per item).
+- The pop-up is rendered in a portal on document.body (cards use transforms, which would break `position: fixed` inside them). Links in the pop-up are shown only when they start with http:// or https://, open in a new tab with rel noopener noreferrer.

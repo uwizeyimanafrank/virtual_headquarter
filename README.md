@@ -21,7 +21,7 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 | P02b | First-run guide, sample content, Config Doctor | done |
 | P03 | Content manager, image uploads, messages inbox, settings | done |
 | P04 | Public Home page (hero, Canvas CV, tilt cards, gate) | done |
-| P05 | The Museum (sideways storytelling) | **next** |
+| P05 | The Museum: vertical timeline and pop-ups done; sideways desktop track **next** | in progress |
 | P06 | Connect page | planned |
 | P07 | AI Twin (Gemini) | planned |
 | P08 | Developer tab (monitor Atlas, Cloudinary, Render...) | planned |
