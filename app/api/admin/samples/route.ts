@@ -3,6 +3,7 @@ import { connectDb } from "@/lib/db";
 import { adminApi, requireFreshAuth } from "@/lib/auth-guard";
 import { audit } from "@/lib/audit";
 import { invalidateHome } from "@/lib/home";
+import { invalidateMuseum } from "@/lib/museum";
 import { getSettings } from "@/lib/settings";
 import { deleteSamples, ensureSamples, sampleStatus } from "@/lib/samples";
 import { Settings } from "@/models/Settings";
@@ -23,7 +24,10 @@ export async function GET(request: Request) {
   const auth = await adminApi(request);
   if (!auth.ok) return auth.response;
   await connectDb();
-  if (await ensureSamples()) invalidateHome();
+  if (await ensureSamples()) {
+    invalidateHome();
+    invalidateMuseum();
+  }
   return Response.json(await sampleStatus(), { headers: { "Cache-Control": "no-store" } });
 }
 
@@ -60,5 +64,6 @@ export async function POST(request: Request) {
     }
   }
   invalidateHome();
+  invalidateMuseum();
   return Response.json(await sampleStatus(), { headers: { "Cache-Control": "no-store" } });
 }

@@ -21,7 +21,7 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 | P02b | First-run guide, sample content, Config Doctor | done |
 | P03 | Content manager, image uploads, messages inbox, settings | done |
 | P04 | Public Home page (hero, Canvas CV, tilt cards, gate) | done |
-| P05 | The Museum: vertical timeline and pop-ups done; sideways desktop track **next** | in progress |
+| P05 | The Museum: data layer, vertical timeline and pop-ups done; sideways desktop track **next** | in progress |
 | P06 | Connect page | planned |
 | P07 | AI Twin (Gemini) | planned |
 | P08 | Developer tab (monitor Atlas, Cloudinary, Render...) | planned |
@@ -30,11 +30,18 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 
 The live details (current task, what is waiting on you, known gaps) are always in **`STATE.md`**.
 
+### Latest handoff (2026-10-31, Claude, after merging Kimi's work)
+
+- **Done:** P05-T01 (Kimi: `lib/museum.ts` data layer, cache tag `museum`), P05-T02 and T03 (Claude: `VerticalTimeline`, `ItemModal`, `MuseumClient`, staggered reveal that never hides content without JavaScript or with reduced motion). `/museum` now shows the real vertical timeline with pop-ups.
+- **Where it stopped:** merged and verified. Nothing half-done.
+- **Next task:** P05-T04, the sideways GSAP track for large screens. Read the notes at the end of `docs/book/chapters/P05-museum.md` first. `components/museum/MuseumClient.tsx` is the switch point.
+- **Heads up:** run the project on **Node 22**. The component tests (`npm test`) need Node 22 APIs; on Node 20 only the lib tests start.
+
 ---
 
 ## Quick start (on your own computer)
 
-You need **Node.js 20.9 or newer** and a free **MongoDB Atlas** database.
+You need **Node.js 22** (the app itself runs on Node 20.9+, but the test suite needs 22) and a free **MongoDB Atlas** database.
 
 ```bash
 git clone <this repository's address>

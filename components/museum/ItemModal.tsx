@@ -2,7 +2,7 @@
 import { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import { thumb } from "@/lib/media";
-import type { MuseumEntry } from "@/lib/museum-chapters";
+import type { MuseumItemData } from "@/lib/museum";
 
 const FOCUSABLE = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
 const isWebLink = (s: string) => /^https?:\/\/\S+$/i.test(s);
@@ -11,7 +11,7 @@ const isWebLink = (s: string) => /^https?:\/\/\S+$/i.test(s);
  * Glass pop-up with the story behind a piece. Keyboard friendly: Escape closes, Tab stays inside,
  * the page behind does not scroll, and focus goes back to the card you opened it from.
  */
-export function ItemModal({ entry, onClose, returnFocusTo }: { entry: MuseumEntry | null; onClose: () => void; returnFocusTo: HTMLElement | null }) {
+export function ItemModal({ entry, onClose, returnFocusTo }: { entry: MuseumItemData | null; onClose: () => void; returnFocusTo: HTMLElement | null }) {
   const titleId = useId();
   const box = useRef<HTMLDivElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);

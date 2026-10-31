@@ -2,13 +2,13 @@
 import { useRef, useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import { thumb } from "@/lib/media";
-import type { Chapter, ChapterId, MuseumEntry } from "@/lib/museum-chapters";
+import type { MuseumChapter, MuseumChapterKey, MuseumItemData } from "@/lib/museum";
 import { ItemModal } from "@/components/museum/ItemModal";
 
 // Each chapter has its own colour mood.
-const MOOD: Record<ChapterId, string> = { about: "#2dd4bf", certificates: "#fbbf24", projects: "#818cf8", library: "#34d399" };
+const MOOD: Record<MuseumChapterKey, string> = { about: "#2dd4bf", certificates: "#fbbf24", projects: "#818cf8", library: "#34d399" };
 
-function Card({ entry, index, onOpen }: { entry: MuseumEntry; index: number; onOpen: (e: MuseumEntry, trigger: HTMLElement) => void }) {
+function Card({ entry, index, onOpen }: { entry: MuseumItemData; index: number; onOpen: (e: MuseumItemData, trigger: HTMLElement) => void }) {
   const { ref, hidden } = useReveal<HTMLLIElement>();
   return (
     <li
@@ -42,12 +42,12 @@ function Card({ entry, index, onOpen }: { entry: MuseumEntry; index: number; onO
  * The Museum as a light vertical timeline. This is the layout for phones and small screens, and the
  * fallback for people who ask for reduced motion. (The sideways desktop version comes later.)
  */
-export function VerticalTimeline({ chapters }: { chapters: Chapter[] }) {
-  const [open, setOpen] = useState<MuseumEntry | null>(null);
+export function VerticalTimeline({ chapters }: { chapters: MuseumChapter[] }) {
+  const [open, setOpen] = useState<MuseumItemData | null>(null);
   const trigger = useRef<HTMLElement | null>(null);
   const [returnTo, setReturnTo] = useState<HTMLElement | null>(null);
 
-  function openEntry(e: MuseumEntry, el: HTMLElement) {
+  function openEntry(e: MuseumItemData, el: HTMLElement) {
     trigger.current = el;
     setReturnTo(el);
     setOpen(e);
@@ -56,13 +56,13 @@ export function VerticalTimeline({ chapters }: { chapters: Chapter[] }) {
   return (
     <div className="mx-auto max-w-2xl space-y-16 px-4 pb-24">
       {chapters.map((c) => (
-        <section key={c.id} aria-labelledby={`chapter-${c.id}`} style={{ ["--chapter" as string]: MOOD[c.id] }}>
+        <section key={c.key} aria-labelledby={`chapter-${c.key}`} style={{ ["--chapter" as string]: MOOD[c.key] }}>
           <div className="mb-8 rounded-2xl border border-line bg-surface p-5 backdrop-blur-md">
             <p className="text-xs font-medium uppercase tracking-[0.3em] text-[var(--chapter)]">Chapter</p>
-            <h2 id={`chapter-${c.id}`} className="mt-1 text-2xl font-semibold">{c.title}</h2>
+            <h2 id={`chapter-${c.key}`} className="mt-1 text-2xl font-semibold">{c.title}</h2>
           </div>
           <ol className="relative space-y-6 border-l border-line">
-            {c.entries.map((e, i) => <Card key={e.id} entry={e} index={i} onOpen={openEntry} />)}
+            {c.items.map((e, i) => <Card key={e.id} entry={e} index={i} onOpen={openEntry} />)}
           </ol>
         </section>
       ))}

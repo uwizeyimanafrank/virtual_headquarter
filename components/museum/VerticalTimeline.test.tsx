@@ -3,13 +3,13 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderToString } from "react-dom/server";
 import { VerticalTimeline } from "@/components/museum/VerticalTimeline";
-import type { Chapter } from "@/lib/museum-chapters";
+import type { MuseumChapter } from "@/lib/museum";
 import { mockMedia } from "@/tests/media-query";
 
-const entry = (over: Partial<Chapter["entries"][number]> = {}) => ({ id: "1", type: "project", title: "Task Tracker", description: "A tracker for tasks.", mediaUrl: "", parallaxSpeed: 0.5, date: "2026-02", skills: ["Next.js"], link: "", howIEarnedIt: "Built it over a weekend.", ...over });
-const chapters: Chapter[] = [
-  { id: "projects", title: "The Execution", entries: [entry(), entry({ id: "2", title: "Shop Catalog", link: "https://example.org/shop", date: "2026-05" })] },
-  { id: "certificates", title: "Proof", entries: [entry({ id: "3", type: "certificate", title: "Web Dev Cert", link: "javascript:alert(1)" })] },
+const entry = (over: Partial<MuseumChapter["items"][number]> = {}): MuseumChapter["items"][number] => ({ id: "1", type: "project", isSample: false, title: "Task Tracker", description: "A tracker for tasks.", mediaUrl: "", parallaxSpeed: 0.5, date: "2026-02", skills: ["Next.js"], link: "", howIEarnedIt: "Built it over a weekend.", ...over });
+const chapters: MuseumChapter[] = [
+  { key: "projects", title: "The Execution", items: [entry(), entry({ id: "2", title: "Shop Catalog", link: "https://example.org/shop", date: "2026-05" })] },
+  { key: "certificates", title: "Proof", items: [entry({ id: "3", type: "certificate", title: "Web Dev Cert", link: "javascript:alert(1)" })] },
 ];
 
 // A tiny stand-in for the browser's IntersectionObserver that we can trigger by hand.
@@ -109,7 +109,7 @@ describe("VerticalTimeline", () => {
   });
 
   it("renders descriptions as plain text, never as HTML", async () => {
-    render(<VerticalTimeline chapters={[{ id: "about", title: "About", entries: [entry({ title: "<img src=x onerror=alert(1)>", description: "<b>bold?</b>" })] }]} />);
+    render(<VerticalTimeline chapters={[{ key: "about", title: "About", items: [entry({ title: "<img src=x onerror=alert(1)>", description: "<b>bold?</b>" })] }]} />);
     expect(document.querySelector("img[onerror]")).toBeNull();
     await userEvent.click(screen.getAllByRole("button")[0]);
     // The same text is in the card preview and in the pop-up; look inside the pop-up.

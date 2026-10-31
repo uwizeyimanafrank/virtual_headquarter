@@ -2,6 +2,7 @@ import { connectDb } from "@/lib/db";
 import { adminApi } from "@/lib/auth-guard";
 import { toAdminItem } from "@/lib/admin-items";
 import { invalidateHome } from "@/lib/home";
+import { invalidateMuseum } from "@/lib/museum";
 import { museumItemInput } from "@/lib/validation";
 import { ITEM_TYPES, MuseumItem, type ItemType } from "@/models/MuseumItem";
 
@@ -39,5 +40,6 @@ export async function POST(request: Request) {
   await connectDb();
   const created = await MuseumItem.create({ ...parsed.data, isSample: false });
   invalidateHome();
+  invalidateMuseum();
   return Response.json({ item: toAdminItem(created.toObject()) }, { status: 201, headers: { "Cache-Control": "no-store" } });
 }

@@ -8,7 +8,7 @@ Update this after EVERY task. Keep it short.
 - **Current phase:** P05 — Museum
 - **Current task:** P05-T04
 - **Status:** in progress (P05-T01..T03 done: Museum data, mobile vertical timeline, pop-up). Passkeys T07 deferred; P00-T07 still waiting on Frank
-- **Last worker:** Claude (chat), 2026-10-28
+- **Last worker:** Claude (chat), 2026-10-31 (merged Kimi's P05-T01 with Claude's T02-T03)
 - **Next action (one sentence):** Build the sideways GSAP track for large screens (P05-T04); read the notes at the end of docs/book/chapters/P05-museum.md first.
 
 ## Phase board
@@ -50,11 +50,12 @@ Status words: not started / in progress / done.
 (empty)
 
 ## Known bugs / debts
+- `npm test`: on Node 20 only the lib test files run — the 7 jsdom component test files fail to start workers because the lockfile's jsdom + undici use Node 22 APIs (zstd zlib, Iterator global). They were green in Claude's Node 22 environment. Use Node 22 locally to run the full suite. Not an app bug.
 - P04 verified over HTTP (49 checks) and with 41 unit/component tests in a simulated browser (jsdom). Not verified in a real browser: visual look, animation smoothness, real touch behaviour. Lighthouse could not run in the sandbox.
 - Home page JavaScript is 176 KB gzipped (React + Next about 150 KB; our own code about 20 KB).
 - Home is cached for 5 minutes and refreshed immediately when you save anything in the Office. If the server restarts on the same build it serves the last saved copy until the next refresh. If the database is unreachable while BUILDING, the build bakes in default wording that is replaced within about 5 minutes of the first visit once the database is reachable.
 - `/connect` is a temporary placeholder page (replaced in P06). `/museum` now works with the vertical layout on every screen size; the sideways desktop track is still to do (P05-T04..T07).
-- P05-T01..T03 verified with 15 new component/unit tests and 33 HTTP checks (chapters in order, edits appear immediately, drafts hidden, text escaped). Not verified in a real browser: how the timeline and pop-up look and feel.
+- P05-T01 (Kimi) and T02..T03 (Claude) merged. Verified with 15 new component tests and 33 HTTP checks (chapters in order, edits appear immediately, drafts hidden, text escaped). Not verified in a real browser: how the timeline and pop-up look and feel.
 - P03 server logic tested over HTTP (87 checks). The browser parts (Uploader drag and drop and its direct upload to Cloudinary, ContentManager, ItemForm preview, MessagesInbox, SettingsForm) are type-checked and server-rendered only. The Cloudinary upload itself could not be run in the sandbox: the signature was verified against an independent calculation, but a real upload is untested.
 - Deleting an item does not delete its image from Cloudinary (the asset stays in your media library). Fine for now; a cleanup tool can come later in the Developer tab (P08).
 - A "not found" edit page (unknown item id) shows the not-found screen but with HTTP status 200 because the response had already started streaming. No content leaks and it is noindex.

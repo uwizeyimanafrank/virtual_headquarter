@@ -51,7 +51,7 @@ Tick each task `[x]` when done. Do them in order.
 **Done when:** Rail follows scroll and jumps to chapters.
 
 ## Notes for whoever does T04-T07 (written after T01-T03)
-- Data: `getMuseumData()` (lib/museum.ts) returns `{ chapters, profileName }`; chapters are built by `buildChapters()` (lib/museum-chapters.ts). Reuse the same `chapters` in the horizontal track.
+- Data (written by Kimi): `getMuseumData()` in lib/museum.ts returns `{ chapters }`, each chapter `{ key, title, items }` (all four chapters, possibly with no items); `MuseumClient` filters out empty ones. Reuse the same `chapters` in the horizontal track. Cache tag `museum`; every admin content route calls `invalidateMuseum()`.
 - Reuse `components/museum/ItemModal.tsx` (focus trap, Escape, scroll lock, portal) for the pop-up on both layouts.
 - `components/museum/MuseumClient.tsx` is the switch point: today it always renders `VerticalTimeline`. Add the horizontal track there, chosen with `useMediaQuery("(min-width: 768px)")` AND not `useReducedMotion()`.
 - `npm i gsap` (record it in DECISIONS.md). Pin the section and translate a wide track with ScrollTrigger; each module's `parallaxSpeed` (0.1-1.5) drives its extra drift. Use `gsap.context()` and call `ctx.revert()` on unmount AND when the breakpoint flips, so no ScrollTrigger or listener is left behind.

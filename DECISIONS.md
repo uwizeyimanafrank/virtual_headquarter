@@ -81,7 +81,7 @@
 - Size budget: first-load JS for Home is measured in the integration test with a 200 KB gzipped ceiling (React + Next are about 150 KB of that).
 
 ## P05 notes (2026-10-30)
-- Museum chapters: story -> "about", certificate -> "certificates", project -> "projects", book and reference -> "library". Empty chapters are left out. Inside a chapter: your own `order`, then newest first. Each chapter has its own colour (teal, amber, indigo, emerald) set through a CSS variable.
-- `getMuseumData()` uses the same cache tag as Home, so `invalidateHome()` refreshes both pages.
+- Museum chapters: story -> "about", certificate -> "certificates", project -> "projects", book and reference -> "library". `getMuseumData()` returns all four; the page layout skips empty ones. Inside a chapter: your own `order`, then newest first. Each chapter has its own colour (teal, amber, indigo, emerald) set through a CSS variable.
+- Museum data (Kimi's `lib/museum.ts`) has its own cache tag `museum`; every admin route that changes public content calls both `invalidateHome()` and `invalidateMuseum()`.
 - Reveal animation (`useReveal`): content is visible in server HTML and without JavaScript; only after hydration, and only without reduced motion, items start hidden and fade up as they enter the viewport (staggered delay by index, once per item).
 - The pop-up is rendered in a portal on document.body (cards use transforms, which would break `position: fixed` inside them). Links in the pop-up are shown only when they start with http:// or https://, open in a new tab with rel noopener noreferrer.
