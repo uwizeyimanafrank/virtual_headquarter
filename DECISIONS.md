@@ -85,3 +85,11 @@
 - Museum data (Kimi's `lib/museum.ts`) has its own cache tag `museum`; every admin route that changes public content calls both `invalidateHome()` and `invalidateMuseum()`.
 - Reveal animation (`useReveal`): content is visible in server HTML and without JavaScript; only after hydration, and only without reduced motion, items start hidden and fade up as they enter the viewport (staggered delay by index, once per item).
 - The pop-up is rendered in a portal on document.body (cards use transforms, which would break `position: fixed` inside them). Links in the pop-up are shown only when they start with http:// or https://, open in a new tab with rel noopener noreferrer.
+
+## P05 sideways track notes (2026-10-31)
+- Dependency added: `gsap` 3.15 (includes ScrollTrigger; GSAP's standard no-charge license). It is loaded with a dynamic `import()` inside the effect, so phones and the vertical layout never download it.
+- Layout rule: sideways track when `(min-width: 768px)` AND NOT reduced motion; otherwise the vertical timeline. Only one is mounted at a time. The server always renders the vertical one (works without JavaScript).
+- Everything GSAP creates lives in one `gsap.context()` that is `revert()`ed on unmount and when props change, so no ScrollTrigger or style is left behind.
+- GSAP pinning moves the pinned element into a "pin-spacer" wrapper. The pinned `<section>` MUST sit inside an element React owns (the outer `div`), otherwise React crashes when removing it. Covered by a real-GSAP test.
+- Per piece: drift `x` from `+140*parallaxSpeed` to `-140*parallaxSpeed` while crossing the screen (scrubbed to the track via `containerAnimation`), plus a one-time fade/slide-in with a small stagger. Progress rail fill and the active chapter are updated from the track's `onUpdate`. Chapter buttons scroll the page to the matching track position; tabbing to an off-screen piece scrolls the page to it.
+- `overflow-clip` on the pinned section stops the browser from scrolling it sideways when something inside takes focus.

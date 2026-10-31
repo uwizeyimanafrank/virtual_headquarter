@@ -9,6 +9,7 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    ".next-pristine/**", // temporary copy of a build used by the test scripts
     "out/**",
     "build/**",
     "next-env.d.ts",

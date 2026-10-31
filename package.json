@@ -16,6 +16,7 @@
     "@node-rs/argon2": "^2.2.2",
     "cloudinary": "^2.11.0",
     "geist": "^1.8.2",
+    "gsap": "^3.15.0",
     "mongoose": "^9.11.4",
     "next": "16.4.3",
     "otplib": "^13.5.0",

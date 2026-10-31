@@ -2,11 +2,10 @@
 import { useRef, useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import { thumb } from "@/lib/media";
-import type { MuseumChapter, MuseumChapterKey, MuseumItemData } from "@/lib/museum";
+import type { MuseumChapter, MuseumItemData } from "@/lib/museum";
+import { MOOD } from "@/components/museum/mood";
 import { ItemModal } from "@/components/museum/ItemModal";
 
-// Each chapter has its own colour mood.
-const MOOD: Record<MuseumChapterKey, string> = { about: "#2dd4bf", certificates: "#fbbf24", projects: "#818cf8", library: "#34d399" };
 
 function Card({ entry, index, onOpen }: { entry: MuseumItemData; index: number; onOpen: (e: MuseumItemData, trigger: HTMLElement) => void }) {
   const { ref, hidden } = useReveal<HTMLLIElement>();

@@ -21,8 +21,8 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 | P02b | First-run guide, sample content, Config Doctor | done |
 | P03 | Content manager, image uploads, messages inbox, settings | done |
 | P04 | Public Home page (hero, Canvas CV, tilt cards, gate) | done |
-| P05 | The Museum: data layer, vertical timeline and pop-ups done; sideways desktop track **next** | in progress |
-| P06 | Connect page | planned |
+| P05 | The Museum: vertical timeline, pop-ups and the sideways desktop track (code done, needs a visual check) | done in code |
+| P06 | Connect page | **next** |
 | P07 | AI Twin (Gemini) | planned |
 | P08 | Developer tab (monitor Atlas, Cloudinary, Render...) | planned |
 | P09 | Encrypted secrets vault | planned |
@@ -30,12 +30,12 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 
 The live details (current task, what is waiting on you, known gaps) are always in **`STATE.md`**.
 
-### Latest handoff (2026-10-31, Claude, after merging Kimi's work)
+### Latest handoff (2026-10-31, Claude)
 
-- **Done:** P05-T01 (Kimi: `lib/museum.ts` data layer, cache tag `museum`), P05-T02 and T03 (Claude: `VerticalTimeline`, `ItemModal`, `MuseumClient`, staggered reveal that never hides content without JavaScript or with reduced motion). `/museum` now shows the real vertical timeline with pop-ups.
-- **Where it stopped:** merged and verified. Nothing half-done.
-- **Next task:** P05-T04, the sideways GSAP track for large screens. Read the notes at the end of `docs/book/chapters/P05-museum.md` first. `components/museum/MuseumClient.tsx` is the switch point.
-- **Heads up:** run the project on **Node 22**. The component tests (`npm test`) need Node 22 APIs; on Node 20 only the lib tests start.
+- **Done:** P05 is complete in code. `/museum` shows the sideways GSAP track on screens 768px and wider (and no reduced motion) and the vertical timeline otherwise; pop-ups work in both. Kimi did P05-T01 (data layer); Claude did the rest and merged.
+- **Not verified:** how it looks in a real browser. Please open `/museum` on a desktop and a phone and report. See "Known bugs / debts" in `STATE.md` (also one skipped test to investigate).
+- **Next task:** P06-T01, the Connect page with the terminal-style form posting to the existing `POST /api/connect`. Read `docs/book/chapters/P06-connect.md`.
+- **Heads up:** run on **Node 22** (the component tests need it). `.next-pristine` is a temporary folder some test scripts create; it is git-ignored for ESLint and must not be committed.
 
 ---
 
