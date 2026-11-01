@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { readJsonLimited } from "@/lib/body";
 import { connectDb } from "@/lib/db";
 import { getBootstrapHash, hashPassword, verifyPassword } from "@/lib/auth";
 import { audit } from "@/lib/audit";
@@ -26,7 +27,9 @@ export async function POST(request: Request) {
       return Response.json({ error: "Too many attempts. Try again later." }, { status: 429, headers: { "Retry-After": String(Math.max(perIp.retryAfterSec, overall.retryAfterSec)) } });
     }
 
-    const parsed = body.safeParse(await request.json().catch(() => null));
+    const raw = await readJsonLimited(request, 5_000);
+    if (!raw.ok) return raw.status === 413 ? Response.json({ error: "Too large." }, { status: 413 }) : FAIL();
+    const parsed = body.safeParse(raw.data);
     if (!parsed.success) return FAIL();
     const email = parsed.data.email.trim().toLowerCase();
 

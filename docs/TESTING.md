@@ -33,3 +33,7 @@ Expected results:
 
 ## Verified on 2026-10-28 (Claude, against a Mongo-compatible test database)
 All of the above passed. Not verified there: automatic expiry of rate-limit counters (MongoDB TTL). Atlas supports it; confirm once on your real database.
+
+## Automated tests
+- `npm test` runs the unit and component tests (Vitest, simulated browser, needs Node 22).
+- `tests/http/*.sh` start the real server and test it with curl (login, sessions, content manager, Home, Museum, contact form). See `tests/http/README.md`.

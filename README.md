@@ -22,8 +22,8 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 | P03 | Content manager, image uploads, messages inbox, settings | done |
 | P04 | Public Home page (hero, Canvas CV, tilt cards, gate) | done |
 | P05 | The Museum: vertical timeline, pop-ups and the sideways desktop track (code done, needs a visual check) | done in code |
-| P06 | Connect page | **next** |
-| P07 | AI Twin (Gemini) | planned |
+| P06 | Connect page (terminal-style form, spam-safe) | done (needs a visual check) |
+| P07 | AI Twin (Gemini) | **next** |
 | P08 | Developer tab (monitor Atlas, Cloudinary, Render...) | planned |
 | P09 | Encrypted secrets vault | planned |
 | P10 | Polish, audit, deploy | planned |
@@ -32,10 +32,10 @@ The live details (current task, what is waiting on you, known gaps) are always i
 
 ### Latest handoff (2026-10-31, Claude)
 
-- **Done:** P05 is complete in code. `/museum` shows the sideways GSAP track on screens 768px and wider (and no reduced motion) and the vertical timeline otherwise; pop-ups work in both. Kimi did P05-T01 (data layer); Claude did the rest and merged.
-- **Not verified:** how it looks in a real browser. Please open `/museum` on a desktop and a phone and report. See "Known bugs / debts" in `STATE.md` (also one skipped test to investigate).
-- **Next task:** P06-T01, the Connect page with the terminal-style form posting to the existing `POST /api/connect`. Read `docs/book/chapters/P06-connect.md`.
-- **Heads up:** run on **Node 22** (the component tests need it). `.next-pristine` is a temporary folder some test scripts create; it is git-ignored for ESLint and must not be committed.
+- **Done:** P00 to P06. The public site works end to end: Home, Museum (sideways on desktop, vertical on phones), and a Connect page whose messages land in the Office inbox.
+- **Not verified:** how P04, P05 and P06 look in a real browser; a real image upload to Cloudinary; a real Atlas connection. Frank was asked to check these (see "Waiting on Frank" in `STATE.md`).
+- **Next task:** P07 (AI Twin). P07-T01 is a **[HUMAN]** step (Gemini API key). Meanwhile do P07-T02 and T03: the Gemini client behind a small interface (so it can be tested without internet) and the safe context builder (counts only, never secrets). Read `docs/book/chapters/P07-ai-twin.md`.
+- **Heads up:** use **Node 22**. Known gaps and one skipped test are listed under "Known bugs / debts" in `STATE.md`.
 
 ---
 
@@ -82,7 +82,8 @@ Follow **`docs/OFFICE-SETUP.md`** (about 5 minutes): make the secrets, hash your
 | `npm run build` / `npm start` | Production build / run it |
 | `npm run lint` | Code style check |
 | `npm run typecheck` | TypeScript check |
-| `npm test` | Unit and component tests (Vitest, simulated browser) |
+| `npm test` | Unit and component tests (Vitest, simulated browser; needs Node 22) |
+| `bash tests/http/<name>.sh` | Server tests with curl against a throw-away database (see `tests/http/README.md`) |
 | `npm run check:urls` | Fails if code contains `localhost` or a hardcoded address (runs before every build) |
 | `node scripts/hash-password.mjs` | Makes `ADMIN_BOOTSTRAP_HASH` from your password |
 
@@ -95,12 +96,14 @@ app/(site)/          public pages: Home, Museum, Connect
 app/office/          the private Office pages (reached through your secret address)
 app/api/             public API (museum, connect, health) and admin API (/api/admin/*)
 components/home/     Home page pieces        components/office/   Office screens
+components/museum/   Museum layouts          components/connect/  Contact form
 lib/                 env, database, sessions, 2FA, validation, cache, samples, doctor...
 models/              database models
 hooks/               small React hooks (media query, reduced motion, card tilt)
 proxy.ts             hides the Office behind the secret address
 docs/book/           the plan: one chapter per phase, with small tasks
 docs/                OFFICE-SETUP.md, PROMPTS.md, SETUP-GITHUB.md, TESTING.md
+tests/http/          server tests (curl) and how to run them
 ```
 
 Golden rules (full list in `AGENTS.md`): no hardcoded addresses (the same code runs on any server, only `.env` changes), secrets never reach the browser, every input is validated, every Office page and admin route checks the session itself.
@@ -140,4 +143,4 @@ The code does not change between your computer and a server — only the environ
 
 ## Honest status
 
-Everything above marked "done" was checked with automated tests against a test database (HTTP checks for the server, plus component tests in a simulated browser). What has **not** been checked yet is the visual look and feel in a real browser, a real image upload to Cloudinary, and the connection to a real Atlas cluster. `STATE.md` lists these as open items.
+Everything above marked "done" was checked with automated tests against a test database (about 340 HTTP checks in `tests/http/` plus 86 unit and component tests in a simulated browser). What has **not** been checked yet is the visual look and feel in a real browser, a real image upload to Cloudinary, and the connection to a real Atlas cluster. `STATE.md` lists these as open items.

@@ -1,3 +1,4 @@
+import { readJsonLimited } from "@/lib/body";
 import { connectDb } from "@/lib/db";
 import { contactInput } from "@/lib/validation";
 import { ipHash, isAllowedOrigin } from "@/lib/request";
@@ -13,12 +14,12 @@ export async function POST(request: Request) {
     return Response.json({ error: "Not allowed." }, { status: 403, headers: NO_STORE });
   }
 
-  let raw: unknown;
-  try {
-    raw = await request.json();
-  } catch {
-    return Response.json({ error: "Please check your details and try again." }, { status: 400, headers: NO_STORE });
+  const body = await readJsonLimited(request);
+  if (!body.ok) {
+    const error = body.status === 413 ? "That message is too large." : "Please check your details and try again.";
+    return Response.json({ error }, { status: body.status, headers: NO_STORE });
   }
+  const raw = body.data;
 
   const parsed = contactInput.safeParse(raw);
   if (!parsed.success) {

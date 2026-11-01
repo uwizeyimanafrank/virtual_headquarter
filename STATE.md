@@ -5,11 +5,11 @@ Update this after EVERY task. Keep it short.
 - GitHub: `uwizeyimanafrank/virtual_headquarter`. Branches: `main` (what Frank has reviewed) and `dev` (where AI tools push). Read README.md first.
 
 ## Pointer
-- **Current phase:** P06 — Connect page
-- **Current task:** P06-T01
-- **Status:** not started (P05 code complete but not visually checked; passkeys T07 deferred; P00-T07 still waiting on Frank)
+- **Current phase:** P07 — AI Twin
+- **Current task:** P07-T01
+- **Status:** not started (P06 done; P05 and P06 not visually checked; passkeys T07 deferred; P00-T07 still waiting on Frank)
 - **Last worker:** Claude (chat), 2026-10-31
-- **Next action (one sentence):** Build the Connect page and its terminal-style form (P06-T01); read docs/book/chapters/P06-connect.md and the existing POST /api/connect first.
+- **Next action (one sentence):** P07-T01 is a [HUMAN] task (Gemini API key). While waiting, do P07-T02 (lib/gemini.ts with the Gemini client behind a small interface so it can be tested without internet) and P07-T03 (safe context builder, counts only); read docs/book/chapters/P07-ai-twin.md first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -21,7 +21,7 @@ Update this after EVERY task. Keep it short.
 | P03 | Content manager and inbox | done |
 | P04 | Home page | done |
 | P05 | Museum | done in code (needs a visual check by Frank) |
-| P06 | Connect page | not started |
+| P06 | Connect page | done (needs a visual check) |
 | P07 | AI Twin | not started |
 | P08 | Developer tab | not started |
 | P09 | Secrets vault | not started |
@@ -48,10 +48,16 @@ Status words: not started / in progress / done.
 
 - Open `/museum` on a desktop and scroll: it should walk sideways through the chapters with the progress buttons at the bottom. Resize the window narrower than 768px and back. On a phone it should be the vertical timeline. Report anything that looks or feels off (speed, overlap with the header, flash on first load).
 
+- Open `/connect` on your phone and PC, send yourself a message, then open Office > Messages and check it arrived (and the unread number on the dashboard). Try sending 6 messages in a row: the 6th should be refused politely.
+- P07-T01: create a free Gemini API key in Google AI Studio and put it in `.env` as `GEMINI_API_KEY` (never paste it into a chat or commit it).
+
 ## Questions for Frank
 (empty)
 
 ## Known bugs / debts
+- P06 `/connect` is tested (unit + HTTP) but not looked at in a real browser.
+- The contact form has only a hidden-field bot trap and a per-address rate limit (5 per hour). A determined spammer using many addresses can still send some messages; add a captcha or a time-to-fill check later if that happens.
+- The HTTP test scripts now live in the repo (`tests/http/`, see its README). They need a MongoDB-compatible server on 127.0.0.1:27017 and drop their own test databases.
 - P05-T04..T07 (sideways Museum) are tested for wiring, switching and cleanup (17 tests, 2 of them with the real GSAP), but NOT looked at in a real browser. Expect small visual tuning (sizes, drift amount `140 * parallaxSpeed`, top padding under the sticky header, scroll length).
 - On wide screens the server sends the vertical layout and the browser switches to the sideways one after loading, so there may be a brief flash/jump. If it looks bad, hide the Museum until the layout is chosen (client-only rendering of the choice).
 - SKIPPED TEST in components/museum/MuseumClient.test.tsx ("only ONE track is built" when props change before GSAP loaded): with the fake GSAP it ends with 0 contexts instead of 1. Not understood yet (test setup or a real bug). Also note `MuseumClient` creates a new `chapters` array on every render (`filter`), which re-runs the track's effect; wrap it in `useMemo` and then re-enable the test.

@@ -93,3 +93,9 @@
 - GSAP pinning moves the pinned element into a "pin-spacer" wrapper. The pinned `<section>` MUST sit inside an element React owns (the outer `div`), otherwise React crashes when removing it. Covered by a real-GSAP test.
 - Per piece: drift `x` from `+140*parallaxSpeed` to `-140*parallaxSpeed` while crossing the screen (scrubbed to the track via `containerAnimation`), plus a one-time fade/slide-in with a small stagger. Progress rail fill and the active chapter are updated from the track's `onUpdate`. Chapter buttons scroll the page to the matching track position; tabbing to an off-screen piece scrolls the page to it.
 - `overflow-clip` on the pinned section stops the browser from scrolling it sideways when something inside takes focus.
+
+## P06 notes (2026-10-31)
+- Connect form errors: the visitor only ever sees our own sentences (429: sent a few already; 400: check your details; anything else: could not be sent). Server wording is never shown.
+- Public JSON endpoints read their body with `readJsonLimited()` (lib/body.ts): contact form 20 KB, login 5 KB. Announced Content-Length is checked first, then the real byte size; too big gives 413, not JSON gives 400 (login keeps its single generic failure answer).
+- Bot trap: an off-screen input named `website` (tabindex -1, aria-hidden, autocomplete off). If filled, the API answers success but saves nothing.
+- HTTP integration scripts live in `tests/http/` (ignored by the no-hardcoded-address guard because they contain test addresses).
