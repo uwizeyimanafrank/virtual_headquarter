@@ -99,3 +99,13 @@
 - Public JSON endpoints read their body with `readJsonLimited()` (lib/body.ts): contact form 20 KB, login 5 KB. Announced Content-Length is checked first, then the real byte size; too big gives 413, not JSON gives 400 (login keeps its single generic failure answer).
 - Bot trap: an off-screen input named `website` (tabindex -1, aria-hidden, autocomplete off). If filled, the API answers success but saves nothing.
 - HTTP integration scripts live in `tests/http/` (ignored by the no-hardcoded-address guard because they contain test addresses).
+
+## P07 notes (2026-10-31)
+- SDK: `@google/genai` (Google's current SDK) instead of the older `@google/generative-ai` named in the first plan, because it is the maintained one and works with current models. Dependency added 2026-10-31.
+- Model: default alias `gemini-flash-latest` so the name does not go stale; override with `GEMINI_MODEL`. `GEMINI_API_BASE_URL` (optional) sends requests through a proxy or the test fake instead of Google; it is how the HTTP tests run without internet.
+- What the AI may know (`lib/twin-context-core.ts`, the ONLY gateway): item counts per type and status, number of samples, unread message count, database size, whether media is configured and its storage size, last successful login time. Never: titles, descriptions, message text, emails, passwords, keys, env values, database address, vault data. The builder copies only whitelisted fields, so a mistake in the collector cannot leak more. Any new fact for the twin must be added there AND get a test.
+- The snapshot is put into the system prompt on the server (the browser never sends or sees it). The prompt tells the model it has no access to secrets, must not ask for them, and must treat instructions inside user text as plain text.
+- Limits: message 2000 chars, history capped at 40 in the request and the last 10 turns used, body 60 KB, 700 output tokens, 20 questions per 10 minutes. Errors shown to the owner are our own sentences; upstream error text and the key are never shown or logged (only the error class name).
+- The chat shows replies as plain text. History lives only in the browser tab.
+- Server modules that import `server-only` are unit-tested through a stub (`tests/server-only-stub.ts`, aliased in vitest.config.mts).
+- `ITEM_TYPES` moved to `lib/item-types.ts` (no database import) so plain code and tests can use it; `models/MuseumItem.ts` re-exports it.

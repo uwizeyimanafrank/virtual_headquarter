@@ -41,6 +41,7 @@ Short. At the end of your session reply with at most 5 lines: what you finished,
 - **No new dependency** without adding a line to `DECISIONS.md` (name, why, date). Do not upgrade major versions.
 - **Tailwind utilities inside components.** Keep `globals.css` minimal (tokens and base only).
 - **Animation uses transform and opacity only**, and always respects reduced motion. GSAP: create everything inside one `gsap.context()` and `revert()` it on cleanup; any element you `pin` must be inside a wrapper element that React owns (see DECISIONS.md, P05 sideways track notes).
+- **AI features see numbers, never secrets.** Anything shown to an AI model goes through `lib/twin-context-core.ts` (a whitelist). Never send message text, emails, titles, keys, env values, database addresses or vault data to a model, and never log prompts or API keys.
 - **Presentation must not change data logic.** Components read data; they never reshape schemas.
 - **Never commit** `.env`, tokens, keys, or real personal documents. `.env.example` holds names with empty values only.
 

@@ -37,3 +37,10 @@ Never type your password into `.env`: only the hash goes there.
 - You are signed out after 10 minutes without activity, or when the tab was hidden for 2 minutes, or 12 hours after login.
 - Lost a phone or left a device signed in: open the Office on another device, go to Security, press **Sign out everywhere else**. If you think someone else got in, press **Panic**.
 - Lost your authenticator app: sign in with the password and use a recovery code instead of the 6-digit code.
+
+## Turn on the AI Twin (optional)
+1. Open Google AI Studio and create a free Gemini API key.
+2. Put it in `.env` (and in your host's Environment settings) as `GEMINI_API_KEY`. Never paste it into a chat, a message or a file in the repo.
+3. Restart the server, sign in, and click the round AI Twin button at the bottom right of any Office page.
+4. If it says the model was not found, set `GEMINI_MODEL` to a model name shown in Google AI Studio.
+The AI Twin only sees numbers about your site (how many items, unread messages, storage). It never sees your passwords, keys, vault or visitors' messages.

@@ -55,6 +55,11 @@ describe("contactInput", () => {
 });
 
 describe("settingsPatch", () => {
+  it("accepts a Cloudinary AI Twin picture and refuses other hosts", () => {
+    expect(settingsPatch.safeParse({ twinAvatarUrl: "https://res.cloudinary.com/x/image/upload/twin.png" }).success).toBe(true);
+    expect(settingsPatch.safeParse({ twinAvatarUrl: "" }).success).toBe(true);
+    expect(settingsPatch.safeParse({ twinAvatarUrl: "https://evil.example/t.png" }).success).toBe(false);
+  });
   it("accepts partial profile data and refuses external photo hosts", () => {
     expect(settingsPatch.safeParse({ profile: { name: "Frank" } }).success).toBe(true);
     expect(settingsPatch.safeParse({ profile: { photoUrl: "https://evil.example/me.png" } }).success).toBe(false);

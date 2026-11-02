@@ -23,6 +23,8 @@ const schema = z.object({
   ADMIN_BOOTSTRAP_HASH: optional,
   COOKIE_DOMAIN: optional,
   GEMINI_API_KEY: optional,
+  GEMINI_MODEL: optional, // optional override, default is the "latest flash" alias
+  GEMINI_API_BASE_URL: optional, // optional: send AI requests through a proxy or test server instead of Google
   SERVICE_CRED_KEY: optional,
 });
 

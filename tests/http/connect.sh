@@ -71,6 +71,7 @@ expect "inbox API" 200 $(code -b /tmp/j6 $B/api/admin/messages); echo "  unread:
 python3 -c "
 import json;d=json.load(open('/tmp/body'))['messages']
 print('PASS: hostile text arrives as a plain JSON string' if any(m['body']=='<script>alert(1)</script> hi there' for m in d) else 'FAIL: hostile message missing')"
-code -b /tmp/j6 $B/$S/messages -o /tmp/office.html >/dev/null; grep -q "<script>alert(1)</script>" /tmp/office.html && fail "raw script in office page" || pass "no raw hostile script in the Office messages page"
+curl -s -b /tmp/j6 -o /tmp/office.html $B/$S/messages; grep -q "Messages visitors send" /tmp/office.html && pass "Office messages page was fetched" || fail "Office messages page not fetched"
+grep -q "<script>alert(1)</script>" /tmp/office.html && fail "raw script in office page" || pass "no raw hostile script in the Office messages page"
 grep -iE "error" /tmp/p6-app.log | head -3 | cut -c1-200
 python3 $ROOT/tests/http/killport.py $PORT >/dev/null

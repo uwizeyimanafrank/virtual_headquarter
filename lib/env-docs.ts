@@ -12,6 +12,7 @@ export const ENV_DOCS: EnvDoc[] = [
   { key: "CLOUDINARY_API_KEY", need: "feature", feature: "Image uploads", why: "Identifies your Cloudinary account when uploading." },
   { key: "CLOUDINARY_API_SECRET", need: "feature", feature: "Image uploads", why: "Signs uploads so only you can upload. Never shown in the browser." },
   { key: "GEMINI_API_KEY", need: "feature", feature: "AI Twin", why: "Lets the AI Twin talk. Needed from phase P07." },
+  { key: "GEMINI_MODEL", need: "feature", feature: "AI Twin", why: "Optional. Which Gemini model answers. If empty the \"latest flash\" model is used." },
   { key: "ALLOWED_ORIGINS", need: "feature", feature: "Other sites calling the API", why: "Only needed if another website (not this server) must call your API." },
   { key: "COOKIE_DOMAIN", need: "feature", feature: "Cookies across subdomains", why: "Only needed if cookies must be shared between subdomains." },
 ];

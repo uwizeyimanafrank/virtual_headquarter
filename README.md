@@ -23,8 +23,8 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 | P04 | Public Home page (hero, Canvas CV, tilt cards, gate) | done |
 | P05 | The Museum: vertical timeline, pop-ups and the sideways desktop track (code done, needs a visual check) | done in code |
 | P06 | Connect page (terminal-style form, spam-safe) | done (needs a visual check) |
-| P07 | AI Twin (Gemini) | **next** |
-| P08 | Developer tab (monitor Atlas, Cloudinary, Render...) | planned |
+| P07 | AI Twin (Gemini assistant in every Office page) | done in code (needs your Gemini key) |
+| P08 | Developer tab (monitor Atlas, Cloudinary, Render...) | **next** |
 | P09 | Encrypted secrets vault | planned |
 | P10 | Polish, audit, deploy | planned |
 
@@ -32,10 +32,10 @@ The live details (current task, what is waiting on you, known gaps) are always i
 
 ### Latest handoff (2026-10-31, Claude)
 
-- **Done:** P00 to P06. The public site works end to end: Home, Museum (sideways on desktop, vertical on phones), and a Connect page whose messages land in the Office inbox.
-- **Not verified:** how P04, P05 and P06 look in a real browser; a real image upload to Cloudinary; a real Atlas connection. Frank was asked to check these (see "Waiting on Frank" in `STATE.md`).
-- **Next task:** P07 (AI Twin). P07-T01 is a **[HUMAN]** step (Gemini API key). Meanwhile do P07-T02 and T03: the Gemini client behind a small interface (so it can be tested without internet) and the safe context builder (counts only, never secrets). Read `docs/book/chapters/P07-ai-twin.md`.
-- **Heads up:** use **Node 22**. Known gaps and one skipped test are listed under "Known bugs / debts" in `STATE.md`.
+- **Done:** P00 to P07. New: the AI Twin, a round assistant button on every Office page. It sees only numbers about the site (never secrets, messages or titles) and helps with questions and writing. Covered by 61 server checks against a fake Google service, plus component tests.
+- **Waiting on Frank:** a Gemini API key (P07-T01), and a visual check of Home, Museum, Connect and the chat window. No real call to Google has been made yet. See `STATE.md`.
+- **Next task:** P08-T02, the Service model with encrypted credentials for the Developer tab (P08-T01 is already satisfied: `SERVICE_CRED_KEY` exists since P02). Read `docs/book/chapters/P08-developer.md`.
+- **Heads up:** use **Node 22**. The server test scripts in `tests/http/` need a MongoDB-compatible database on 127.0.0.1:27017 (see their README). Known gaps and one skipped test are under "Known bugs / debts" in `STATE.md`.
 
 ---
 
@@ -66,6 +66,7 @@ Every variable is explained in plain words in `docs/book/ENV.md`. The ones you n
 | `ADMIN_ROUTE_SLUG` | The secret address of your Office (8-64 chars: letters, digits, hyphens) |
 | `ADMIN_BOOTSTRAP_HASH` | Your password, as a hash. Make it with `node scripts/hash-password.mjs` |
 | `CLOUDINARY_*` | Three values from your Cloudinary dashboard (for image uploads) |
+| `GEMINI_API_KEY` | Optional: turns on the AI Twin (free key from Google AI Studio) |
 
 **Never commit `.env`.** It is already in `.gitignore`.
 
@@ -143,4 +144,4 @@ The code does not change between your computer and a server — only the environ
 
 ## Honest status
 
-Everything above marked "done" was checked with automated tests against a test database (about 340 HTTP checks in `tests/http/` plus 86 unit and component tests in a simulated browser). What has **not** been checked yet is the visual look and feel in a real browser, a real image upload to Cloudinary, and the connection to a real Atlas cluster. `STATE.md` lists these as open items.
+Everything above marked "done" was checked with automated tests against a test database (about 400 HTTP checks in `tests/http/` plus 115 unit and component tests in a simulated browser). What has **not** been checked yet is the visual look and feel in a real browser, a real image upload to Cloudinary, and the connection to a real Atlas cluster. `STATE.md` lists these as open items.

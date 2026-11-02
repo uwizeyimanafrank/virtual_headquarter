@@ -1,7 +1,8 @@
 import { Schema, model, models, type InferSchemaType, type Model } from "mongoose";
 
-export const ITEM_TYPES = ["project", "certificate", "story", "book", "reference"] as const;
-export type ItemType = (typeof ITEM_TYPES)[number];
+import { ITEM_TYPES, type ItemType } from "@/lib/item-types";
+export { ITEM_TYPES };
+export type { ItemType };
 
 const schema = new Schema(
   {

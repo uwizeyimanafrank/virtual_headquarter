@@ -11,6 +11,7 @@ These shell scripts start the production server (`next start`) against a throw-a
 | `home.sh` | Home page content, cache refresh after edits, escaping, JS size |
 | `museum.sh` | Museum chapters, edits visible immediately, escaping |
 | `connect.sh` | the contact form under abuse: empty, huge, script tags, bots, rapid submissions |
+| `ai.sh` | the AI Twin API against `fake-gemini.py` (a fake Google service): exactly what is sent, no secrets, limits, failures |
 
 ## How to run
 1. Use **Node 22**, run `npm install`.
@@ -23,9 +24,12 @@ These shell scripts start the production server (`next start`) against a throw-a
    (`home.sh`, `museum.sh` and `connect.sh` restore that copy before each run, because Next saves regenerated pages back into `.next`.)
 4. Run any script: `bash tests/http/connect.sh`. Every line starts with `PASS:` or `FAIL:`. Count them: `bash tests/http/connect.sh | grep -c FAIL` should print `0`.
 
-Each script uses its own port (4030-4039) and kills anything left on it. Do not run two at once.
+Each script uses its own port (4030-4041) and kills anything left on it. Do not run two at once.
 
 ## Good to know
 - They set fake secrets in the environment for the test server only. Nothing real is read or written.
 - `gen-code.mjs` makes authenticator codes; `killport.py` frees a port without killing your shell.
 - If you add a feature that changes server behaviour, add checks here or write a new script in the same style.
+
+- If the test database stops between runs, the scripts restart it using `FERRET_BIN`; if you use a normal MongoDB, just keep it running.
+- When you write a check that saves a page to a file, first check that the file is non-empty: a check on a file that was never written passes without testing anything.

@@ -23,10 +23,11 @@ export async function PATCH(request: Request) {
   if (!parsed.success) {
     return Response.json({ error: "Please check the fields.", issues: parsed.error.issues.map((i) => ({ path: i.path.join("."), message: i.message })) }, { status: 400 });
   }
-  const { heroTitle, heroText, chapterTitles, profile } = parsed.data;
+  const { heroTitle, heroText, twinAvatarUrl, chapterTitles, profile } = parsed.data;
   const $set: Record<string, unknown> = {};
   if (heroTitle !== undefined) $set.heroTitle = heroTitle;
   if (heroText !== undefined) $set.heroText = heroText;
+  if (twinAvatarUrl !== undefined) $set.twinAvatarUrl = twinAvatarUrl;
   for (const [k, v] of Object.entries(chapterTitles ?? {})) if (v !== undefined) $set[`chapterTitles.${k}`] = v;
   for (const [k, v] of Object.entries(profile ?? {})) if (v !== undefined) $set[`profile.${k}`] = v;
   if (Object.keys($set).length === 0) return Response.json({ error: "Nothing to change." }, { status: 400 });

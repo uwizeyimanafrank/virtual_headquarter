@@ -4,7 +4,7 @@
 
 Tick each task `[x]` when done. Do them in order.
 
-### [ ] P08-T01 — [HUMAN] Choose Service credential key
+### [x] P08-T01 — [HUMAN] Choose Service credential key
 **Do:**
 - Frank generates `SERVICE_CRED_KEY` (32 random bytes base64) and sets it in `.env` and on the host.
 **Files:** .env
@@ -48,6 +48,9 @@ Tick each task `[x]` when done. Do them in order.
 - If a monitored service is down on check, show a banner in the Office and log it. (Email alerts can come later.)
 **Files:** lib/services/alerts.ts
 **Done when:** A deliberately wrong URL shows the banner.
+
+## Note on T01
+`SERVICE_CRED_KEY` has been required since P02 (it encrypts the 2FA secret), so Frank already has it. Reuse it here (different AAD label per use, as in `lib/crypto-server.ts`). Do NOT make a second key.
 
 ## Phase finish check
 Frank can add a new monitored service from the UI without touching code. Mark done.

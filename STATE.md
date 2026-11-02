@@ -5,11 +5,11 @@ Update this after EVERY task. Keep it short.
 - GitHub: `uwizeyimanafrank/virtual_headquarter`. Branches: `main` (what Frank has reviewed) and `dev` (where AI tools push). Read README.md first.
 
 ## Pointer
-- **Current phase:** P07 — AI Twin
-- **Current task:** P07-T01
-- **Status:** not started (P06 done; P05 and P06 not visually checked; passkeys T07 deferred; P00-T07 still waiting on Frank)
+- **Current phase:** P08 — Developer tab
+- **Current task:** P08-T02
+- **Status:** not started (P07 done in code; P05, P06 and P07 not visually checked; P07-T01 Gemini key waiting on Frank; passkeys T07 deferred; P00-T07 still waiting on Frank)
 - **Last worker:** Claude (chat), 2026-10-31
-- **Next action (one sentence):** P07-T01 is a [HUMAN] task (Gemini API key). While waiting, do P07-T02 (lib/gemini.ts with the Gemini client behind a small interface so it can be tested without internet) and P07-T03 (safe context builder, counts only); read docs/book/chapters/P07-ai-twin.md first.
+- **Next action (one sentence):** Build the Service model with encrypted credentials (P08-T02); P08-T01 is already satisfied because SERVICE_CRED_KEY exists since P02. Read docs/book/chapters/P08-developer.md first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -22,7 +22,7 @@ Update this after EVERY task. Keep it short.
 | P04 | Home page | done |
 | P05 | Museum | done in code (needs a visual check by Frank) |
 | P06 | Connect page | done (needs a visual check) |
-| P07 | AI Twin | not started |
+| P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | not started |
 | P09 | Secrets vault | not started |
 | P10 | Polish, audit, deploy | not started |
@@ -49,12 +49,16 @@ Status words: not started / in progress / done.
 - Open `/museum` on a desktop and scroll: it should walk sideways through the chapters with the progress buttons at the bottom. Resize the window narrower than 768px and back. On a phone it should be the vertical timeline. Report anything that looks or feels off (speed, overlap with the header, flash on first load).
 
 - Open `/connect` on your phone and PC, send yourself a message, then open Office > Messages and check it arrived (and the unread number on the dashboard). Try sending 6 messages in a row: the 6th should be refused politely.
-- P07-T01: create a free Gemini API key in Google AI Studio and put it in `.env` as `GEMINI_API_KEY` (never paste it into a chat or commit it).
+- P07-T01: create a free Gemini API key in Google AI Studio and put it in `.env` as `GEMINI_API_KEY` (never paste it into a chat or commit it). Then open the Office, click the round AI Twin button (bottom right), ask "How is my site doing?" and report what happens. If it says the model is not found, set `GEMINI_MODEL` to a model name shown in Google AI Studio.
 
 ## Questions for Frank
 (empty)
 
 ## Known bugs / debts
+- P07: no real call to Google has ever been made (no internet in the build sandbox). The request format is verified against the official SDK and a fake service (`tests/http/fake-gemini.py`). The default model alias `gemini-flash-latest` is unverified; `GEMINI_MODEL` overrides it.
+- P07: the SDK is `@google/genai` (the maintained one), not `@google/generative-ai` as first planned; see DECISIONS.md.
+- P07: the AI Twin can only talk. It cannot change anything, and its chat history is not saved (gone when the tab closes). That is on purpose for now.
+- Test-quality note: two older HTTP checks (in connect.sh) passed vacuously because a page was saved to the wrong file; fixed, and each now first proves the page was fetched. If you write new checks, make sure they would fail when the thing is broken.
 - P06 `/connect` is tested (unit + HTTP) but not looked at in a real browser.
 - The contact form has only a hidden-field bot trap and a per-address rate limit (5 per hour). A determined spammer using many addresses can still send some messages; add a captcha or a time-to-fill check later if that happens.
 - The HTTP test scripts now live in the repo (`tests/http/`, see its README). They need a MongoDB-compatible server on 127.0.0.1:27017 and drop their own test databases.

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AutoLock } from "@/components/office/AutoLock";
+import { TwinAvatar } from "@/components/office/TwinAvatar";
 
 const NAV = [
   { path: "", label: "Dashboard" },
@@ -16,7 +17,7 @@ const NAV = [
 ];
 
 /** Office frame: sidebar on desktop, scrolling tab bar on phones. `base` is the secret Office address. */
-export function Shell({ base, email, children }: { base: string; email: string; children: React.ReactNode }) {
+export function Shell({ base, email, twinAvatarUrl, children }: { base: string; email: string; twinAvatarUrl?: string; children: React.ReactNode }) {
   const pathname = usePathname();
   const active = (p: string) => (p === "" ? pathname === base : pathname.startsWith(`${base}${p}`));
   const link = (p: string, label: string, extra = "") => (
@@ -28,6 +29,7 @@ export function Shell({ base, email, children }: { base: string; email: string; 
   return (
     <div className="flex min-h-screen flex-1 flex-col md:flex-row">
       <AutoLock base={base} />
+      <TwinAvatar avatarUrl={twinAvatarUrl} />
       <aside className="border-b border-line bg-surface/40 backdrop-blur md:w-56 md:border-b-0 md:border-r">
         <div className="hidden px-4 py-5 md:block">
           <p className="font-semibold">VHQ Office</p>

@@ -2,6 +2,11 @@ import "server-only";
 import { v2 as cloudinary } from "cloudinary";
 import { requireEnv } from "@/lib/env";
 
+/** Cloudinary client configured from the environment (throws a readable error if a value is missing). */
+export function cloudinaryClient() {
+  return configured();
+}
+
 function configured() {
   cloudinary.config({
     cloud_name: requireEnv("CLOUDINARY_CLOUD_NAME"),

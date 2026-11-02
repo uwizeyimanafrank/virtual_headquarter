@@ -30,6 +30,7 @@ const schema = new Schema(
       samplesSeeded: { type: Boolean, default: false }, // sample content was created once, never re-created by itself
       profileIsSample: { type: Boolean, default: false }, // profile fields currently hold sample text
     },
+    twinAvatarUrl: { type: String, default: "", maxlength: 500 }, // picture of the AI Twin bubble in the Office
     showSamples: { type: Boolean, default: true },
     autoHideSamples: { type: Boolean, default: true }, // hide samples of a type once a real item of that type is published
     theme: { type: Schema.Types.Mixed, default: {} },

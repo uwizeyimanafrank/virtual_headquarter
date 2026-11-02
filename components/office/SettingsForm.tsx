@@ -21,7 +21,7 @@ export function SettingsForm({ initial }: { initial: SettingsView }) {
     e.preventDefault();
     setBusy(true); setMsg(""); setErrors([]);
     try {
-      const r = await api<SettingsView>("/api/admin/settings", { method: "PATCH", body: JSON.stringify({ heroTitle: s.heroTitle, heroText: s.heroText, chapterTitles: s.chapterTitles, profile: s.profile }) });
+      const r = await api<SettingsView>("/api/admin/settings", { method: "PATCH", body: JSON.stringify({ heroTitle: s.heroTitle, heroText: s.heroText, twinAvatarUrl: s.twinAvatarUrl, chapterTitles: s.chapterTitles, profile: s.profile }) });
       setS(r);
       setMsg("Saved.");
     } catch (err) {
@@ -39,6 +39,11 @@ export function SettingsForm({ initial }: { initial: SettingsView }) {
         <div><label className={label} htmlFor="name">Name</label><input id="name" className={input} value={s.profile.name} onChange={(e) => setProfile("name", e.target.value)} maxLength={80} /></div>
         <div><label className={label} htmlFor="tagline">Tagline</label><input id="tagline" className={input} value={s.profile.tagline} onChange={(e) => setProfile("tagline", e.target.value)} maxLength={160} /></div>
         <div><label className={label} htmlFor="bio">Short bio</label><textarea id="bio" className={`${input} min-h-28`} value={s.profile.bio} onChange={(e) => setProfile("bio", e.target.value)} maxLength={2000} /></div>
+      </section>
+      <section className="space-y-4">
+        <h2 className="text-lg font-medium">AI Twin picture</h2>
+        <p className="text-sm text-muted">The round picture of your assistant in the corner of the Office. Leave empty to use the default.</p>
+        <Uploader folder="profile" value={s.twinAvatarUrl} onChange={(u) => setS({ ...s, twinAvatarUrl: u })} />
       </section>
       <section className="space-y-4">
         <h2 className="text-lg font-medium">Home page wording</h2>

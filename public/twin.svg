@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="AI Twin">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2dd4bf"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+  <circle cx="64" cy="64" r="64" fill="url(#g)"/>
+  <rect x="30" y="38" width="68" height="52" rx="18" fill="#0b1020" fill-opacity="0.85"/>
+  <circle cx="50" cy="62" r="7" fill="#2dd4bf"/><circle cx="78" cy="62" r="7" fill="#2dd4bf"/>
+  <path d="M52 78 Q64 86 76 78" stroke="#2dd4bf" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M64 38 V26" stroke="#0b1020" stroke-width="4" stroke-linecap="round"/><circle cx="64" cy="22" r="5" fill="#0b1020"/>
+</svg>

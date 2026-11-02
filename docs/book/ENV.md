@@ -15,6 +15,8 @@ Copy `.env.example` to `.env` and fill in. Never commit `.env`.
 | ADMIN_BOOTSTRAP_HASH | P02 | `b64:` + base64 of the argon2id hash. Make it with `node scripts/hash-password.mjs`. Only needed for the very first login | no |
 | COOKIE_DOMAIN | optional | Only if cookies must span subdomains | no |
 | GEMINI_API_KEY | P07 | AI Twin | no |
+| GEMINI_MODEL | optional | Which Gemini model to use (default `gemini-flash-latest`) | no |
+| GEMINI_API_BASE_URL | optional | Only for proxies and tests: where AI requests go instead of Google | no |
 | SERVICE_CRED_KEY | P02 (2FA secret), P08 | 32 random bytes base64, encrypts server-readable secrets at rest. Back it up | no |
 
 Generate random secrets with: `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`
