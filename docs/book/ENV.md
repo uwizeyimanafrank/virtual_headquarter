@@ -16,6 +16,8 @@ Copy `.env.example` to `.env` and fill in. Never commit `.env`.
 | COOKIE_DOMAIN | optional | Only if cookies must span subdomains | no |
 | GEMINI_API_KEY | P07 | AI Twin | no |
 | GEMINI_MODEL | optional | Which Gemini model to use (default `gemini-flash-latest`) | no |
+| ALLOW_PRIVATE_SERVICE_TARGETS | optional | `true` lets the Developer tab monitor addresses on private networks (self-hosting). Default: refused, which blocks attacks that aim the server at internal addresses | no |
+| RENDER_API_BASE_URL | optional | Only for proxies and tests: where Render API requests go | no |
 | GEMINI_API_BASE_URL | optional | Only for proxies and tests: where AI requests go instead of Google | no |
 | SERVICE_CRED_KEY | P02 (2FA secret), P08 | 32 random bytes base64, encrypts server-readable secrets at rest. Back it up | no |
 

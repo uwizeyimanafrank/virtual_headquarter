@@ -5,11 +5,11 @@ Update this after EVERY task. Keep it short.
 - GitHub: `uwizeyimanafrank/virtual_headquarter`. Branches: `main` (what Frank has reviewed) and `dev` (where AI tools push). Read README.md first.
 
 ## Pointer
-- **Current phase:** P08 — Developer tab
-- **Current task:** P08-T02
-- **Status:** not started (P07 done in code; P05, P06 and P07 not visually checked; P07-T01 Gemini key waiting on Frank; passkeys T07 deferred; P00-T07 still waiting on Frank)
+- **Current phase:** P09 — Secrets vault
+- **Current task:** P09-T01
+- **Status:** not started (P08 done in code; P05-P08 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-10-31
-- **Next action (one sentence):** Build the Service model with encrypted credentials (P08-T02); P08-T01 is already satisfied because SERVICE_CRED_KEY exists since P02. Read docs/book/chapters/P08-developer.md first.
+- **Next action (one sentence):** Build the browser-side vault crypto module (P09-T01: Web Crypto, PBKDF2 600k + AES-256-GCM, versioned payload). Read docs/book/chapters/P09-vault.md and the vault rules in DECISIONS.md first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -23,7 +23,7 @@ Update this after EVERY task. Keep it short.
 | P05 | Museum | done in code (needs a visual check by Frank) |
 | P06 | Connect page | done (needs a visual check) |
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
-| P08 | Developer tab | not started |
+| P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | not started |
 | P10 | Polish, audit, deploy | not started |
 
@@ -55,6 +55,10 @@ Status words: not started / in progress / done.
 (empty)
 
 ## Known bugs / debts
+- Flaky unit test: once, 1 of 197 unit tests failed on a busy machine and passed on the immediate rerun (not identified; probably a timing-based one such as the probe time-limit test in lib/services/net.test.ts). If `npm test` fails once, rerun it before assuming a real break; if it keeps happening, find it with `npx vitest run --reporter=verbose` and make it less timing-sensitive.
+- P08: tested against fakes only. The Render adapter (`lib/services/render.ts`) and the Cloudinary usage field names (`lib/services/cloudinary.ts`) follow those services' documented answers from memory and have never talked to the real services. If a card shows odd numbers or "Could not read", adjust those two files.
+- P08: a stored MongoDB address (monitoring someone else's database) is connected to as given; only the website-address checks have the private-network protection. Credentials are owner-only and need a fresh 2FA to save.
+- P08: Developer pages and the down banner are not visually checked.
 - P07: no real call to Google has ever been made (no internet in the build sandbox). The request format is verified against the official SDK and a fake service (`tests/http/fake-gemini.py`). The default model alias `gemini-flash-latest` is unverified; `GEMINI_MODEL` overrides it.
 - P07: the SDK is `@google/genai` (the maintained one), not `@google/generative-ai` as first planned; see DECISIONS.md.
 - P07: the AI Twin can only talk. It cannot change anything, and its chat history is not saved (gone when the tab closes). That is on purpose for now.

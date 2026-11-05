@@ -24,18 +24,18 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 | P05 | The Museum: vertical timeline, pop-ups and the sideways desktop track (code done, needs a visual check) | done in code |
 | P06 | Connect page (terminal-style form, spam-safe) | done (needs a visual check) |
 | P07 | AI Twin (Gemini assistant in every Office page) | done in code (needs your Gemini key) |
-| P08 | Developer tab (monitor Atlas, Cloudinary, Render...) | **next** |
-| P09 | Encrypted secrets vault | planned |
+| P08 | Developer tab (watch Atlas, Cloudinary, Render and any website; storage library; system reminder; down banner) | done in code (needs a visual check) |
+| P09 | Encrypted secrets vault | **next** |
 | P10 | Polish, audit, deploy | planned |
 
 The live details (current task, what is waiting on you, known gaps) are always in **`STATE.md`**.
 
-### Latest handoff (2026-10-31, Claude)
+### Latest handoff (2026-11-04, Claude)
 
-- **Done:** P00 to P07. New: the AI Twin, a round assistant button on every Office page. It sees only numbers about the site (never secrets, messages or titles) and helps with questions and writing. Covered by 61 server checks against a fake Google service, plus component tests.
-- **Waiting on Frank:** a Gemini API key (P07-T01), and a visual check of Home, Museum, Connect and the chat window. No real call to Google has been made yet. See `STATE.md`.
-- **Next task:** P08-T02, the Service model with encrypted credentials for the Developer tab (P08-T01 is already satisfied: `SERVICE_CRED_KEY` exists since P02). Read `docs/book/chapters/P08-developer.md`.
-- **Heads up:** use **Node 22**. The server test scripts in `tests/http/` need a MongoDB-compatible database on 127.0.0.1:27017 (see their README). Known gaps and one skipped test are under "Known bugs / debts" in `STATE.md`.
+- **Done:** P00 to P08 (about 80% of the project). New: the Developer tab, which watches your database, Cloudinary, Render and any website, keeps credentials encrypted (never shown again), shows a storage library and a system map, and puts a red banner on every Office page when something is down. Website checks cannot be aimed at private/internal addresses.
+- **Waiting on Frank:** a Gemini API key; a look at Home, Museum, Connect, the AI chat and the Developer tab in a real browser; a real Cloudinary upload and Atlas connection. See `STATE.md`.
+- **Next task:** P09-T01, the vault's browser-side crypto (Web Crypto: PBKDF2 600,000 rounds + AES-256-GCM; the server must only ever store ciphertext). Read `docs/book/chapters/P09-vault.md` and the vault rules in `DECISIONS.md`.
+- **Heads up:** use **Node 22**. Known gaps (including one skipped test) are under "Known bugs / debts" in `STATE.md`. Remember to revoke any GitHub token that was pasted into a chat.
 
 ---
 
@@ -144,4 +144,4 @@ The code does not change between your computer and a server — only the environ
 
 ## Honest status
 
-Everything above marked "done" was checked with automated tests against a test database (about 400 HTTP checks in `tests/http/` plus 115 unit and component tests in a simulated browser). What has **not** been checked yet is the visual look and feel in a real browser, a real image upload to Cloudinary, and the connection to a real Atlas cluster. `STATE.md` lists these as open items.
+Everything above marked "done" was checked with automated tests against a test database (about 520 HTTP checks in `tests/http/` plus almost 200 unit and component tests in a simulated browser). What has **not** been checked yet is the visual look and feel in a real browser, a real image upload to Cloudinary, and the connection to a real Atlas cluster. `STATE.md` lists these as open items.

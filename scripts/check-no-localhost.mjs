@@ -9,7 +9,7 @@ const FILES = ["proxy.ts", "middleware.ts", "next.config.ts"];
 const EXTS = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs"]);
 // Addresses that are namespaces/standards, not servers we call.
 // Third-party service endpoints we deliberately allow (CSP for Cloudinary images/uploads).
-const ALLOWED_HOSTS = ["www.w3.org", "res.cloudinary.com", "api.cloudinary.com"];
+const ALLOWED_HOSTS = ["www.w3.org", "res.cloudinary.com", "api.cloudinary.com", "api.render.com"];
 
 const problems = [];
 
@@ -18,6 +18,7 @@ function scanFile(path) {
   lines.forEach((line, i) => {
     const t = line.trim();
     if (t.startsWith("//") || t.startsWith("*") || t.startsWith("/*")) return; // comments are harmless
+    if (line.includes("check:urls-ignore")) return; // a line may opt out on purpose (for example the list of blocked private addresses)
     if (/localhost|127\.0\.0\.1|0\.0\.0\.0/i.test(line)) {
       problems.push(`${path}:${i + 1}  contains localhost / local address`);
     }

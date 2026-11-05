@@ -6,7 +6,7 @@ export const LIMITS = { title: 120, description: 4000, name: 80, email: 160, mes
 
 // Remove invisible control characters and trim. Text is always treated as plain text.
 const cleanText = (s: string) => s.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim();
-const text = (max: number) => z.string().transform(cleanText).pipe(z.string().max(max));
+export const text = (max: number) => z.string().transform(cleanText).pipe(z.string().max(max));
 
 const httpUrl = z
   .string()

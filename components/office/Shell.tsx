@@ -17,7 +17,7 @@ const NAV = [
 ];
 
 /** Office frame: sidebar on desktop, scrolling tab bar on phones. `base` is the secret Office address. */
-export function Shell({ base, email, twinAvatarUrl, children }: { base: string; email: string; twinAvatarUrl?: string; children: React.ReactNode }) {
+export function Shell({ base, email, twinAvatarUrl, downServices = [], children }: { base: string; email: string; twinAvatarUrl?: string; downServices?: { id: string; name: string }[]; children: React.ReactNode }) {
   const pathname = usePathname();
   const active = (p: string) => (p === "" ? pathname === base : pathname.startsWith(`${base}${p}`));
   const link = (p: string, label: string, extra = "") => (
@@ -39,7 +39,15 @@ export function Shell({ base, email, twinAvatarUrl, children }: { base: string; 
           {NAV.map((n) => link(n.path, n.label, "md:block"))}
         </nav>
       </aside>
-      <main className="flex-1 p-4 md:p-8">{children}</main>
+      <main className="flex-1 p-4 md:p-8">
+        {downServices.length > 0 && (
+          <p role="status" className="mb-6 rounded-xl border border-red-400/50 bg-red-400/10 px-4 py-3 text-sm text-red-200">
+            {downServices.length === 1 ? "A service is down" : `${downServices.length} services are down`}: {downServices.map((d) => d.name).join(", ")}.{" "}
+            <Link href={`${base}/developer`} className="underline">Open the Developer tab</Link>
+          </p>
+        )}
+        {children}
+      </main>
     </div>
   );
 }

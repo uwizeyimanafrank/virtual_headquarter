@@ -11,6 +11,7 @@ These shell scripts start the production server (`next start`) against a throw-a
 | `home.sh` | Home page content, cache refresh after edits, escaping, JS size |
 | `museum.sh` | Museum chapters, edits visible immediately, escaping |
 | `connect.sh` | the contact form under abuse: empty, huge, script tags, bots, rapid submissions |
+| `developer.sh` | the Developer tab against `fake-render.py` (a fake Render API and website): checks, caching, secrets stay secret, private addresses refused, alerts (about 2 minutes) |
 | `ai.sh` | the AI Twin API against `fake-gemini.py` (a fake Google service): exactly what is sent, no secrets, limits, failures |
 
 ## How to run
@@ -24,7 +25,7 @@ These shell scripts start the production server (`next start`) against a throw-a
    (`home.sh`, `museum.sh` and `connect.sh` restore that copy before each run, because Next saves regenerated pages back into `.next`.)
 4. Run any script: `bash tests/http/connect.sh`. Every line starts with `PASS:` or `FAIL:`. Count them: `bash tests/http/connect.sh | grep -c FAIL` should print `0`.
 
-Each script uses its own port (4030-4041) and kills anything left on it. Do not run two at once.
+Each script uses its own port (4030-4043) and kills anything left on it. Do not run two at once.
 
 ## Good to know
 - They set fake secrets in the environment for the test server only. Nothing real is read or written.

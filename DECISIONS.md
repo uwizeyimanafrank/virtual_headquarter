@@ -109,3 +109,11 @@
 - The chat shows replies as plain text. History lives only in the browser tab.
 - Server modules that import `server-only` are unit-tested through a stub (`tests/server-only-stub.ts`, aliased in vitest.config.mts).
 - `ITEM_TYPES` moved to `lib/item-types.ts` (no database import) so plain code and tests can use it; `models/MuseumItem.ts` re-exports it.
+
+## P08 notes (2026-11-04)
+- Service kinds: http (any web address), mongodb (empty credentials = THIS app's database), cloudinary (empty = values from .env), render (API key + service id). A new kind = one file in lib/services + one line in the registry.
+- Credentials: JSON encrypted with SERVICE_CRED_KEY (AES-256-GCM, label `service:<id>` so a value cannot be moved to another service). Write-only: never returned (the API only says `hasCredentials`), never logged, never shown again. Saving, replacing or clearing credentials and deleting a service need a fresh 2FA (step-up). Max 30 services.
+- SSRF protection for website checks (lib/services/net.ts): http(s) only, no login details inside the address, private/loopback/link-local/metadata/reserved ranges refused both for literal IPs and for the address a name resolves to (checked inside the connection's own DNS lookup, so rebinding cannot swap it), no redirects followed, nothing of the answer kept except the status code, 5 s limit. `ALLOW_PRIVATE_SERVICE_TARGETS=true` (exactly that value) switches the refusal off for self-hosting.
+- Caching: results are reused for 5 minutes; "check now" waits at least 30 s between checks of one service; every check has a 9 s overall limit; any failure becomes a plain message, never raw error text.
+- Alerts: going down writes one `service_down` audit entry (staying down does not repeat), coming back writes `service_up`; Office pages show a red banner naming services that are down (names shown as plain text).
+- Dependencies: none added. The no-hardcoded-address guard now allows a line to opt out with a `check:urls-ignore` comment (used once, for the list of blocked private ranges) and allows api.render.com.

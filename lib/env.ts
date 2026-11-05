@@ -26,6 +26,8 @@ const schema = z.object({
   GEMINI_MODEL: optional, // optional override, default is the "latest flash" alias
   GEMINI_API_BASE_URL: optional, // optional: send AI requests through a proxy or test server instead of Google
   SERVICE_CRED_KEY: optional,
+  ALLOW_PRIVATE_SERVICE_TARGETS: optional, // "true" lets the Developer tab monitor addresses on private networks (self-hosting). Default: refused.
+  RENDER_API_BASE_URL: optional, // optional: proxy or test server instead of the real Render API
 });
 
 export type EnvKey = keyof z.infer<typeof schema>;
