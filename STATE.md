@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P09 — Secrets vault
-- **Current task:** P09-T02
-- **Status:** in progress, T01 done (P08 done in code; P05-P08 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
+- **Current task:** P09-T03
+- **Status:** in progress, T01-T02 done (P08 done in code; P05-P08 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** P09-T02: write lib/vault-crypto.test.ts (round trip, wrong passphrase, tampered cipher, payload versioning). Module is lib/vault-crypto.ts (encryptText/decryptText, VaultCryptoError).
+- **Next action (one sentence):** P09-T03: vault API (models/VaultEntry.ts + app/api/admin/vault/*) that stores ONLY ciphertext strings; owner only, step-up for delete. Read the P09 chapter and the vault rules in DECISIONS.md first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -24,7 +24,7 @@ Update this after EVERY task. Keep it short.
 | P06 | Connect page | done (needs a visual check) |
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
-| P09 | Secrets vault | in progress (T01 done) |
+| P09 | Secrets vault | in progress (T01-T02 done) |
 | P10 | Polish, audit, deploy | not started |
 
 Status words: not started / in progress / done.

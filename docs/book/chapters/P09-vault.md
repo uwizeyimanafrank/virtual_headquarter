@@ -12,7 +12,7 @@ Tick each task `[x]` when done. Do them in order.
 **Done when:** Round trip works; wrong passphrase throws a clean error; two encryptions of the same text differ.
 **Don't:** No third-party crypto library; no passphrase persistence anywhere (not localStorage, not memory longer than needed).
 
-### [ ] P09-T02 — Crypto tests
+### [x] P09-T02 — Crypto tests
 **Do:**
 - Add tests (Vitest is already installed since P04: `npm test`) for round trip, wrong passphrase, tampered cipher (must fail), and payload versioning.
 **Files:** lib/vault-crypto.test.ts
