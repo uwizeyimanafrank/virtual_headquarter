@@ -78,6 +78,7 @@ dbq "const docs=await d.collection('vaultentries').find({}).toArray();console.lo
 eqv "one entry, only expected fields, no secret, no passphrase" "1|__v,_id,createdAt,payload,updatedAt|false|false" "$(cat /tmp/dbout)"
 eqv "payload stored exactly as uploaded" "$PAY" "$(dbq "console.log((await d.collection('vaultentries').findOne({})).payload)")"
 eqv "one vault_change audit" 1 "$(audits vault_change)"
+eqv "no plaintext or passphrase in ANY collection of the whole database" "false|false" "$(dbq "const names=(await d.listCollections().toArray()).map(c=>c.name);let all='';for(const n of names){all+=JSON.stringify(await d.collection(n).find({}).toArray())};console.log(all.includes('$MARK')+'|'+all.includes('$VP'))")"
 
 echo "== opening"
 fresh

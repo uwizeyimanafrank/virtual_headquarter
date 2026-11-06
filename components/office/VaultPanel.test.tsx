@@ -189,3 +189,88 @@ describe("VaultPanel", () => {
     expect(await screen.findByText(/Nothing here yet/)).toBeInTheDocument();
   });
 });
+
+describe("VaultPanel backup", () => {
+  let blobs: Blob[] = [];
+  let names: string[] = [];
+  beforeEach(() => {
+    blobs = []; names = [];
+    URL.createObjectURL = vi.fn((b: Blob | MediaSource) => { blobs.push(b as Blob); return "blob:test"; });
+    URL.revokeObjectURL = vi.fn();
+    vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(function (this: HTMLAnchorElement) { names.push(this.download); });
+  });
+  afterEach(() => { vi.restoreAllMocks(); });
+
+  const file = (obj: unknown) => new File([JSON.stringify(obj)], "backup.json", { type: "application/json" });
+  const backupOf = (...payloads: string[]) => ({ kind: "vhq-vault-backup", v: 1, exportedAt: "2026-11-06T00:00:00Z", entries: payloads.map((p) => JSON.parse(p)) });
+
+  it("downloads the entries still encrypted", async () => {
+    await openList();
+    await U().click(screen.getByRole("button", { name: "Download backup" }));
+    expect(names[0]).toMatch(/^vhq-vault-backup-\d{4}-\d{2}-\d{2}\.json$/);
+    const text = await blobs[0].text();
+    expect(JSON.parse(text).entries).toEqual([JSON.parse(payload)]);
+    for (const word of ["Render production", "SECRET123", PASS]) expect(text).not.toContain(word);
+    expect(await screen.findByRole("status")).toHaveTextContent(/Backup downloaded/);
+  });
+
+  it("imports only new entries and skips ones already there", async () => {
+    const other = await sealSecret("second long passphrase", { label: "Second app", project: "", content: "K=2" });
+    await openList();
+    mockApi.mockResolvedValueOnce({ id: "c".repeat(24) });
+    await U().upload(screen.getByLabelText("Import backup"), file(backupOf(payload, other)));
+    expect(await screen.findByText(/Imported 1 entry\. 1 already in the vault/)).toBeInTheDocument();
+    const posts = mockApi.mock.calls.filter((c) => (c[1] as RequestInit | undefined)?.method === "POST");
+    expect(posts).toHaveLength(1);
+    expect(JSON.parse(String((posts[0][1] as RequestInit).body)).payload).toBe(other);
+    expect(screen.getAllByText("Encrypted entry")).toHaveLength(2);
+  }, 30000);
+
+  it("an imported entry opens with the same passphrase it always had", async () => {
+    const other = await sealSecret("second long passphrase", { label: "Second app", project: "", content: "K=2" });
+    await openList();
+    mockApi.mockResolvedValueOnce({ id: "c".repeat(24) });
+    await U().upload(screen.getByLabelText("Import backup"), file(backupOf(other)));
+    await screen.findByText(/Imported 1 entry/);
+    await U().click(screen.getAllByRole("button", { name: "Unlock" })[1]);
+    await U().type(screen.getByPlaceholderText("Passphrase for this entry"), "second long passphrase");
+    await U().click(screen.getByRole("button", { name: "Reveal" }));
+    expect(await screen.findByText("Second app")).toBeInTheDocument();
+  }, 30000);
+
+  it("refuses a file that is not a backup and uploads nothing", async () => {
+    await openList();
+    await U().upload(screen.getByLabelText("Import backup"), file({ hello: "world" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent(/not a vault backup/);
+    expect(mockApi).toHaveBeenCalledTimes(1); // only the list call
+  });
+
+  it("leaves out entries that are not valid ciphertext", async () => {
+    const other = await sealSecret("second long passphrase", { label: "Second app", project: "", content: "K=2" });
+    await openList();
+    mockApi.mockResolvedValueOnce({ id: "c".repeat(24) });
+    const bad = { ...backupOf(other), entries: [JSON.parse(other), { name: "x", value: "readable" }] };
+    await U().upload(screen.getByLabelText("Import backup"), file(bad));
+    expect(await screen.findByText(/1 not valid and left out/)).toBeInTheDocument();
+    const posts = mockApi.mock.calls.filter((c) => (c[1] as RequestInit | undefined)?.method === "POST");
+    expect(posts).toHaveLength(1);
+  }, 30000);
+
+  it("a code prompt in the middle of an import does not upload anything twice", async () => {
+    const o1 = await sealSecret("second long passphrase", { label: "S1", project: "", content: "K=1" });
+    const o2 = await sealSecret("third long passphrase", { label: "S2", project: "", content: "K=2" });
+    await openList();
+    mockApi.mockResolvedValueOnce({ id: "c".repeat(24) }); // o1 saved
+    mockApi.mockRejectedValueOnce(new ApiError(401, "Please confirm it is you.")); // o2 needs a code
+    await U().upload(screen.getByLabelText("Import backup"), file(backupOf(o1, o2)));
+    expect(await screen.findByRole("dialog")).toBeInTheDocument();
+    mockApi.mockResolvedValueOnce({ ok: true }); // step-up
+    mockApi.mockResolvedValueOnce({ id: "d".repeat(24) }); // o2 saved
+    await U().type(screen.getByPlaceholderText("Code"), "123456");
+    await U().click(screen.getByRole("button", { name: "Confirm" }));
+    expect(await screen.findByText(/Imported 2 entries/)).toBeInTheDocument();
+    const sent = mockApi.mock.calls.filter((c) => c[0] === "/api/admin/vault" && (c[1] as RequestInit | undefined)?.method === "POST").map((c) => JSON.parse(String((c[1] as RequestInit).body)).payload);
+    expect(sent.filter((p) => p === o1)).toHaveLength(1);
+    expect(sent.filter((p) => p === o2)).toHaveLength(2); // the one that was refused, then the retry
+  }, 30000);
+});

@@ -33,11 +33,11 @@ Tick each task `[x]` when done. Do them in order.
 **Files:** app/(office)/office/vault/page.tsx, components/office/Vault*.tsx
 **Done when:** Wrong passphrase reveals nothing; server logs show no plaintext.
 
-### [ ] P09-T05 — Vault export/import of ciphertext
+### [x] P09-T05 — Vault export/import of ciphertext
 **Do:**
 - Allow downloading all ciphertext as one JSON file as an offline backup, and importing it back.
 **Files:** app/(office)/office/vault/backup
 **Done when:** Imported backup decrypts with the same passphrase.
 
-## Phase finish check
+## Phase finish check (DONE 2026-11-06)
 Run a final test: search the database and network logs for any plaintext from a test .env. There must be none. Mark done.

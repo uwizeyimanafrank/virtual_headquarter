@@ -5,6 +5,7 @@ import { StepUpDialog } from "@/components/office/StepUpDialog";
 import { VaultCryptoError } from "@/lib/vault-crypto";
 import { MAX_CONTENT_CHARS, MAX_LABEL_CHARS, MASK, openSecret, parseEnv, passphraseStrength, sealSecret, type VaultSecret } from "@/lib/vault-entry";
 import { MAX_VAULT_PAYLOAD_CHARS } from "@/lib/vault-payload";
+import { backupFileName, makeBackup, parseBackup } from "@/lib/vault-backup";
 
 type Entry = { id: string; payload: string; createdAt: string };
 export const REVEAL_SECONDS = 30; // the secret hides itself after this long
@@ -28,6 +29,7 @@ export function VaultPanel() {
   const [entries, setEntries] = useState<Entry[] | null>(null); // null = list not loaded yet
   const [max, setMax] = useState(200);
   const [error, setError] = useState("");
+  const [note, setNote] = useState(""); // friendly result messages (backup and import)
   const [busy, setBusy] = useState(false);
   const [pending, setPending] = useState<null | (() => void)>(null); // action waiting for a fresh authenticator code
   const [adding, setAdding] = useState(false);
@@ -54,13 +56,50 @@ export function VaultPanel() {
     } finally { setBusy(false); }
   });
 
-  const lockAll = useCallback(() => { setOpened(null); setUnlockId(null); setAdding(false); setEntries(null); }, []);
+  const lockAll = useCallback(() => { setNote(""); setOpened(null); setUnlockId(null); setAdding(false); setEntries(null); }, []);
 
   const remove = (id: string) => guard(async () => {
     await api(`/api/admin/vault/${id}`, { method: "DELETE" });
     setEntries((list) => list && list.filter((e) => e.id !== id));
     setOpened((o) => (o?.id === id ? null : o));
   });
+
+  /** Downloads every entry exactly as stored (still encrypted). Nothing is decrypted to make it. */
+  function downloadBackup() {
+    if (!entries || entries.length === 0) return;
+    const url = URL.createObjectURL(new Blob([makeBackup(entries.map((e) => e.payload))], { type: "application/json" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = backupFileName();
+    a.click();
+    URL.revokeObjectURL(url);
+    setNote("Backup downloaded. It is encrypted, so it opens only with your passphrases. Keep it somewhere safe.");
+  }
+
+  /** Reads a backup file and uploads the entries that are not already in the vault. */
+  async function importBackup(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file || !entries) return;
+    setNote("");
+    setError("");
+    const parsed = parseBackup(await file.text());
+    if (!parsed.ok) { setError(parsed.error); return; }
+    const have = new Set(entries.map((x) => x.payload));
+    const todo = parsed.payloads.filter((p, i, all) => !have.has(p) && all.indexOf(p) === i);
+    const skipped = parsed.payloads.length - todo.length;
+    if (entries.length + todo.length > max) { setError(`The vault holds up to ${max} entries, so this backup does not fit.`); return; }
+    const done = new Set<string>(); // survives a step-up retry, so nothing is uploaded twice
+    await guard(async () => {
+      for (const payload of todo) {
+        if (done.has(payload)) continue;
+        const r = await api<{ id: string }>("/api/admin/vault", { method: "POST", body: JSON.stringify({ payload }) });
+        done.add(payload);
+        setEntries((list) => [...(list ?? []), { id: r.id, payload, createdAt: new Date().toISOString() }]);
+      }
+      setNote(`Imported ${done.size} entr${done.size === 1 ? "y" : "ies"}. ${skipped} already in the vault${parsed.invalid ? `, ${parsed.invalid} not valid and left out` : ""}.`);
+    });
+  }
 
   return (
     <div className="space-y-5">
@@ -70,6 +109,7 @@ export function VaultPanel() {
       </div>
 
       {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
+      {note && <p role="status" className="text-sm text-emerald-400">{note}</p>}
 
       {entries === null ? (
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-line bg-surface p-8 text-center">
@@ -82,6 +122,8 @@ export function VaultPanel() {
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-sm text-muted">{entries.length} of {max} entries</p>
             <div className="flex gap-2">
+              <button className={ghostCls} onClick={downloadBackup} disabled={entries.length === 0}>Download backup</button>
+              <label className={`${ghostCls} cursor-pointer`}>Import backup<input type="file" accept="application/json,.json" className="sr-only" onChange={(e) => void importBackup(e)} /></label>
               <button className={ghostCls} onClick={lockAll}>Lock the list</button>
               <button className={btnCls} onClick={() => setAdding(true)} disabled={adding || entries.length >= max}>Add entry</button>
             </div>
