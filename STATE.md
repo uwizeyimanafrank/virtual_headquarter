@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P09 — Secrets vault
-- **Current task:** P09-T03
-- **Status:** in progress, T01-T02 done (P08 done in code; P05-P08 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
+- **Current task:** P09-T04
+- **Status:** in progress, T01-T03 done (P08 done in code; P05-P08 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** P09-T03: vault API (models/VaultEntry.ts + app/api/admin/vault/*) that stores ONLY ciphertext strings; owner only, step-up for delete. Read the P09 chapter and the vault rules in DECISIONS.md first.
+- **Next action (one sentence):** P09-T04: vault UI at app/(office)/office/vault (a /office/vault placeholder page already exists): passphrase box, list, add, delete, copy-to-clipboard with auto-clear; everything encrypted/decrypted in the browser with lib/vault-crypto.ts; GET/POST/DELETE /api/admin/vault exist (step-up needed). Read the P09 chapter first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -24,7 +24,7 @@ Update this after EVERY task. Keep it short.
 | P06 | Connect page | done (needs a visual check) |
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
-| P09 | Secrets vault | in progress (T01-T02 done) |
+| P09 | Secrets vault | in progress (T01-T03 done) |
 | P10 | Polish, audit, deploy | not started |
 
 Status words: not started / in progress / done.
@@ -55,7 +55,7 @@ Status words: not started / in progress / done.
 (empty)
 
 ## Known bugs / debts
-- `npx tsc --noEmit` shows 'Cannot find name RouteContext/LayoutProps/PageProps' in older files when Next's generated types are missing. Not from P09. Run `npx next typegen` (or `npm run build`) first, then typecheck again.
+- Typecheck needs Next generated types: run `npx next typegen` before `npx tsc --noEmit`.
 - Flaky unit test: once, 1 of 197 unit tests failed on a busy machine and passed on the immediate rerun (not identified; probably a timing-based one such as the probe time-limit test in lib/services/net.test.ts). If `npm test` fails once, rerun it before assuming a real break; if it keeps happening, find it with `npx vitest run --reporter=verbose` and make it less timing-sensitive.
 - P08: tested against fakes only. The Render adapter (`lib/services/render.ts`) and the Cloudinary usage field names (`lib/services/cloudinary.ts`) follow those services' documented answers from memory and have never talked to the real services. If a card shows odd numbers or "Could not read", adjust those two files.
 - P08: a stored MongoDB address (monitoring someone else's database) is connected to as given; only the website-address checks have the private-network protection. Credentials are owner-only and need a fresh 2FA to save.

@@ -18,7 +18,7 @@ Tick each task `[x]` when done. Do them in order.
 **Files:** lib/vault-crypto.test.ts
 **Done when:** `npm test` passes.
 
-### [ ] P09-T03 — Vault API
+### [x] P09-T03 — Vault API
 **Do:**
 - `GET/POST/DELETE /api/admin/vault`. Server validates structure and size only and stores the payload as is. Every call requireAdmin; creating/deleting/reading payload requires step-up.
 - Audit vault_open and delete.

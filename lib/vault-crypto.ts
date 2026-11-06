@@ -5,12 +5,12 @@
 
 export const VAULT_FORMAT_VERSION = 1;
 export const PBKDF2_ITERATIONS = 600_000;
-const SALT_BYTES = 16;
-const IV_BYTES = 12;
+export const SALT_BYTES = 16;
+export const IV_BYTES = 12;
 // On decrypt we accept only a sane range, so a tampered payload cannot force
 // a weak key (too low) or freeze the tab (too high).
-const MIN_ITERATIONS = 100_000;
-const MAX_ITERATIONS = 5_000_000;
+export const MIN_ITERATIONS = 100_000;
+export const MAX_ITERATIONS = 5_000_000;
 
 export type VaultPayload = {
   v: number;

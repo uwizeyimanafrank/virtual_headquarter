@@ -12,6 +12,7 @@ These shell scripts start the production server (`next start`) against a throw-a
 | `museum.sh` | Museum chapters, edits visible immediately, escaping |
 | `connect.sh` | the contact form under abuse: empty, huge, script tags, bots, rapid submissions |
 | `developer.sh` | the Developer tab against `fake-render.py` (a fake Render API and website): checks, caching, secrets stay secret, private addresses refused, alerts (about 2 minutes) |
+| `vault.sh` | the vault API (port 4044): step-up needed, only encrypted-looking payloads accepted, database holds no readable text, audit, limit, no plaintext in the server log (about 1 minute, Node 22) |
 | `ai.sh` | the AI Twin API against `fake-gemini.py` (a fake Google service): exactly what is sent, no secrets, limits, failures |
 
 ## How to run
