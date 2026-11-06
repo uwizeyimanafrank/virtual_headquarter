@@ -25,7 +25,7 @@ Tick each task `[x]` when done. Do them in order.
 **Files:** models/VaultEntry.ts, app/api/admin/vault/*
 **Done when:** Database contains no readable text.
 
-### [ ] P09-T04 — Vault UI
+### [x] P09-T04 — Vault UI
 **Do:**
 - List of entries (label, project, date). Add entry: paste or upload `.env`, choose passphrase (confirm twice, strength hint), encrypt in browser, then upload cipher.
 - Reveal: ask passphrase, decrypt in browser, show masked values with per-line reveal, auto-hide after 30 seconds and when the tab loses focus, clear clipboard after copy timeout.

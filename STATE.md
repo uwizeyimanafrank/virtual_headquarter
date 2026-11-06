@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P09 — Secrets vault
-- **Current task:** P09-T04
-- **Status:** in progress, T01-T03 done (P08 done in code; P05-P08 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
+- **Current task:** P09-T05
+- **Status:** in progress, T01-T04 done (P08 done in code; P05-P09 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** P09-T04: vault UI at app/(office)/office/vault (a /office/vault placeholder page already exists): passphrase box, list, add, delete, copy-to-clipboard with auto-clear; everything encrypted/decrypted in the browser with lib/vault-crypto.ts; GET/POST/DELETE /api/admin/vault exist (step-up needed). Read the P09 chapter first.
+- **Next action (one sentence):** P09-T05: ciphertext backup. Download all entries as one JSON file of the encrypted payloads (no decrypting) and import it back with the same shape check as POST; then P09 is finished. Read the P09 chapter first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -24,7 +24,7 @@ Update this after EVERY task. Keep it short.
 | P06 | Connect page | done (needs a visual check) |
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
-| P09 | Secrets vault | in progress (T01-T03 done) |
+| P09 | Secrets vault | in progress (T01-T04 done) |
 | P10 | Polish, audit, deploy | not started |
 
 Status words: not started / in progress / done.
