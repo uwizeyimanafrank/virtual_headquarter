@@ -4,7 +4,7 @@
 
 Tick each task `[x]` when done. Do them in order.
 
-### [ ] P09-T01 — Browser crypto module
+### [x] P09-T01 — Browser crypto module
 **Do:**
 - `lib/vault-crypto.ts` (client only) using Web Crypto: derive key with PBKDF2-SHA256 (600,000 iterations, 16-byte random salt), encrypt with AES-256-GCM (12-byte random IV), output versioned JSON `{v,kdf:{iterations,salt},iv,cipher}` base64.
 - Export `encryptText(passphrase, plaintext)` and `decryptText(passphrase, payload)`.
