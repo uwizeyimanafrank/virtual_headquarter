@@ -6,7 +6,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 
 **Foundation rule (read `docs/book/05-image-slots.md`):** every fixed picture is a **slot** with a default and an Office control. Tasks T01 to T05 build that system first; every later task uses `SlotImage` and adds its slots to the registry.
 
-### [ ] P11-T01 — Slot registry and data
+### [x] P11-T01 — Slot registry and data
 **Do:** write `lib/image-slots.ts` (the registry from `docs/book/05-image-slots.md`), `models/ImageSlot.ts`, and `lib/slots.ts` (`getSlots`, `getSlot`: database overrides over defaults, cached; with no database return defaults).
 **Files:** lib/image-slots.ts, models/ImageSlot.ts, lib/slots.ts, tests
 **Done when:** unit tests: a custom slot overrides its default; with no database every slot still resolves to its default; every registry entry has label, where, aspect and a default that exists on disk.

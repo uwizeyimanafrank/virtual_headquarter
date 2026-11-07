@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T01 (image slot registry; art kit is now P11-T06)
+- **Current task:** P11-T02 (SlotImage component; art kit is P11-T06)
 - **Status:** not started. P09 done in code (P08 done in code; P05-P09 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** Read docs/book/05-image-slots.md and P11-art-and-home.md, then build the image slot registry and data (P11-T01). Frank is also testing the dev build locally (`npm run dev`); fix anything he reports first.
+- **Next action (one sentence):** P11-T02: build components/art/SlotImage.tsx (uses lib/image-slots.ts and getSlots from lib/slots.ts), with tests. Frank is also testing the dev build locally; fix what he reports first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -25,7 +25,7 @@ Update this after EVERY task. Keep it short.
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
-| P11 | Art and Home v2 | not started |
+| P11 | Art and Home v2 | in progress (T01 done) |
 | P12 | Museum halls (glass cases) | not started |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |
