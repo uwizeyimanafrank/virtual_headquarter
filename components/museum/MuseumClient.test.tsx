@@ -8,6 +8,7 @@ import { createMedia } from "@/tests/media-query";
 
 type Vars = {
   x?: () => number;
+  paused?: boolean;
   scrollTrigger?: { pin?: boolean; scrub?: number; start?: string; end?: () => string; onUpdate?: (s: { progress: number }) => void; containerAnimation?: unknown };
 };
 // A stand-in for GSAP that records what the component asks for. jsdom has no layout, so real animation
@@ -16,6 +17,7 @@ const g = vi.hoisted(() => ({
   contexts: [] as { revert: () => void }[],
   to: [] as { target: unknown; vars: Vars }[],
   fromTo: [] as { target: unknown; from: Record<string, unknown>; to: Vars }[],
+  created: [] as Record<string, unknown>[],
   registered: 0,
   st: { start: 100, end: 1100 },
 }));
@@ -24,11 +26,11 @@ vi.mock("gsap", () => {
     registerPlugin: () => { g.registered++; },
     context: (fn: () => void) => { const ctx = { revert: vi.fn() }; g.contexts.push(ctx); fn(); return ctx; },
     to: (target: unknown, vars: Vars) => { g.to.push({ target, vars }); return { scrollTrigger: g.st }; },
-    fromTo: (target: unknown, from: Record<string, unknown>, to: Vars) => { g.fromTo.push({ target, from, to }); return {}; },
+    fromTo: (target: unknown, from: Record<string, unknown>, to: Vars) => { g.fromTo.push({ target, from, to }); return { isActive: () => false, progress: () => 0, play: vi.fn() }; },
   };
   return { gsap, default: gsap };
 });
-vi.mock("gsap/ScrollTrigger", () => ({ ScrollTrigger: {} }));
+vi.mock("gsap/ScrollTrigger", () => ({ ScrollTrigger: { create: (vars: Record<string, unknown>) => { g.created.push(vars); return {}; }, update: () => {} } }));
 
 const item = (id: string, over: Partial<MuseumItemData> = {}): MuseumItemData => ({ id, type: "project", title: `Piece ${id}`, date: "2026-02", description: "About it.", mediaUrl: "", parallaxSpeed: 0.5, skills: [], link: "", howIEarnedIt: "", isSample: false, ...over });
 const chapters: MuseumChapter[] = [
@@ -38,7 +40,7 @@ const chapters: MuseumChapter[] = [
 ];
 
 beforeEach(() => {
-  g.contexts.length = 0; g.to.length = 0; g.fromTo.length = 0; g.registered = 0;
+  g.contexts.length = 0; g.to.length = 0; g.fromTo.length = 0; g.created.length = 0; g.registered = 0;
   Object.defineProperty(HTMLElement.prototype, "scrollWidth", { configurable: true, get: () => 3000 });
   Object.defineProperty(HTMLElement.prototype, "offsetLeft", { configurable: true, get(this: HTMLElement) { return this.hasAttribute("data-chapter") ? [...(this.parentElement?.children ?? [])].indexOf(this) * 1000 : 0; } });
   window.innerWidth = 1000;
@@ -109,10 +111,13 @@ describe("HorizontalTrack and GSAP", () => {
     expect(g.fromTo).toHaveLength(6); // 3 pieces x (drift + fade-in)
     const drift = g.fromTo.filter((c) => c.from.x !== undefined);
     expect(drift.map((c) => c.from.x).sort()).toEqual([140 * 0.3, 140 * 0.5, 140 * 0.9].sort());
+    // The fade-in waits (paused) for its own one-time trigger, which is also checked once on load for pieces already in view.
     const fades = g.fromTo.filter((c) => c.from.opacity === 0);
     expect(fades).toHaveLength(3);
-    expect(fades.every((c) => (c.to.scrollTrigger as { once?: boolean }).once === true)).toBe(true);
-    expect(g.fromTo.every((c) => c.to.scrollTrigger?.containerAnimation !== undefined)).toBe(true);
+    expect(fades.every((c) => c.to.paused === true)).toBe(true);
+    expect(g.created).toHaveLength(3);
+    expect(g.created.every((t) => t.once === true && t.containerAnimation !== undefined)).toBe(true);
+    expect(drift.every((c) => c.to.scrollTrigger?.containerAnimation !== undefined)).toBe(true);
   });
 
   it("cleans up everything when the track goes away", async () => {

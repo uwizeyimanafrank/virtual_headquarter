@@ -35,6 +35,7 @@ export function HorizontalTrack({ chapters }: { chapters: MuseumChapter[] }) {
       if (cancelled || !sectionEl || !trackEl) return;
       gsap.registerPlugin(ScrollTrigger);
 
+      const revealsRef: Array<() => void> = [];
       ctx = gsap.context(() => {
         const distance = () => Math.max(0, trackEl.scrollWidth - window.innerWidth);
         const chapterEls = [...trackEl.querySelectorAll<HTMLElement>("[data-chapter]")];
@@ -79,16 +80,22 @@ export function HorizontalTrack({ chapters }: { chapters: MuseumChapter[] }) {
           if (m) window.scrollTo({ top: scrollFor(m.offsetLeft - (window.innerWidth - m.offsetWidth) / 2), behavior: "auto" });
         };
 
+        const reveals = revealsRef; // checks run once after setup, so pieces already on the first screen appear without a scroll
         // Per piece: drift at its own speed while crossing the screen, and fade in once as it approaches.
         trackEl.querySelectorAll<HTMLElement>("[data-module]").forEach((el, i) => {
           const speed = Number(el.dataset.speed ?? 0.5);
           gsap.fromTo(el, { x: 140 * speed }, { x: -140 * speed, ease: "none", scrollTrigger: { trigger: el, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
           const inner = el.querySelector("[data-reveal]");
           if (inner) {
-            gsap.fromTo(inner, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, delay: (i % 3) * 0.08, ease: "power2.out", scrollTrigger: { trigger: el, containerAnimation: tween, start: "left 92%", once: true } });
+            const fade = gsap.fromTo(inner, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, delay: (i % 3) * 0.08, ease: "power2.out", paused: true });
+            const reveal = () => { if (!fade.isActive() && fade.progress() === 0) fade.play(); };
+            ScrollTrigger.create({ trigger: el, containerAnimation: tween, start: "left 92%", once: true, onEnter: reveal });
+            reveals.push(() => { if (el.getBoundingClientRect().left < window.innerWidth * 0.92) reveal(); });
           }
         });
       }, sectionEl);
+      // Evaluate the fade-ins once now, so pieces already on the first screen do not wait for the first scroll to appear.
+      requestAnimationFrame(() => { if (!cancelled) { ScrollTrigger.update?.(); revealsRef.forEach((f) => f()); } });
     })();
 
     return () => {

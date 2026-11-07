@@ -1,6 +1,7 @@
 import "server-only";
 import { cacheLife, cacheTag, revalidateTag } from "next/cache";
 import { connectDb } from "@/lib/db";
+import { demoHome } from "@/lib/demo";
 import { applySampleRules } from "@/lib/samples-data";
 import { MuseumItem } from "@/models/MuseumItem";
 import { Settings } from "@/models/Settings";
@@ -14,6 +15,7 @@ export type HomeData = {
   chapterTitles: { about: string; certificates: string; projects: string; library: string };
   profile: { name: string; tagline: string; bio: string; photoUrl: string };
   items: HomeItem[];
+  demo?: boolean; // true when this is built-in demo content (database not connected yet)
 };
 
 // Shown if the database cannot be reached (for example while building without database access).
@@ -42,6 +44,18 @@ export async function getHomeData(): Promise<HomeData> {
       MuseumItem.find({ status: "published" }).lean(),
     ]);
     const visible = applySampleRules(published, { showSamples: s?.showSamples ?? true, autoHide: s?.autoHideSamples ?? true });
+    // Brand-new database: nothing published and the Office never created the samples yet. Show the demo so the site is not empty.
+    if (visible.length === 0 && (s?.showSamples ?? true) && !s?.onboarding?.samplesSeeded) {
+      const d = demoHome();
+      const pf = s?.profile;
+      return {
+        ...d,
+        demo: false,
+        heroTitle: s?.heroTitle ?? d.heroTitle,
+        heroText: s?.heroText ?? d.heroText,
+        profile: { name: pf?.name || d.profile.name, tagline: pf?.tagline || d.profile.tagline, bio: pf?.bio || d.profile.bio, photoUrl: pf?.photoUrl || d.profile.photoUrl },
+      };
+    }
     return {
       heroTitle: s?.heroTitle ?? FALLBACK.heroTitle,
       heroText: s?.heroText ?? FALLBACK.heroText,
@@ -66,8 +80,8 @@ export async function getHomeData(): Promise<HomeData> {
         .sort((a, b) => b.date.localeCompare(a.date)),
     };
   } catch (err) {
-    console.error("home data unavailable, using defaults:", err instanceof Error ? err.message : "unknown error");
-    return FALLBACK;
+    console.error("home data unavailable, showing demo content:", err instanceof Error ? err.message : "unknown error");
+    return demoHome();
   }
 }
 

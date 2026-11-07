@@ -1,5 +1,6 @@
 import { getHomeData } from "@/lib/home";
 import { CanvasCv } from "@/components/home/CanvasCv";
+import { DemoBanner } from "@/components/site/DemoBanner";
 import { Gate } from "@/components/home/Gate";
 import { Hero } from "@/components/home/Hero";
 import { HomeBackground } from "@/components/home/HomeBackground";
@@ -11,6 +12,7 @@ export default async function Home() {
     <main className="relative flex-1 px-4 py-12 sm:py-20">
       <HomeBackground />
       <div className="mx-auto max-w-6xl">
+        <DemoBanner show={data.demo} />
         <HomeTabs hero={<Hero data={data} />} cv={<CanvasCv data={data} />} />
         <Gate />
       </div>

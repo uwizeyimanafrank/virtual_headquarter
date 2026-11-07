@@ -1,6 +1,7 @@
 import "server-only";
 import { cacheLife, cacheTag, revalidateTag } from "next/cache";
 import { connectDb } from "@/lib/db";
+import { demoMuseum } from "@/lib/demo";
 import { applySampleRules } from "@/lib/samples-data";
 import { MuseumItem, type ItemType } from "@/models/MuseumItem";
 import { Settings } from "@/models/Settings";
@@ -30,7 +31,7 @@ export type MuseumChapter = {
   items: MuseumItemData[]; // manual order first, then newest date — matches the Office list
 };
 
-export type MuseumData = { chapters: MuseumChapter[] };
+export type MuseumData = { chapters: MuseumChapter[]; demo?: boolean };
 
 // Which item types belong to each chapter, in walking order. Library joins books and references.
 const CHAPTER_TYPES: Record<MuseumChapterKey, ItemType[]> = {
@@ -80,6 +81,12 @@ export async function getMuseumData(): Promise<MuseumData> {
       autoHide: s?.autoHideSamples ?? true,
     });
 
+    // Brand-new database: nothing published and the Office never created the samples yet. Show the demo so the Museum is not empty.
+    if (visible.length === 0 && (s?.showSamples ?? true) && !s?.onboarding?.samplesSeeded) {
+      const d = demoMuseum();
+      return { chapters: d.chapters.map((c) => ({ ...c, title: s?.chapterTitles?.[c.key] ?? c.title })) };
+    }
+
     const data = fallbackData();
     for (const chapter of data.chapters) {
       chapter.title = s?.chapterTitles?.[chapter.key] ?? DEFAULT_TITLES[chapter.key];
@@ -103,8 +110,8 @@ export async function getMuseumData(): Promise<MuseumData> {
     }
     return data;
   } catch (err) {
-    console.error("museum data unavailable, using defaults:", err instanceof Error ? err.message : "unknown error");
-    return fallbackData();
+    console.error("museum data unavailable, showing demo content:", err instanceof Error ? err.message : "unknown error");
+    return demoMuseum();
   }
 }
 
