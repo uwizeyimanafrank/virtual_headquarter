@@ -68,3 +68,13 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Work on branch `dev` (never force-push). Frank merges `dev` into `main`.
 - Commit message format: `P03-T05: short title`. WIP commits: `WIP: P03-T05 short title`.
 - One task per commit when possible.
+
+
+## Taking over from another AI (read this first if you just arrived)
+Frank works with several AI tools because free quotas run out. You may be the next one. Do this in order:
+1. Read `README.md`, `STATE.md` (current task, waiting-on-Frank list, known debts), `LOG.md` (last entries), `DECISIONS.md` (especially "P11 to P15 plan"), then the current chapter in `docs/book/chapters/`.
+2. Work on branch `dev`. Do **one task at a time**. Run `npm test`, `npm run lint`, `npx next typegen && npx tsc --noEmit`, `npm run build` before pushing. Push after every finished task.
+3. After every task update: the chapter checkbox, `STATE.md` (pointer and next action), `LOG.md` (one line: date, who, task, what, how verified), and `DECISIONS.md` when you chose something.
+4. Rules that never bend: no hardcoded addresses (`npm run check:urls`); **no fixed picture outside an image slot** (`npm run check:images`, see `docs/book/05-image-slots.md`); everything the owner may want to change is editable in the Office; public side is **2D** (no WebGL/3D); art has **no real faces** and no copied images; respect `prefers-reduced-motion`; never print or commit secrets; the Office door stays secret.
+5. Frank reads simple English and wants short messages. Put details in the repo (`STATE.md`), not in long chat replies.
+6. If something is unclear or you cannot verify it, say so in `STATE.md` instead of guessing.

@@ -1,5 +1,7 @@
 # P12 — Museum halls (glass cases and the story tour)
 
+**Pictures:** every fixed picture on these pages is an image slot (see `docs/book/05-image-slots.md`): registry entry, `SlotImage`, replaceable in Office > Images. Pictures that belong to items the owner creates are edited inside those items.
+
 **Goal:** the Museum becomes a building with halls. **Hall 1: the Story Tour** (what exists now, the sideways storytelling). **Hall 2: the Glass Cases** (cards behind glass with a label plate; step closer to read more; click to open a floating detail panel). Certificates, books, projects, references and anything else are added from the Office, never in code.
 
 Tick each task `[x]` when done. Do them in order.

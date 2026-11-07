@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T01
+- **Current task:** P11-T01 (image slot registry; art kit is now P11-T06)
 - **Status:** not started. P09 done in code (P08 done in code; P05-P09 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** Read docs/book/04-art-direction.md and P11-art-and-home.md, then draw the art kit (P11-T01). Frank is also testing the dev build locally (`npm run dev`); fix anything he reports first.
+- **Next action (one sentence):** Read docs/book/05-image-slots.md and P11-art-and-home.md, then build the image slot registry and data (P11-T01). Frank is also testing the dev build locally (`npm run dev`); fix anything he reports first.
 
 ## Phase board
 | Phase | Name | Status |

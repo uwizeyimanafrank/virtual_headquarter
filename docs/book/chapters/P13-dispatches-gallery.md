@@ -1,5 +1,7 @@
 # P13 — Dispatches (news) and the public Gallery
 
+**Pictures:** every fixed picture on these pages is an image slot (see `docs/book/05-image-slots.md`): registry entry, `SlotImage`, replaceable in Office > Images. Pictures that belong to items the owner creates are edited inside those items.
+
 **Goal:** the site feels alive. **Dispatches** are short updates from the HQ (news, what I am building now, what I am learning, a win, a note). The **Gallery** is a stylish public wall of random images Frank uploads. Both are managed in the Office.
 
 ### [ ] P13-T01 — Dispatch model and public API

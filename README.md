@@ -39,7 +39,7 @@ The live details (current task, what is waiting on you, known gaps) are always i
 
 - **Done:** P00 to P08 (about 80% of the project). New: the Developer tab, which watches your database, Cloudinary, Render and any website, keeps credentials encrypted (never shown again), shows a storage library and a system map, and puts a red banner on every Office page when something is down. Website checks cannot be aimed at private/internal addresses.
 - **Waiting on Frank:** a Gemini API key; a look at Home, Museum, Connect, the AI chat and the Developer tab in a real browser; a real Cloudinary upload and Atlas connection. See `STATE.md`.
-- **Next task:** P11-T01 (art kit). Read `docs/book/04-art-direction.md` and `docs/book/chapters/P11-art-and-home.md`. The plan for P11 to P15 is in `DECISIONS.md` (section "P11 to P15 plan").
+- **Next task:** P11-T01 (image slot registry). Read `docs/book/05-image-slots.md`, `docs/book/04-art-direction.md` and `docs/book/chapters/P11-art-and-home.md`. The plan for P11 to P15 is in `DECISIONS.md` (section "P11 to P15 plan").
 - **Heads up:** use **Node 22**. Known gaps (including one skipped test) are under "Known bugs / debts" in `STATE.md`. Remember to revoke any GitHub token that was pasted into a chat.
 
 ---
@@ -159,3 +159,6 @@ Everything above marked "done" was checked with automated tests against a test d
 4. Press Ctrl+C in the terminal and run `npm run dev` again. Open `http://localhost:3000/<your office address>/login`.
 
 The setup screen exists only on your own computer (development mode). On a real host it answers 404. It writes a private `.env.local` file that is never uploaded to GitHub.
+
+### Another AI taking over?
+Read `AGENTS.md` section **"Taking over from another AI"**, then `STATE.md`. The whole plan for the next phases is in `DECISIONS.md` ("P11 to P15 plan") and `docs/book/chapters/P11` to `P15`.

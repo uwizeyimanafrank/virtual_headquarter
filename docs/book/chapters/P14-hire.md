@@ -1,5 +1,7 @@
 # P14 — Hire me
 
+**Pictures:** every fixed picture on these pages is an image slot (see `docs/book/05-image-slots.md`): registry entry, `SlotImage`, replaceable in Office > Images. Pictures that belong to items the owner creates are edited inside those items.
+
 **Goal:** someone who really wants to hire Frank has their own door, separate from Connect (Connect is "say hello", Hire is "let us work together").
 
 ### [ ] P14-T01 — `/hire` page

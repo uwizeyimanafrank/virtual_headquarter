@@ -1,5 +1,7 @@
 # P15 — Public avatar and Office AI control
 
+**Pictures:** every fixed picture on these pages is an image slot (see `docs/book/05-image-slots.md`): registry entry, `SlotImage`, replaceable in Office > Images. Pictures that belong to items the owner creates are edited inside those items.
+
 **Goal:** a small floating avatar on the public site that visitors can ask about Frank. It only knows what Frank lets it know. In the Office, Frank controls its memory and rules, reads what visitors ask, and can ask the AI to summarize what people say and what challenges them.
 
 Not the same as the Office assistant from P07 (that one helps Frank inside the Office). The public one is the **avatar**; its **name is chosen by Frank** (Settings).
