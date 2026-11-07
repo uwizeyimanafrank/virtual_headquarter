@@ -99,6 +99,7 @@ Status words: not started / in progress / done.
 - `components/ui/HealthBadge.tsx` is a temporary diagnostic on the home page. Remove it in P04.
 
 ## Waiting on Frank (added 2026-11-07)
+- Hero photo: use my original silhouette, or give me your own moody photo (upload it later in the Office) for the hero.
 - Pick the avatar's name (or keep "Avatar").
 - Confirm the suggested order: P11, P12, P13, P14, then P10 rest and go live; P15 (avatar) after.
 - Say yes or no to video (it uses free Cloudinary bandwidth).

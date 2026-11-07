@@ -4,6 +4,7 @@
 
 ## The characters
 - **The Quiet Builder:** a hooded figure seen from behind or in silhouette. **No face, ever.** Scenes: sitting at the water at sunset; under a dark storm cloud with one light in the distance; at a desk at night with a glowing screen; on a rooftop looking at a city.
+- **The Strategist (hero default):** a silhouette seated with **steepled fingertips**, head slightly lowered, **eyes in shadow, no face detail**, cold teal rim light on shoulders and hands, a soft aura behind. The mood is calm power and patience. It is inspired by that low-key, cinematic mood only; **no film stills, no actor likenesses, nothing copied**.
 - **The Deal:** two suited silhouettes shaking hands. **No faces, no real people**, just shapes and a soft light between the hands. Used on the Hire page.
 - **The Avatar:** a small version of the Quiet Builder that waves. Used by the floating assistant.
 
@@ -16,3 +17,9 @@
 - **Replaceable:** every scene has a built-in default AND can be replaced from the Office by uploading Frank's own image or video. Nothing is hardcoded in code.
 - **Accessibility:** decorative art is hidden from screen readers (`aria-hidden`); real photos need alt text (the Office will not save a gallery photo without it).
 - **Floating items:** small SVG icons (tech, tools, shapes) by default, emoji optional per item (emoji look different on every phone, so icons are the default).
+
+## Mood recipe (also used for Frank's own photos)
+Low-key light, mostly dark; one cold rim light (teal); a warm or violet glow behind the figure (the aura); fog and vignette at the edges; fine film grain; the figure always half-hidden by shadow. In the Office the "mood filter" applies this recipe to any uploaded photo.
+
+## Cards, not 3D
+The public side stays **2D**: layered images, gradients, floating cards with tilt and glow. No WebGL, no 3D scenes. Many images and cards, so visitors always find something to look at, but light enough for a phone.
