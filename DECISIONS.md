@@ -117,3 +117,12 @@
 - Caching: results are reused for 5 minutes; "check now" waits at least 30 s between checks of one service; every check has a 9 s overall limit; any failure becomes a plain message, never raw error text.
 - Alerts: going down writes one `service_down` audit entry (staying down does not repeat), coming back writes `service_up`; Office pages show a red banner naming services that are down (names shown as plain text).
 - Dependencies: none added. The no-hardcoded-address guard now allows a line to opt out with a `check:urls-ignore` comment (used once, for the list of blocked private ranges) and allows api.render.com.
+
+## P11 to P15 plan (2026-11-07, Frank's wishes)
+- Home is no longer "hero + CV": it is built from **blocks** (hero, stats, what I build, journey, featured, dispatches, gallery, hire, avatar, now) whose order, visibility and content are controlled in the Office. Nothing about them is hardcoded.
+- Art direction is in `docs/book/04-art-direction.md`: original faceless SVG scenes (the quiet hooded builder, the suited handshake), layered so each part moves by itself, replaceable by Frank's own image or video from the Office. Floating items default to SVG icons (emoji are optional because they look different on every phone).
+- The Museum gets two halls: Story Tour (existing) and Glass Cases (cards with a floating detail panel). Items carry `display` = tour, case or both; old items default to both.
+- Video is optional and light: poster first, muted, only in view or on hover, never with reduced motion or Save-Data. Watch the free Cloudinary bandwidth.
+- Hire me (`/hire`) is a separate door from Connect, with its own inbox filter and statuses.
+- The public avatar is separate from the Office assistant. It answers only from facts Frank allows (hidden facts never reach the model), says "I do not know" instead of inventing, and has rate limits, a daily cap and an off switch. Conversations are saved without names or IP (hashed IP only for rate limiting), redacted, kept 90 days by default, deletable. Visitors are told. The owner can ask the AI about the saved chats ("what do people say about me?").
+- **Suggested order (Frank to confirm):** P11, P12, P13, P14, then the rest of P10 (security review, speed, share previews, deploy, merge to main) so a first public version can go live; then P15 (avatar) as the next release, because it needs the most care (cost, abuse, privacy).

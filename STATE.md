@@ -5,11 +5,11 @@ Update this after EVERY task. Keep it short.
 - GitHub: `uwizeyimanafrank/virtual_headquarter`. Branches: `main` (what Frank has reviewed) and `dev` (where AI tools push). Read README.md first.
 
 ## Pointer
-- **Current phase:** P10 — Polish, audit, deploy
-- **Current task:** P10-T01
+- **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
+- **Current task:** P11-T01
 - **Status:** not started. P09 done in code (P08 done in code; P05-P09 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** Frank is testing the dev build on his computer (`npm run dev`, demo mode, /setup). Fix what he reports, then continue P10: speed, accessibility, share previews (OG), security review (remove unsafe-inline scripts), deploy guide, then merge dev to main and walk him through hosting.
+- **Next action (one sentence):** Read docs/book/04-art-direction.md and P11-art-and-home.md, then draw the art kit (P11-T01). Frank is also testing the dev build locally (`npm run dev`); fix anything he reports first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -25,7 +25,12 @@ Update this after EVERY task. Keep it short.
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
-| P10 | Polish, audit, deploy | not started |
+| P11 | Art and Home v2 | not started |
+| P12 | Museum halls (glass cases) | not started |
+| P13 | Dispatches and Gallery | not started |
+| P14 | Hire me | not started |
+| P15 | Public avatar and AI control room | not started (after first release) |
+| P10 (rest) | Security review, speed, previews, deploy, merge to main | after P14 |
 
 Status words: not started / in progress / done.
 
@@ -92,3 +97,9 @@ Status words: not started / in progress / done.
 - `/api/museum` returns the sample book when `showSamples` is true (default). Sample seeding itself arrives in P02b.
 - `lib/db.ts` was only tested here against an unreachable database (returns false, no crash). It still needs one real test with a real Atlas URI (see P00-T07).
 - `components/ui/HealthBadge.tsx` is a temporary diagnostic on the home page. Remove it in P04.
+
+## Waiting on Frank (added 2026-11-07)
+- Pick the avatar's name (or keep "Avatar").
+- Confirm the suggested order: P11, P12, P13, P14, then P10 rest and go live; P15 (avatar) after.
+- Say yes or no to video (it uses free Cloudinary bandwidth).
+- Local test feedback (screenshots or error text) from running `npm run dev` on Windows (Node 24).

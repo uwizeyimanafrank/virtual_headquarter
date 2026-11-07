@@ -26,7 +26,12 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 | P07 | AI Twin (Gemini assistant in every Office page) | done in code (needs your Gemini key) |
 | P08 | Developer tab (watch Atlas, Cloudinary, Render and any website; storage library; system reminder; down banner) | done in code (needs a visual check) |
 | P09 | Encrypted secrets vault | done in code (not yet looked at in a real browser) |
-| P10 | Polish, audit, deploy | planned |
+| P11 | Art and Home v2 (scenes, floating items, blocks, Hire door teaser) | planned |
+| P12 | Museum halls: Story Tour + Glass Cases with floating detail panel | planned |
+| P13 | Dispatches (news) and public Gallery | planned |
+| P14 | Hire me page and inbox | planned |
+| P15 | Public avatar and Office AI control room | planned (after first release) |
+| P10 (rest) | Security review, speed, share previews, deploy, merge to main | do after P14 |
 
 The live details (current task, what is waiting on you, known gaps) are always in **`STATE.md`**.
 
@@ -34,7 +39,7 @@ The live details (current task, what is waiting on you, known gaps) are always i
 
 - **Done:** P00 to P08 (about 80% of the project). New: the Developer tab, which watches your database, Cloudinary, Render and any website, keeps credentials encrypted (never shown again), shows a storage library and a system map, and puts a red banner on every Office page when something is down. Website checks cannot be aimed at private/internal addresses.
 - **Waiting on Frank:** a Gemini API key; a look at Home, Museum, Connect, the AI chat and the Developer tab in a real browser; a real Cloudinary upload and Atlas connection. See `STATE.md`.
-- **Next task:** P10 (polish, security review, deploy). Read `docs/book/chapters/P10-polish.md` first.
+- **Next task:** P11-T01 (art kit). Read `docs/book/04-art-direction.md` and `docs/book/chapters/P11-art-and-home.md`. The plan for P11 to P15 is in `DECISIONS.md` (section "P11 to P15 plan").
 - **Heads up:** use **Node 22**. Known gaps (including one skipped test) are under "Known bugs / debts" in `STATE.md`. Remember to revoke any GitHub token that was pasted into a chat.
 
 ---
