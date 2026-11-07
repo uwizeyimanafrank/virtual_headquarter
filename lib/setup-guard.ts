@@ -12,7 +12,7 @@ export function setupEnabled(): boolean {
 
 export function isLoopbackHost(host: string | null | undefined): boolean {
   const h = (host ?? "").toLowerCase().replace(/:\d+$/, "").replace(/^\[|\]$/g, "");
-  return h === "localhost" || h === "127.0.0.1" || h === "::1";
+  return h === "localhost" || h === "127.0.0.1" || h === "::1"; // check:urls-ignore (this is the check that keeps setup local)
 }
 
 type G = typeof globalThis & { __vhqSetupCode?: string };

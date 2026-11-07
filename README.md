@@ -145,3 +145,12 @@ The code does not change between your computer and a server — only the environ
 ## Honest status
 
 Everything above marked "done" was checked with automated tests against a test database (about 520 HTTP checks in `tests/http/` plus almost 200 unit and component tests in a simulated browser). What has **not** been checked yet is the visual look and feel in a real browser, a real image upload to Cloudinary, and the connection to a real Atlas cluster. `STATE.md` lists these as open items.
+
+## Run it on your computer (first time)
+
+1. Install Node 22, then in a terminal: `git clone <your repo link>`, `cd virtual_headquarter`, `git checkout dev`, `npm install`.
+2. Start it: `npm run dev`, then open `http://localhost:3000` in the browser. With nothing configured the site already looks finished: it shows demo content and a small "Demo mode" bar.
+3. Click **Connect it now** (or open `/setup`). Type the **setup code** that the terminal printed, then paste your MongoDB Atlas link, Cloudinary values and Gemini key (all testable with one button), and choose your Office address and password.
+4. Press Ctrl+C in the terminal and run `npm run dev` again. Open `http://localhost:3000/<your office address>/login`.
+
+The setup screen exists only on your own computer (development mode). On a real host it answers 404. It writes a private `.env.local` file that is never uploaded to GitHub.

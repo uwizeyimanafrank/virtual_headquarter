@@ -9,7 +9,7 @@ Update this after EVERY task. Keep it short.
 - **Current task:** P10-T01
 - **Status:** not started. P09 done in code (P08 done in code; P05-P09 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** FIRST fix `npm run build`: `npm run check:urls` rejects hardcoded localhost/https:// text in components/setup/SetupWizard.tsx, lib/setup-env.ts, lib/setup-guard.ts (build the address from window.location/env instead). Then re-check /setup and /api/setup answer 404 on a production build, then continue P10 (README run-locally section, speed, accessibility, share previews, security review, deploy guide).
+- **Next action (one sentence):** Frank is testing the dev build on his computer (`npm run dev`, demo mode, /setup). Fix what he reports, then continue P10: speed, accessibility, share previews (OG), security review (remove unsafe-inline scripts), deploy guide, then merge dev to main and walk him through hosting.
 
 ## Phase board
 | Phase | Name | Status |

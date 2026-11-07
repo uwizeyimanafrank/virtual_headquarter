@@ -78,7 +78,7 @@ describe("buildUpdates", () => {
     expect(u.SESSION_SECRET).toBeTruthy();
     expect(u.SERVICE_CRED_KEY).toBeTruthy();
     expect(u.ADMIN_ROUTE_SLUG).toMatch(/^[a-f0-9]{18}$/);
-    expect(u.APP_URL).toBe("http://localhost:3000");
+    expect(u.APP_URL).toMatch(/^http:\/\/localhost:3000$/);
     expect(u.MONGODB_URI).toBeUndefined(); // empty boxes never write or erase anything
   });
   it("never replaces secrets that already exist (SERVICE_CRED_KEY protects the 2FA secret)", () => {

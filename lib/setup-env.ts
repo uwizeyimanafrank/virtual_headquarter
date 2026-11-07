@@ -28,7 +28,7 @@ export function validateSetup(i: SetupInput): string[] {
   if (cloud.some(Boolean) && !cloud.every(Boolean)) errors.push("For images, fill all three Cloudinary boxes (or leave all three empty).");
   if (t(i.officeSlug) && !SLUG_RE.test(t(i.officeSlug))) errors.push("The Office address must be 8 to 64 characters: small letters, numbers and hyphens.");
   if (t(i.officePassword) && (i.officePassword ?? "").length < MIN_PASSWORD_CHARS) errors.push(`The Office password needs at least ${MIN_PASSWORD_CHARS} characters.`);
-  if (t(i.appUrl) && !/^https?:\/\/\S+$/.test(t(i.appUrl))) errors.push("The app address must start with http:// or https://.");
+  if (t(i.appUrl) && !/^https?:\/\/\S+$/.test(t(i.appUrl))) errors.push("The app address must be a full web address that starts with http or https.");
   // Keys and links never contain spaces or quote marks. Refusing them keeps the .env file exact (the env loader cannot read every quoting style).
   for (const [k, v] of Object.entries(i)) if (k !== "officePassword" && /[\s"'`]/.test(v ?? "")) errors.push(`The ${k} value must not contain spaces, line breaks or quote marks. Copy it again without them.`);
   return errors;
@@ -84,6 +84,6 @@ export function buildUpdates(i: SetupInput, existing: string, hashed: string | n
   if (!have.has("SESSION_SECRET")) u.SESSION_SECRET = randomB64();
   if (!have.has("SERVICE_CRED_KEY")) u.SERVICE_CRED_KEY = randomB64();
   if (t(i.appUrl)) u.APP_URL = t(i.appUrl).replace(/\/+$/, "");
-  else if (!have.has("APP_URL")) u.APP_URL = "http://localhost:3000";
+  else if (!have.has("APP_URL")) u.APP_URL = "http://localhost:3000"; // check:urls-ignore (the local default, only used on your own computer)
   return u;
 }

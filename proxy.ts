@@ -27,6 +27,9 @@ export function proxy(req: NextRequest) {
   // The internal folder name must never be reachable directly.
   if (pathname === "/office" || pathname.startsWith("/office/")) return notFound(req);
 
+  // The local Setup screen does not exist on a real host: a plain 404 unless this is your own computer (same rule as lib/setup-guard.ts).
+  if ((pathname === "/setup" || pathname.startsWith("/setup/")) && process.env.NODE_ENV !== "development" && process.env.ENABLE_SETUP_WIZARD !== "true") return notFound(req);
+
   const secret = slug();
   if (!secret) return NextResponse.next();
   if (pathname !== `/${secret}` && !pathname.startsWith(`/${secret}/`)) return NextResponse.next();

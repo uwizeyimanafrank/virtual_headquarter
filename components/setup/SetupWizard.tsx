@@ -85,6 +85,7 @@ export function SetupWizard() {
 
   if (done) {
     const slug = done.slug ?? v.officeSlug;
+    const origin = window.location.origin;
     return (
       <div className="space-y-5">
         <div className="rounded-2xl border border-emerald-400/40 bg-emerald-400/10 p-6">
@@ -94,7 +95,7 @@ export function SetupWizard() {
         <ol className="space-y-3 rounded-2xl border border-line bg-surface p-6 text-sm">
           <li><span className="font-medium">1.</span> In the terminal where the app is running, press <kbd className="rounded border border-line px-1.5 font-mono">Ctrl</kbd> + <kbd className="rounded border border-line px-1.5 font-mono">C</kbd>.</li>
           <li><span className="font-medium">2.</span> Start it again: <code className="rounded bg-bg px-2 py-1 font-mono">npm run dev</code></li>
-          <li><span className="font-medium">3.</span> Open your private Office door: <code className="break-all rounded bg-bg px-2 py-1 font-mono">http://localhost:3000/{slug}/login</code></li>
+          <li><span className="font-medium">3.</span> Open your private Office door: <code className="break-all rounded bg-bg px-2 py-1 font-mono">{origin}/{slug}/login</code></li>
           <li className="text-muted">Save that address: it is the only way in, and it is not linked anywhere on the site.</li>
         </ol>
         <p className="text-xs text-muted">Saved: {done.written.join(", ")}</p>
