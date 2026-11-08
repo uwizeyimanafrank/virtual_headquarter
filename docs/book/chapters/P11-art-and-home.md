@@ -11,7 +11,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Files:** lib/image-slots.ts, models/ImageSlot.ts, lib/slots.ts, tests
 **Done when:** unit tests: a custom slot overrides its default; with no database every slot still resolves to its default; every registry entry has label, where, aspect and a default that exists on disk.
 
-### [ ] P11-T02 — `SlotImage` component
+### [x] P11-T02 — `SlotImage` component
 **Do:** `<SlotImage slot="..." />` with responsive sizes, blurred placeholder, focal-point crop, correct alt (empty and aria-hidden when decorative), no layout shift.
 **Files:** components/art/SlotImage.tsx, tests
 **Done when:** renders default and custom images; focal point moves the crop; decorative images are hidden from screen readers.
