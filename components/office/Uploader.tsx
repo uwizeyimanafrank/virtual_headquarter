@@ -11,7 +11,7 @@ const MAX_BYTES = 8 * 1024 * 1024;
  * Drag-and-drop image upload straight to Cloudinary.
  * The server only hands out a signature; the secret never reaches the browser.
  */
-export function Uploader({ folder, value, onChange }: { folder: "project" | "certificate" | "story" | "book" | "reference" | "profile"; value: string; onChange: (url: string) => void }) {
+export function Uploader({ folder, value, onChange }: { folder: "project" | "certificate" | "story" | "book" | "reference" | "profile" | "slot"; value: string; onChange: (url: string) => void }) {
   const input = useRef<HTMLInputElement>(null);
   const [over, setOver] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);

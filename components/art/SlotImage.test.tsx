@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
-import { SlotPicture, SlotImage } from "@/components/art/SlotImage";
+import { SlotPicture } from "@/components/art/SlotPicture";
+import { SlotImage } from "@/components/art/SlotImage";
 import { resolveSlots } from "@/lib/image-slots";
 
 const getSlot = vi.fn();

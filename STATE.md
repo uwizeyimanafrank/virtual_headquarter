@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T03 (Office > Images manager; art kit is P11-T06)
+- **Current task:** P11-T04 (import from an image link; art kit is P11-T06)
 - **Status:** not started. P09 done in code (P08 done in code; P05-P09 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** P11-T03: Office > Images manager (app/office/(panel)/images, components/office/ImageSlots.tsx, app/api/admin/slots/*): list slots grouped by page with thumbnail, where-text, size and default/custom status; replace by upload or library, focus point, alt/credit/license, reset to default, audit every change, revalidateSlots() after each. Use groupSlots() and getSlots(); follow the services/vault admin API pattern (adminApi, readJsonLimited, audit). Frank is also testing the dev build locally; fix what he reports first.
+- **Next action (one sentence):** P11-T04: 'Paste an image link' import: POST /api/admin/slots/import (server downloads https image, checks type and magic bytes, size limit, private-address refusal via lib/services/net.ts, uploads to Cloudinary, saves sourceUrl, credit, license, kind 'import'); add a link box to the Editor in components/office/ImageSlots.tsx; allow kind 'import' in lib/slot-input.ts. Test it with unit tests and extend tests/http/slots.sh. Frank is also testing the dev build locally; fix what he reports first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -25,7 +25,7 @@ Update this after EVERY task. Keep it short.
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
-| P11 | Art and Home v2 | in progress (T01-T02 done) |
+| P11 | Art and Home v2 | in progress (T01-T03 done) |
 | P12 | Museum halls (glass cases) | not started |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |

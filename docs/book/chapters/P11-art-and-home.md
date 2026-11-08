@@ -16,7 +16,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Files:** components/art/SlotImage.tsx, tests
 **Done when:** renders default and custom images; focal point moves the crop; decorative images are hidden from screen readers.
 
-### [ ] P11-T03 — Office > Images manager
+### [x] P11-T03 — Office > Images manager
 **Do:** the screen described in the slots doc: grouped by page and section, thumbnail, "where it appears" text, recommended size, default/custom status; Replace by **upload** or **library**; Adjust focus; Alt, credit and license fields; Reset to default.
 **Files:** app/office/(panel)/images, components/office/ImageSlots.tsx, app/api/admin/slots/*
 **Done when:** replacing a slot changes the public page; reset brings the default back; every change is audited; step-up not needed (not secret) but admin login is.

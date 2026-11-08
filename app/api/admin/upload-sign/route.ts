@@ -3,7 +3,7 @@ import { adminApi } from "@/lib/auth-guard";
 import { getUploadSignature } from "@/lib/cloudinary";
 import { ITEM_TYPES } from "@/models/MuseumItem";
 
-const body = z.object({ folder: z.enum([...ITEM_TYPES, "profile"]) });
+const body = z.object({ folder: z.enum([...ITEM_TYPES, "profile", "slot"]) });
 
 /**
  * Gives the browser a one-time signature to upload an image straight to Cloudinary.
