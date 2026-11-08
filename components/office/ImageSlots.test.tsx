@@ -110,4 +110,28 @@ describe("ImageSlots", () => {
     render(<ImageSlots />);
     expect(await screen.findByRole("alert")).toHaveTextContent("Server error.");
   });
+
+  it("imports a picture from a link, keeps its source and fills the credit", async () => {
+    await load();
+    await userEvent.click(screen.getByRole("button", { name: "Replace Hero background" }));
+    await userEvent.type(screen.getByPlaceholderText(/starts with https/), "https://images.example/photo.jpg");
+    mockApi.mockResolvedValueOnce({ url: NEW, publicId: "vhq/slot/new", sourceUrl: "https://images.example/photo.jpg", host: "images.example" });
+    await userEvent.click(screen.getByRole("button", { name: "Import" }));
+    await waitFor(() => expect(screen.getByLabelText(/Credit/)).toHaveValue("Source: images.example"));
+    expect(mockApi.mock.calls[1]).toEqual(["/api/admin/slots/import", { method: "POST", body: JSON.stringify({ link: "https://images.example/photo.jpg" }) }]);
+    mockApi.mockResolvedValueOnce({ ok: true });
+    await userEvent.click(screen.getByRole("button", { name: "Save picture" }));
+    await waitFor(() => expect(mockApi).toHaveBeenCalledTimes(3));
+    expect(JSON.parse(String((mockApi.mock.calls[2][1] as RequestInit).body))).toMatchObject({ url: NEW, kind: "import", sourceUrl: "https://images.example/photo.jpg", publicId: "vhq/slot/new" });
+  });
+
+  it("shows why an import was refused and keeps nothing", async () => {
+    await load();
+    await userEvent.click(screen.getByRole("button", { name: "Replace Hero background" }));
+    await userEvent.type(screen.getByPlaceholderText(/starts with https/), "https://127.0.0.1/a.jpg");
+    mockApi.mockRejectedValueOnce(new ApiError(400, "That link points to a private or internal address, so it was refused."));
+    await userEvent.click(screen.getByRole("button", { name: "Import" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent(/private or internal/);
+    expect(screen.getByRole("button", { name: "Save picture" })).toBeDisabled();
+  });
 });

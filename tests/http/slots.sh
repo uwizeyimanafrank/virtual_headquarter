@@ -75,6 +75,22 @@ expect "reset" 200 $(code $CB -X DELETE $B/api/admin/slots/home.hero.bg -H "$O")
 eqv "one left" 1 "$(dbq "console.log(await d.collection('imageslots').countDocuments({}))")"
 expect "reset when already default is fine" 200 $(code $CB -X DELETE $B/api/admin/slots/home.hero.bg -H "$O")
 
+
+echo "== importing from a link (refusals only: there is no internet or Cloudinary in the test)"
+expect "no login: import" 401 $(code -X POST $B/api/admin/slots/import -H "$J" -H "$O" -d '{"link":"https://images.example/a.jpg"}')
+expect "no Origin (CSRF): import" 403 $(code $CB -X POST $B/api/admin/slots/import -H "$J" -d '{"link":"https://images.example/a.jpg"}')
+expect "no link" 400 $(P POST /api/admin/slots/import '{}')
+expect "link is not text" 400 $(P POST /api/admin/slots/import '{"link":5}')
+expect "link too short" 400 $(P POST /api/admin/slots/import '{"link":"x"}')
+for L in "http://images.example/a.jpg" "ftp://images.example/a.jpg" "file:///etc/passwd" "https://user:pw@images.example/a.jpg" "https://127.0.0.1/a.jpg" "https://10.0.0.5/a.jpg" "https://169.254.169.254/latest/meta-data" "https://[::1]/a.jpg" "https://localhost/a.jpg"; do
+  expect "refused: $L" 400 $(P POST /api/admin/slots/import "{\"link\":\"$L\"}")
+done
+eqv "the refusal explains itself" "True" "$(P POST /api/admin/slots/import '{"link":"https://127.0.0.1/a.jpg"}' >/dev/null; jq_ "'private' in d['error']")"
+expect "save a slot as an import with its source" 200 $(P PUT /api/admin/slots/home.hero.bg "{\"url\":\"$C1\",\"kind\":\"import\",\"sourceUrl\":\"https://images.example/a.jpg\",\"publicId\":\"vhq/slot/a\",\"credit\":\"Source: images.example\"}")
+eqv "source kept" "https://images.example/a.jpg" "$(dbq "console.log((await d.collection('imageslots').findOne({key:'home.hero.bg'})).sourceUrl)")"
+expect "a bad source link is refused" 400 $(P PUT /api/admin/slots/home.hero.bg "{\"url\":\"$C1\",\"kind\":\"import\",\"sourceUrl\":\"javascript:alert(1)\"}")
+expect "reset clears the import too" 200 $(code $CB -X DELETE $B/api/admin/slots/home.hero.bg -H "$O")
+
 echo "== server log"
 grep -q "Traceback\|TypeError\|Unhandled" $LOG && fail "errors in the server log" || pass "no errors in the server log"
 python3 "$ROOT/tests/http/killport.py" $PORT >/dev/null

@@ -25,7 +25,7 @@ export async function PUT(request: Request, ctx: RouteContext<"/api/admin/slots/
   const d = parsed.data;
   await ImageSlot.findOneAndUpdate(
     { key },
-    { $set: { key, url: d.url, alt: d.alt, focal: d.focal, credit: d.credit, license: d.license, kind: d.kind, publicId: "", sourceUrl: "" } },
+    { $set: { key, url: d.url, alt: d.alt, focal: d.focal, credit: d.credit, license: d.license, kind: d.kind, publicId: d.publicId, sourceUrl: d.kind === "import" ? d.sourceUrl : "" } },
     { upsert: true },
   );
   await audit("settings_change", true, request.headers, `image ${key}`);

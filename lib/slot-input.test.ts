@@ -10,7 +10,7 @@ const meaningful = slotDef("home.profile.photo")!;
 describe("parseSlotUpdate", () => {
   it("accepts a Cloudinary picture and fills the defaults", () => {
     const r = parseSlotUpdate(decorative, { url: CLOUD });
-    expect(r).toEqual({ ok: true, data: { url: CLOUD, alt: "", credit: "", license: "", kind: "upload", focal: { x: 50, y: 50 } } });
+    expect(r).toEqual({ ok: true, data: { url: CLOUD, alt: "", credit: "", license: "", kind: "upload", sourceUrl: "", publicId: "", focal: { x: 50, y: 50 } } });
   });
   it("refuses addresses outside our Cloudinary", () => {
     for (const url of ["http://res.cloudinary.com/x/y.jpg", "https://evil.example/a.jpg", "/art/defaults/wide.svg", "javascript:alert(1)", "", 5, undefined]) {
@@ -27,7 +27,10 @@ describe("parseSlotUpdate", () => {
     expect(parseSlotUpdate(decorative, { url: CLOUD, credit: "x".repeat(201) }).ok).toBe(false);
     expect(parseSlotUpdate(decorative, { url: CLOUD, focal: { x: 101, y: 0 } }).ok).toBe(false);
     expect(parseSlotUpdate(decorative, { url: CLOUD, focal: { x: -1, y: 0 } }).ok).toBe(false);
-    expect(parseSlotUpdate(decorative, { url: CLOUD, kind: "import" }).ok).toBe(false); // only upload or library for now
+    expect(parseSlotUpdate(decorative, { url: CLOUD, kind: "bogus" }).ok).toBe(false);
+    expect(parseSlotUpdate(decorative, { url: CLOUD, kind: "import", sourceUrl: "https://unsplash.example/photo.jpg" }).ok).toBe(true);
+    expect(parseSlotUpdate(decorative, { url: CLOUD, kind: "import", sourceUrl: "javascript:alert(1)" }).ok).toBe(false);
+    expect(parseSlotUpdate(decorative, { url: CLOUD, publicId: "bad id <script>" }).ok).toBe(false);
   });
   it("refuses a body that is not an object", () => {
     for (const b of [null, "x", 5, []]) expect(parseSlotUpdate(decorative, b).ok).toBe(false);

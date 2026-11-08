@@ -21,7 +21,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Files:** app/office/(panel)/images, components/office/ImageSlots.tsx, app/api/admin/slots/*
 **Done when:** replacing a slot changes the public page; reset brings the default back; every change is audited; step-up not needed (not secret) but admin login is.
 
-### [ ] P11-T04 — Import from an image link
+### [x] P11-T04 — Import from an image link
 **Do:** "Paste an image link": the server downloads the image (https only, image types and magic bytes checked, size limit, private addresses refused with the P08 network guard), stores it in Cloudinary, saves source link, credit and license note. Never hotlink.
 **Files:** app/api/admin/slots/import/route.ts, lib/import-image.ts
 **Done when:** HTTP and unit tests: good link works; a private address, a non-image, an oversized file and an http (not https) link are refused with plain messages.

@@ -101,6 +101,11 @@ function Editor({ row, library, onSaved, onCancel }: { row: Row; library: string
   const [license, setLicense] = useState(c?.license ?? "");
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
+  const [link, setLink] = useState("");
+  const [importing, setImporting] = useState(false);
+  const [importMsg, setImportMsg] = useState("");
+  const [sourceUrl, setSourceUrl] = useState("");
+  const [publicId, setPublicId] = useState("");
   const needAlt = !row.decorative && !alt.trim();
   const canSave = !!url && !needAlt && !busy;
   const preview = url || row.defaultSrc;
@@ -112,11 +117,23 @@ function Editor({ row, library, onSaved, onCancel }: { row: Row; library: string
     setFocal({ x: clamp(((e.clientX - b.left) / b.width) * 100), y: clamp(((e.clientY - b.top) / b.height) * 100) });
   }
 
+  async function importLink() {
+    setImporting(true);
+    setImportMsg("");
+    try {
+      const r = await api<{ url: string; publicId: string; sourceUrl: string; host: string }>("/api/admin/slots/import", { method: "POST", body: JSON.stringify({ link }) });
+      setUrl(r.url); setKind("import"); setSourceUrl(r.sourceUrl); setPublicId(r.publicId); setLink("");
+      if (!credit.trim()) setCredit(`Source: ${r.host}`);
+    } catch (e) {
+      setImportMsg(e instanceof ApiError ? e.message : "Could not import that picture.");
+    } finally { setImporting(false); }
+  }
+
   async function save() {
     setBusy(true);
     setMsg("");
     try {
-      await api(`/api/admin/slots/${row.key}`, { method: "PUT", body: JSON.stringify({ url, alt, focal, credit, license, kind }) });
+      await api(`/api/admin/slots/${row.key}`, { method: "PUT", body: JSON.stringify({ url, alt, focal, credit, license, kind, sourceUrl, publicId }) });
       onSaved({ url, alt, focal, credit, license, kind });
     } catch (e) {
       setMsg(e instanceof ApiError ? e.message : "Could not save.");
@@ -125,14 +142,24 @@ function Editor({ row, library, onSaved, onCancel }: { row: Row; library: string
 
   return (
     <div className="mt-4 space-y-4 border-t border-line pt-4">
-      <Uploader folder="slot" value={url} onChange={(u) => { setUrl(u); setKind("upload"); }} />
+      <Uploader folder="slot" value={url} onChange={(u) => { setUrl(u); setKind("upload"); setSourceUrl(""); setPublicId(""); }} />
+      <div>
+        <label className="block text-sm font-medium">Or paste an image link
+          <span className="mt-1 flex gap-2">
+            <input className={inputCls} value={link} onChange={(e) => setLink(e.target.value)} placeholder="Link to the picture (starts with https)" inputMode="url" autoComplete="off" spellCheck={false} />
+            <button type="button" className={ghostCls} onClick={() => void importLink()} disabled={!link.trim() || importing}>{importing ? "Importing..." : "Import"}</button>
+          </span>
+        </label>
+        <p className="mt-1 text-xs text-muted">We keep our own copy, so it never breaks. Use free-license pictures (Unsplash, Pexels, Pixabay) and check the license on the original page.</p>
+        {importMsg && <p role="alert" className="mt-1 text-sm text-red-400">{importMsg}</p>}
+      </div>
       {library.length > 0 && (
         <div>
           <p className="text-sm font-medium">Or use a picture already on your site</p>
           <ul className="mt-2 flex flex-wrap gap-2">
             {library.map((u) => (
               <li key={u}>
-                <button type="button" onClick={() => { setUrl(u); setKind("library"); }} aria-pressed={url === u} aria-label="Use this picture" className={`block h-14 w-14 overflow-hidden rounded-lg border ${url === u ? "border-accent" : "border-line"}`}>
+                <button type="button" onClick={() => { setUrl(u); setKind("library"); setSourceUrl(""); setPublicId(""); }} aria-pressed={url === u} aria-label="Use this picture" className={`block h-14 w-14 overflow-hidden rounded-lg border ${url === u ? "border-accent" : "border-line"}`}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={show(u, 120)} alt="" className="h-full w-full object-cover" />
                 </button>
