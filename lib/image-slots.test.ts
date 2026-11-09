@@ -2,7 +2,7 @@
 import { existsSync, statSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { SLOTS, aspectRatio, groupSlots, isAllowedPictureUrl, resolveSlots, slotDef } from "@/lib/image-slots";
+import { SLOTS, slotPagePath, aspectRatio, groupSlots, isAllowedPictureUrl, resolveSlots, slotDef } from "@/lib/image-slots";
 
 const CLOUD = "https://res.cloudinary.com/demo/image/upload/v1/vhq/hero.jpg";
 
@@ -68,5 +68,15 @@ describe("resolveSlots", () => {
     const r = resolveSlots([{ key: "home.hero.bg", url: CLOUD, focal: { x: -20, y: 900 } }, { key: "home.journey.bg", url: CLOUD, focal: { x: Number.NaN } }]);
     expect(r["home.hero.bg"].focal).toEqual({ x: 0, y: 100 });
     expect(r["home.journey.bg"].focal).toEqual({ x: 50, y: 50 });
+  });
+});
+
+describe("slotPagePath", () => {
+  it("knows the live pages and hides the ones not built yet", () => {
+    expect(slotPagePath({ page: "Home" })).toBe("/");
+    expect(slotPagePath({ page: "Museum" })).toBe("/museum");
+    expect(slotPagePath({ page: "Connect" })).toBe("/connect");
+    expect(slotPagePath({ page: "Hire" })).toBeNull();
+    expect(slotPagePath({ page: "Gallery" })).toBeNull();
   });
 });

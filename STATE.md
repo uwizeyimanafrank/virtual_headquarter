@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T05 (coverage guard and Show on page; art kit is P11-T06)
+- **Current task:** P11-T06 (art kit: original faceless SVG scenes)
 - **Status:** not started. P09 done in code (P08 done in code; P05-P09 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** P11-T05: `npm run check:images` (scripts/check-images.mjs, add to prebuild): fail if a public component or page uses a fixed image path (/art/..., /samples/..., an image URL) outside lib/image-slots.ts and demo data; plus 'Show on page' (owner-only outline of the slot via the data-slot attribute). Add a planted-bad-path test. Frank is also testing the dev build locally; fix what he reports first. NOTE for the real-internet check: the positive import path (download from a real link into Cloudinary) cannot be tested in the sandbox; Frank should try one real link in Office > Images.
+- **Next action (one sentence):** P11-T06: draw the art kit per docs/book/04-art-direction.md (hoodie-steepled, hoodie-shore-sunset, hoodie-storm, hoodie-night-desk, suits-handshake, avatar-wave) as layered SVG with named layer ids, under 40 KB each, then point the registry defaults in lib/image-slots.ts at them. Frank is also testing the dev build locally; fix what he reports first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -25,7 +25,7 @@ Update this after EVERY task. Keep it short.
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
-| P11 | Art and Home v2 | in progress (T01-T04 done) |
+| P11 | Art and Home v2 | in progress (T01-T05 done) |
 | P12 | Museum halls (glass cases) | not started |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |

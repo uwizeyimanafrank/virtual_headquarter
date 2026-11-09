@@ -43,6 +43,11 @@ export const SLOTS: readonly ImageSlotDef[] = [
   s("site.notfound", "Page not found art", "Whole site", "Errors", "The 404 page", "4:3", 900, D + "card.svg"),
 ];
 
+/** The public page each group of slots lives on. Pages that are not built yet are left out, so the Office hides "Show on page" for them. */
+const PAGE_PATHS: Record<string, string> = { Home: "/", Museum: "/museum", Connect: "/connect", Avatar: "/", "Whole site": "/" };
+// Add Gallery "/gallery", Dispatches "/dispatches" and Hire "/hire" here when those pages exist (P13, P14).
+export const slotPagePath = (d: Pick<ImageSlotDef, "page">): string | null => PAGE_PATHS[d.page] ?? null;
+
 export type OverrideDoc = { key: string; url?: string | null; alt?: string | null; focal?: { x?: number; y?: number } | null; credit?: string | null; license?: string | null; kind?: string | null };
 
 export type ResolvedSlot = {

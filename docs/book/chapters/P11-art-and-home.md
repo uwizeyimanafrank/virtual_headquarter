@@ -26,7 +26,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Files:** app/api/admin/slots/import/route.ts, lib/import-image.ts
 **Done when:** HTTP and unit tests: good link works; a private address, a non-image, an oversized file and an http (not https) link are refused with plain messages.
 
-### [ ] P11-T05 — Coverage guard and "Show on page"
+### [x] P11-T05 — Coverage guard and "Show on page"
 **Do:** `npm run check:images` (in `prebuild`): fails if a public component uses a fixed image path or image URL outside the registry. Add "Show on page": opens the public page with the slot outlined (owner only).
 **Files:** scripts/check-images.mjs, package.json, tests
 **Done when:** the guard catches a planted bad path; "Show on page" outlines the right slot.

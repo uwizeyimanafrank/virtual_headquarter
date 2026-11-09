@@ -13,7 +13,7 @@ const mockApi = vi.mocked(api);
 
 const CLOUD = "https://res.cloudinary.com/demo/image/upload/v1/vhq/slot/old.jpg";
 const NEW = "https://res.cloudinary.com/demo/image/upload/v1/vhq/slot/new.jpg";
-const row = (o: Record<string, unknown>) => ({ aspect: "16:9", minWidth: 1600, defaultSrc: "/art/defaults/wide.svg", decorative: true, custom: null, section: "x", ...o });
+const row = (o: Record<string, unknown>) => ({ path: "/", aspect: "16:9", minWidth: 1600, defaultSrc: "/art/defaults/wide.svg", decorative: true, custom: null, section: "x", ...o });
 const SLOTS = [
   row({ key: "home.hero.bg", label: "Hero background", page: "Home", where: "Home, behind everything" }),
   row({ key: "home.profile.photo", label: "Profile photo", page: "Home", where: "Home, profile card", aspect: "1:1", decorative: false }),
@@ -83,6 +83,20 @@ describe("ImageSlots", () => {
     expect(screen.getByText("Focus: 25% across, 75% down")).toBeInTheDocument();
     fireEvent.keyDown(preview, { key: "ArrowRight" });
     expect(screen.getByText("Focus: 30% across, 75% down")).toBeInTheDocument();
+  });
+
+  it("offers Show on page when the page exists, opening it with the slot key", async () => {
+    await load();
+    const a = within(card("Hero background")).getByRole("link", { name: "Show Hero background on the page" });
+    expect(a).toHaveAttribute("href", "/?show-slot=home.hero.bg");
+    expect(a).toHaveAttribute("target", "_blank");
+  });
+
+  it("hides Show on page for pages that are not built yet", async () => {
+    mockApi.mockResolvedValueOnce({ slots: [row({ key: "hire.backdrop", label: "Hire header", page: "Hire", where: "Hire, top", path: null })], library: [] });
+    render(<ImageSlots />);
+    await screen.findByText("Hire header");
+    expect(screen.queryByRole("link", { name: /Show Hire header/ })).toBeNull();
   });
 
   it("resets to the default only after a second click", async () => {

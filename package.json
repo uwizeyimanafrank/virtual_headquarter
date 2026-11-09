@@ -9,8 +9,9 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "check:urls": "node scripts/check-no-localhost.mjs",
-    "prebuild": "npm run check:urls",
-    "test": "vitest run"
+    "prebuild": "npm run check:urls && npm run check:images",
+    "test": "vitest run",
+    "check:images": "node scripts/check-images.mjs"
   },
   "dependencies": {
     "@google/genai": "^2.32.0",

@@ -20,7 +20,7 @@ export type PictureProps = {
  * alt text (decorative pictures are hidden from screen readers).
  */
 export function SlotPicture({ slot, sizes = "100vw", priority = false, className = "", mode = "ratio" }: PictureProps) {
-  const remote = slot.src.startsWith("https://res.cloudinary.com/");
+  const remote = slot.src.startsWith("https://res.cloudinary.com/"); // check:images-ignore (decides whether Cloudinary can resize it)
   const focal = `${slot.focal.x}% ${slot.focal.y}%`;
   const baseW = 1600;
   const box = mode === "fill" ? "absolute inset-0 h-full w-full" : "relative w-full";

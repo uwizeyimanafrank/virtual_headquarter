@@ -1,6 +1,6 @@
 import { connectDb } from "@/lib/db";
 import { adminApi } from "@/lib/auth-guard";
-import { SLOTS, isAllowedPictureUrl } from "@/lib/image-slots";
+import { SLOTS, isAllowedPictureUrl, slotPagePath } from "@/lib/image-slots";
 import { ImageSlot } from "@/models/ImageSlot";
 import { MuseumItem } from "@/models/MuseumItem";
 
@@ -15,7 +15,7 @@ export async function GET(request: Request) {
   const byKey = new Map(docs.map((d) => [d.key, d]));
   const slots = SLOTS.map((d) => {
     const c = byKey.get(d.key);
-    return { ...d, custom: c ? { url: c.url, alt: c.alt ?? "", focal: { x: c.focal?.x ?? 50, y: c.focal?.y ?? 50 }, credit: c.credit ?? "", license: c.license ?? "", kind: c.kind, updatedAt: c.updatedAt } : null };
+    return { ...d, path: slotPagePath(d), custom: c ? { url: c.url, alt: c.alt ?? "", focal: { x: c.focal?.x ?? 50, y: c.focal?.y ?? 50 }, credit: c.credit ?? "", license: c.license ?? "", kind: c.kind, updatedAt: c.updatedAt } : null };
   });
   const library = [...new Set([...docs.map((d) => d.url), ...items.map((i) => i.mediaUrl)])].filter(isAllowedPictureUrl).slice(0, 60);
   return Response.json({ slots, library }, { headers: NO_STORE });

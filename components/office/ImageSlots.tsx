@@ -5,7 +5,7 @@ import { thumb } from "@/lib/media";
 import { Uploader } from "@/components/office/Uploader";
 
 type Custom = { url: string; alt: string; focal: { x: number; y: number }; credit: string; license: string; kind: string };
-type Row = { key: string; label: string; page: string; section: string; where: string; aspect: string; minWidth: number; defaultSrc: string; decorative: boolean; custom: Custom | null };
+type Row = { path: string | null; key: string; label: string; page: string; section: string; where: string; aspect: string; minWidth: number; defaultSrc: string; decorative: boolean; custom: Custom | null };
 
 const inputCls = "w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-sm outline-none focus:border-accent";
 const btnCls = "rounded-xl bg-accent px-4 py-2 text-sm font-medium text-bg disabled:opacity-50";
@@ -65,6 +65,7 @@ export function ImageSlots() {
                 ) : (
                   <div className="mt-3 flex flex-wrap gap-2">
                     <button className={ghostCls} onClick={() => setEditing(r.key)} aria-label={`Replace ${r.label}`}>Replace</button>
+                    {r.path && <a className={ghostCls} href={`${r.path}?show-slot=${encodeURIComponent(r.key)}`} target="_blank" rel="noreferrer" aria-label={`Show ${r.label} on the page`}>Show on page</a>}
                     {r.custom && <ResetButton label={r.label} onDone={async () => {
                       try { await api(`/api/admin/slots/${r.key}`, { method: "DELETE" }); patch(r.key, null); setError(""); }
                       catch (e) { setError(e instanceof ApiError ? e.message : "Could not reset."); }

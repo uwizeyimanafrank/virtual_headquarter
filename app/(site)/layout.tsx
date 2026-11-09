@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import Link from "next/link";
+import { SlotHighlighter } from "@/components/site/SlotHighlighter";
 
 /** Frame for the public pages: a small header with the three public places. No social links, by design. */
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -16,6 +18,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         </nav>
       </header>
       {children}
+      <Suspense fallback={null}><SlotHighlighter /></Suspense>
     </>
   );
 }
