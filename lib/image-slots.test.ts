@@ -43,7 +43,7 @@ describe("resolveSlots", () => {
     for (const s of SLOTS) {
       expect(r[s.key].src).toBe(s.defaultSrc);
       expect(r[s.key].custom).toBe(false);
-      expect(r[s.key].focal).toEqual({ x: 50, y: 50 });
+      expect(r[s.key].focal).toEqual(s.defaultFocal ?? { x: 50, y: 50 });
     }
   });
   it("puts the owner's picture over the default and keeps its details", () => {
@@ -78,5 +78,18 @@ describe("slotPagePath", () => {
     expect(slotPagePath({ page: "Connect" })).toBe("/connect");
     expect(slotPagePath({ page: "Hire" })).toBeNull();
     expect(slotPagePath({ page: "Gallery" })).toBeNull();
+  });
+});
+
+describe("default art", () => {
+  it("the wide hire band looks at the handshake, not the empty sky", () => {
+    expect(resolveSlots([])["home.hire.band"].focal).toEqual({ x: 50, y: 62 });
+    expect(resolveSlots([{ key: "home.hire.band", url: "https://res.cloudinary.com/demo/image/upload/v1/a.jpg" }])["home.hire.band"].focal).toEqual({ x: 50, y: 50 }); // the owner's own picture uses the owner's focus
+  });
+  it("hero, museum and avatar use the drawn scenes, not plain gradients", () => {
+    const r = resolveSlots([]);
+    expect(r["home.hero.character"].src).toBe("/art/hoodie-steepled.svg");
+    expect(r["museum.backdrop"].src).toBe("/art/hoodie-shore-sunset.svg");
+    expect(r["avatar.figure"].src).toBe("/art/avatar-wave.svg");
   });
 });

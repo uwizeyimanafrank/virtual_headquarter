@@ -23,3 +23,6 @@ Low-key light, mostly dark; one cold rim light (teal); a warm or violet glow beh
 
 ## Cards, not 3D
 The public side stays **2D**: layered images, gradients, floating cards with tilt and glow. No WebGL, no 3D scenes. Many images and cards, so visitors always find something to look at, but light enough for a phone.
+
+## The files (done in P11-T06, listed in `lib/art.ts`)
+`public/art/hoodie-steepled.svg` (The Strategist, 4:5, hero character), `hoodie-shore-sunset.svg`, `hoodie-storm.svg`, `hoodie-night-desk.svg` (all 16:9), `suits-handshake.svg` (3:2), `avatar-wave.svg` (1:1), `mood-fog.svg` (16:9, no figure). All are faceless, under 10 KB, and built in the named layers listed in `lib/art.ts`; a test checks the layers exist. Gradient ids are prefixed with the scene name so several scenes can be inlined on one page. Their code-drawn source is not kept in the repo: to change a scene, edit its SVG directly (keep the layer ids) or replace it from Office > Images.

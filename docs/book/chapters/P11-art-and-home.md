@@ -31,7 +31,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Files:** scripts/check-images.mjs, package.json, tests
 **Done when:** the guard catches a planted bad path; "Show on page" outlines the right slot.
 
-### [ ] P11-T06 — Art kit (original SVG scenes)
+### [x] P11-T06 — Art kit (original SVG scenes)
 **Do:**
 - Draw `public/art/hoodie-shore-sunset.svg`, `hoodie-storm.svg`, `hoodie-night-desk.svg`, `suits-handshake.svg`, `avatar-wave.svg` with named layers (see art direction). Faceless figures only.
 - `lib/art.ts`: list of scenes (key, title, file, layer names, default alt = empty because decorative).

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="avatar-wave-aura" cx="50%" cy="46%" r="55%"><stop offset="0" stop-color="#6d5dfc" stop-opacity=".6"/><stop offset=".6" stop-color="#2dd4bf" stop-opacity=".2"/><stop offset="1" stop-color="#2dd4bf" stop-opacity="0"/></radialGradient>
+<linearGradient id="avatar-wave-bgg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#05070d"/></linearGradient></defs><rect id="bg" width="1000" height="1000" fill="url(#avatar-wave-bgg)"/>
+<circle id="aura" cx="500" cy="470" r="470" fill="url(#avatar-wave-aura)"/>
+<g id="figure" fill="#05070d"><path d="M180 1000 C190 820 270 700 380 666 L620 666 C730 700 810 820 820 1000Z"/>
+<path d="M500 250 C400 250 346 330 344 424 C342 486 366 536 404 566 C424 582 460 592 500 592 C540 592 576 582 596 566 C634 536 658 486 656 424 C654 330 600 250 500 250Z"/></g>
+<path id="face-shadow" d="M500 312 C434 312 402 366 402 432 C402 490 428 534 462 556 C478 566 490 570 500 570 C510 570 522 566 538 556 C572 534 598 490 598 432 C598 366 566 312 500 312Z" fill="#010204"/>
+<path id="hood-rim" d="M360 460 C356 372 408 266 500 258 C592 266 644 372 640 460" fill="none" stroke="#7ef0dc" stroke-width="3" opacity=".6"/>
+<g id="arm"><path d="M700 720 C770 690 800 600 790 500" fill="none" stroke="#05070d" stroke-width="64" stroke-linecap="round"/>
+<ellipse cx="790" cy="470" rx="40" ry="52" fill="#0a0e18" stroke="#7ef0dc" stroke-width="2.5" stroke-opacity=".6"/></g>
+<path id="rim" d="M240 760 C270 710 310 686 360 672 M760 760 C730 720 700 690 650 672" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round" opacity=".5"/></svg>
