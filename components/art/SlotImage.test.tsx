@@ -14,7 +14,7 @@ const img = (c: HTMLElement) => c.querySelector("img") as HTMLImageElement;
 describe("SlotPicture", () => {
   it("shows the default picture without responsive sizes", () => {
     const { container } = render(<SlotPicture slot={slots()["home.hero.bg"]} />);
-    expect(img(container).getAttribute("src")).toBe("/art/defaults/wide.svg");
+    expect(img(container).getAttribute("src")).toBe("/art/mood-fog.svg");
     expect(img(container).getAttribute("srcset")).toBeNull();
   });
   it("shows the owner's Cloudinary picture with sizes and a blurred placeholder", () => {
