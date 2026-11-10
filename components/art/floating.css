@@ -1,0 +1,7 @@
+/* Floating background items (components/art/FloatingField.tsx). Still for reduced motion. */
+.ff-item { position: absolute; display: block; line-height: 1; will-change: transform; }
+@keyframes ff-drift { from { transform: translate(0, 0) rotate(0deg); } to { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); } }
+@media (prefers-reduced-motion: no-preference) {
+  .ff[data-motion="on"] .ff-item { animation: ff-drift var(--dur) ease-in-out var(--delay) infinite alternate; }
+  .ff[data-paused="true"] .ff-item { animation-play-state: paused; }
+}

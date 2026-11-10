@@ -47,7 +47,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Done when:** renders each scene; reduced motion gives no animation classes; no hydration warning.
 **Don't:** No animation library for this (CSS only); no layout shift.
 
-### [ ] P11-T08 — `FloatingField` (random floating items)
+### [x] P11-T08 — `FloatingField` (random floating items)
 **Do:**
 - Items at random x/y chosen after mount (no hydration mismatch), slow drift with depth (near items move more), at most 16, pause off screen and when hidden, off for reduced motion. Items are SVG icons by default, emoji optional.
 **Files:** components/art/FloatingField.tsx, lib/floating-icons.ts, tests
