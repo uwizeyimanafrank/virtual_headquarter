@@ -8,6 +8,7 @@ const NAV = [
   { path: "", label: "Dashboard" },
   { path: "/setup", label: "Setup" },
   { path: "/content", label: "Content" },
+  { path: "/home-layout", label: "Home layout" },
   { path: "/images", label: "Images" },
   { path: "/messages", label: "Messages" },
   { path: "/ai", label: "AI Twin" },

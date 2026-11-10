@@ -1,5 +1,6 @@
 import type { HomeData } from "@/lib/home";
 import type { MuseumChapter, MuseumChapterKey, MuseumData } from "@/lib/museum";
+import { resolveBlocks, visibleBlocks } from "@/lib/home-blocks";
 import { SAMPLE_ITEMS, SAMPLE_PROFILE } from "@/lib/samples-data";
 
 /**
@@ -27,6 +28,7 @@ export function demoHome(): HomeData {
       id: `demo-${i}`, type: s.type, title: s.title, date: s.date, description: s.description.slice(0, 280),
       mediaUrl: s.mediaUrl, skills: [...(meta(s).skills ?? [])], link: meta(s).gradeOrLink ?? "",
     })).sort((a, b) => b.date.localeCompare(a.date)),
+    blocks: visibleBlocks(resolveBlocks([])),
     demo: true,
   };
 }

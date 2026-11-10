@@ -14,6 +14,7 @@ These shell scripts start the production server (`next start`) against a throw-a
 | `developer.sh` | the Developer tab against `fake-render.py` (a fake Render API and website): checks, caching, secrets stay secret, private addresses refused, alerts (about 2 minutes) |
 | `vault.sh` | the vault API (port 4044): step-up needed, only encrypted-looking payloads accepted, database holds no readable text, audit, limit, no plaintext in the server log (about 1 minute, Node 22) |
 | `slots.sh` | the image slots API (port 4046; 4045 is reserved by Next.js): login needed, only our Cloudinary pictures, alt text where required, library, audit, reset (about 1 minute) |
+| `homeblocks.sh` | the Home layout API (port 4047): login needed, strict validation, order/switches/text saved, public Home still works, reset (about 1 minute) |
 | `ai.sh` | the AI Twin API against `fake-gemini.py` (a fake Google service): exactly what is sent, no secrets, limits, failures |
 
 ## How to run

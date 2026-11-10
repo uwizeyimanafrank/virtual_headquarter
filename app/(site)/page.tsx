@@ -4,6 +4,7 @@ import { DemoBanner } from "@/components/site/DemoBanner";
 import { Gate } from "@/components/home/Gate";
 import { Hero } from "@/components/home/Hero";
 import { HomeBackground } from "@/components/home/HomeBackground";
+import { HomeBlocks } from "@/components/home/HomeBlocks";
 import { HomeTabs } from "@/components/home/HomeTabs";
 
 export default async function Home() {
@@ -13,7 +14,7 @@ export default async function Home() {
       <HomeBackground />
       <div className="mx-auto max-w-6xl">
         <DemoBanner show={data.demo} />
-        <HomeTabs hero={<Hero data={data} />} cv={<CanvasCv data={data} />} />
+        <HomeBlocks blocks={data.blocks} components={{ hero: () => <HomeTabs hero={<Hero data={data} />} cv={<CanvasCv data={data} />} /> }} />
         <Gate />
       </div>
     </main>

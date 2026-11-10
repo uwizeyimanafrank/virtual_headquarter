@@ -2,6 +2,7 @@ import "server-only";
 import { cacheLife, cacheTag, revalidateTag } from "next/cache";
 import { connectDb } from "@/lib/db";
 import { demoHome } from "@/lib/demo";
+import { resolveBlocks, visibleBlocks, type ResolvedBlock } from "@/lib/home-blocks";
 import { applySampleRules } from "@/lib/samples-data";
 import { MuseumItem } from "@/models/MuseumItem";
 import { Settings } from "@/models/Settings";
@@ -15,6 +16,7 @@ export type HomeData = {
   chapterTitles: { about: string; certificates: string; projects: string; library: string };
   profile: { name: string; tagline: string; bio: string; photoUrl: string };
   items: HomeItem[];
+  blocks: ResolvedBlock[]; // the Home blocks that are on and built, in the owner's order (lib/home-blocks.ts)
   demo?: boolean; // true when this is built-in demo content (database not connected yet)
 };
 
@@ -25,6 +27,7 @@ const FALLBACK: HomeData = {
   chapterTitles: { about: "The Person Behind the Work", certificates: "Proof", projects: "The Execution", library: "Books and References" },
   profile: { name: "", tagline: "", bio: "", photoUrl: "" },
   items: [],
+  blocks: visibleBlocks(resolveBlocks([])),
 };
 
 /**
@@ -50,6 +53,7 @@ export async function getHomeData(): Promise<HomeData> {
       const pf = s?.profile;
       return {
         ...d,
+        blocks: visibleBlocks(resolveBlocks(s?.homeBlocks)),
         demo: false,
         heroTitle: s?.heroTitle ?? d.heroTitle,
         heroText: s?.heroText ?? d.heroText,
@@ -57,6 +61,7 @@ export async function getHomeData(): Promise<HomeData> {
       };
     }
     return {
+      blocks: visibleBlocks(resolveBlocks(s?.homeBlocks)),
       heroTitle: s?.heroTitle ?? FALLBACK.heroTitle,
       heroText: s?.heroText ?? FALLBACK.heroText,
       chapterTitles: {

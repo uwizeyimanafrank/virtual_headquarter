@@ -54,7 +54,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Done when:** unit test with a seeded random shows items inside bounds and capped at 16.
 **Don't:** Do not block clicks (pointer-events none); no heavy filters on phones.
 
-### [ ] P11-T09 — Home blocks (admin controls the layout)
+### [x] P11-T09 — Home blocks (admin controls the layout)
 **Do:**
 - Settings gain `homeBlocks`: list of `{key, enabled, order, content}` for hero, stats, whatIBuild, journey, featured, dispatches, gallery, hire, avatar, now. Sample defaults so nothing is empty.
 - Office page "Home layout": reorder, switch on/off, edit text, pick a scene or upload an image.

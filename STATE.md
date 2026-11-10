@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T09 (Home blocks: admin controls the layout)
+- **Current task:** P11-T10 (Hero v2: image behind, character on the side, half in shadow)
 - **Status:** not started. P09 done in code (P08 done in code; P05-P09 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** P11-T09: Settings gain `homeBlocks` ({key, enabled, order, content}) for hero, stats, whatIBuild, journey, featured, dispatches, gallery, hire, avatar, now; defaults so nothing is empty; Office page 'Home layout' (reorder, on/off, edit text, pick a scene); public Home renders blocks in order, with demo blocks when there is no database (lib/demo.ts). Pure ordering/default logic in its own file with unit tests; follow the existing settings API pattern. Frank is also testing the dev build locally; fix what he reports first.
+- **Next action (one sentence):** P11-T10: rebuild the hero block (components/home/Hero.tsx, still the 'hero' block in components/home/HomeBlocks via app/(site)/page.tsx): full-width background via <SceneImage slot="home.hero.bg"/>, the character via <SceneImage slot="home.hero.character"/> on one side (left/right switch in Office), half in shadow with gradient mask + aura, text on the other side with strong contrast, FloatingField behind, two buttons (Enter the Museum, Hire me), scroll cue; the 'Welcome | Canvas CV' tabs must keep working (HomeTabs). CSS only, 2D only. Add the mood filter settings (darken, teal tint, grain, vignette) for owner-uploaded photos. Screenshot at 390, 768 and 1440 wide and LOOK at them. Remember: when a block's component is built, add it to the components map in app/(site)/page.tsx and set ready: true in lib/home-blocks.ts.
 
 ## Phase board
 | Phase | Name | Status |
@@ -25,7 +25,7 @@ Update this after EVERY task. Keep it short.
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
-| P11 | Art and Home v2 | in progress (T01-T08 done) |
+| P11 | Art and Home v2 | in progress (T01-T09 done) |
 | P12 | Museum halls (glass cases) | not started |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |

@@ -34,6 +34,7 @@ const schema = new Schema(
     showSamples: { type: Boolean, default: true },
     autoHideSamples: { type: Boolean, default: true }, // hide samples of a type once a real item of that type is published
     theme: { type: Schema.Types.Mixed, default: {} },
+    homeBlocks: { type: [Schema.Types.Mixed], default: [] }, // the owner's Home layout, see lib/home-blocks.ts
   },
   { timestamps: true },
 );
