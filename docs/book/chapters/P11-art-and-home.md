@@ -39,7 +39,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Done when:** each file under 40 KB, opens in a browser, layers have the agreed ids; a test checks every scene file exists and has its layers.
 **Don't:** No faces, no copyrighted characters, no external fonts or images inside the SVG.
 
-### [ ] P11-T07 — `Scene` component (layered motion)
+### [x] P11-T07 — `Scene` component (layered motion)
 **Do:**
 - `components/art/Scene.tsx`: inlines the SVG and animates layers with CSS (clouds drift, sun pulse, water shimmer, stars twinkle, figure breathes). Optional soft parallax by scroll (desktop) and mouse (desktop only).
 - Static when `prefers-reduced-motion`; pauses when off screen (IntersectionObserver) or tab hidden.

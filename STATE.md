@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T07 (`Scene` component: layered motion)
+- **Current task:** P11-T08 (`FloatingField`: random floating items)
 - **Status:** not started. P09 done in code (P08 done in code; P05-P09 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** P11-T07: build components/art/Scene.tsx (client): inlines a scene from lib/art.ts and animates its named layers with CSS only (clouds drift, sun pulse, water shimmer, stars twinkle, figure breathes, rain falls); optional scroll/mouse parallax on desktop; static for prefers-reduced-motion; pauses off screen and when the tab is hidden; no hydration warning. Inline SVG text must come from a server-read of the file (not fetch in the browser). Tests included. Frank is also testing the dev build locally; fix what he reports first.
+- **Next action (one sentence):** P11-T08: components/art/FloatingField.tsx + lib/floating-icons.ts: at most 16 floating items (SVG icons by default, emoji optional) at random x/y chosen after mount (no hydration mismatch), slow drift with depth, pause off screen and when the tab is hidden, off for reduced motion, pointer-events none; seeded-random unit test for bounds and the cap. Reuse the pause/reduced-motion pattern from components/art/Scene.tsx. Frank is also testing the dev build locally; fix what he reports first.
 
 ## Phase board
 | Phase | Name | Status |
@@ -25,7 +25,7 @@ Update this after EVERY task. Keep it short.
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
-| P11 | Art and Home v2 | in progress (T01-T06 done) |
+| P11 | Art and Home v2 | in progress (T01-T07 done) |
 | P12 | Museum halls (glass cases) | not started |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |

@@ -1,0 +1,46 @@
+/* Motion for the drawn scenes (lib/art.ts). CSS only. Each layer of a scene has an id, so each moves by itself.
+   Animations use `transform`; parallax uses the separate `translate` property so they never fight. */
+.scene { position: relative; overflow: hidden; }
+.scene > svg { display: block; width: 100%; height: 100%; }
+.scene [id] { transform-box: fill-box; transform-origin: center; }
+
+/* depth of each layer for parallax (bigger = moves more; negative = moves the other way) */
+.scene [id="sky"], .scene [id="bg"], .scene [id="wall"] { --d: 2; }
+.scene [id="stars"] { --d: 4; }
+.scene [id="sun"], .scene [id="moon"] { --d: 6; }
+.scene [id="mountains"], .scene [id="city"], .scene [id="skyline"] { --d: 8; }
+.scene [id="clouds"], .scene [id="lightning"] { --d: 14; }
+.scene [id="aura"], .scene [id="aura-a"], .scene [id="aura-b"], .scene [id="glow"], .scene [id="screen-glow"] { --d: 10; }
+.scene [id="fog"], .scene [id="bokeh"] { --d: 18; }
+.scene [id="figure"], .scene [id="left"], .scene [id="right"], .scene [id="arms"] { --d: -6; }
+.scene [id="hill"], .scene [id="foreground"], .scene [id="desk"] { --d: -10; }
+
+.scene[data-parallax="on"] [id] {
+  translate: calc(var(--px, 0) * var(--d, 0) * 1px) calc((var(--py, 0) + var(--sy, 0)) * var(--d, 0) * 0.5px);
+  transition: translate 0.5s ease-out;
+}
+
+@keyframes scene-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+@keyframes scene-pulse { from { opacity: 0.75; transform: scale(1); } to { opacity: 1; transform: scale(1.05); } }
+@keyframes scene-glow { from { opacity: 0.55; } to { opacity: 1; } }
+@keyframes scene-twinkle { from { opacity: 0.45; } to { opacity: 1; } }
+@keyframes scene-breathe { from { transform: translateY(0); } to { transform: translateY(-0.6%); } }
+@keyframes scene-shimmer { 0% { opacity: 0.25; transform: translateX(-1%); } 50% { opacity: 1; } 100% { opacity: 0.35; transform: translateX(1%); } }
+@keyframes scene-rain { from { transform: translateY(-46px); } to { transform: translateY(0); } }
+@keyframes scene-flash { 0%, 90%, 100% { opacity: 0.15; } 92% { opacity: 1; } 94% { opacity: 0.3; } 96% { opacity: 0.9; } }
+@keyframes scene-wave { from { transform: rotate(-9deg); } to { transform: rotate(11deg); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .scene[data-motion="on"] [id="clouds"] { animation: scene-drift 70s ease-in-out infinite alternate; }
+  .scene[data-motion="on"] [id="fog"] { animation: scene-drift 45s ease-in-out infinite alternate; }
+  .scene[data-motion="on"] [id="sun"], .scene[data-motion="on"] [id="moon"] { animation: scene-pulse 9s ease-in-out infinite alternate; }
+  .scene[data-motion="on"] [id="aura"], .scene[data-motion="on"] [id="aura-a"], .scene[data-motion="on"] [id="aura-b"],
+  .scene[data-motion="on"] [id="glow"], .scene[data-motion="on"] [id="screen-glow"], .scene[data-motion="on"] [id="lamp-glow"] { animation: scene-glow 7s ease-in-out infinite alternate; }
+  .scene[data-motion="on"] [id="stars"], .scene[data-motion="on"] [id="bokeh"] { animation: scene-twinkle 5s ease-in-out infinite alternate; }
+  .scene[data-motion="on"] [id="shimmer"] { animation: scene-shimmer 6s ease-in-out infinite; }
+  .scene[data-motion="on"] [id="figure"] { animation: scene-breathe 6s ease-in-out infinite alternate; }
+  .scene[data-motion="on"] [id="rain"] { animation: scene-rain 0.9s linear infinite; }
+  .scene[data-motion="on"] [id="lightning"] { animation: scene-flash 11s linear infinite; }
+  .scene[data-motion="on"] [id="arm"] { animation: scene-wave 1.6s ease-in-out infinite alternate; transform-box: view-box; transform-origin: 700px 720px; }
+  .scene[data-paused="true"] [id] { animation-play-state: paused !important; }
+}

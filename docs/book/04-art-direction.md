@@ -26,3 +26,6 @@ The public side stays **2D**: layered images, gradients, floating cards with til
 
 ## The files (done in P11-T06, listed in `lib/art.ts`)
 `public/art/hoodie-steepled.svg` (The Strategist, 4:5, hero character), `hoodie-shore-sunset.svg`, `hoodie-storm.svg`, `hoodie-night-desk.svg` (all 16:9), `suits-handshake.svg` (3:2), `avatar-wave.svg` (1:1), `mood-fog.svg` (16:9, no figure). All are faceless, under 10 KB, and built in the named layers listed in `lib/art.ts`; a test checks the layers exist. Gradient ids are prefixed with the scene name so several scenes can be inlined on one page. Their code-drawn source is not kept in the repo: to change a scene, edit its SVG directly (keep the layer ids) or replace it from Office > Images.
+
+## Using a scene on a page (P11-T07)
+Server pages use `<SceneImage slot="home.hero.character" />` (components/art/SceneImage.tsx): it shows the moving drawn scene while the default art is in place, and the owner's own picture (a normal still image with focus and alt) once they replace it in the Office. The scene SVG text comes from `lib/art-data.generated.ts`; after changing any file in `public/art`, run `npm run build:art` (a test fails if it is out of date). Motion is CSS in `components/art/scene.css`, keyed on the layer ids; to give a new layer motion, add its id there.
