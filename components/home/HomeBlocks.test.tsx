@@ -7,7 +7,7 @@ const all = (order: string[]) => resolveBlocks(["hero", "stats", "hire"].map((ke
 const comps = { hero: () => <p>HERO</p>, hire: () => <p>HIRE</p> };
 
 describe("HomeBlocks", () => {
-  it("shows today only the hero (the others are not built, so they are hidden)", () => {
+  it("shows only blocks that are built (hero and card wall today), and only those that have a component", () => {
     const { container } = render(<HomeBlocks blocks={visibleBlocks(resolveBlocks(null))} components={comps} />);
     expect([...container.querySelectorAll("[data-block]")].map((e) => e.getAttribute("data-block"))).toEqual(["hero"]);
   });

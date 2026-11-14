@@ -1,0 +1,28 @@
+/* Card wall (components/home/CardWall.tsx). 2D only: tilted cards that straighten and glow, and slow image strips. */
+.wall { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2.5rem 1rem 2rem; scrollbar-width: none; }
+.wall::-webkit-scrollbar { display: none; }
+.wall > li { flex: 0 0 15.5rem; scroll-snap-align: center; }
+@media (min-width: 768px) {
+  .wall { display: block; columns: 2; column-gap: 1.5rem; overflow: visible; padding: 2.5rem 0; }
+  .wall > li { break-inside: avoid; margin-bottom: 1.5rem; }
+}
+@media (min-width: 1024px) { .wall { columns: 3; } }
+@media (min-width: 1280px) { .wall { columns: 4; } }
+
+.wall-card { position: relative; transform: translateY(var(--lift)) rotate(var(--rot)); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s; border-radius: 1.25rem; }
+.wall-card:hover, .wall-card:focus-within { transform: translateY(calc(var(--lift) - 10px)) rotate(0deg) scale(1.03); z-index: 5; box-shadow: 0 24px 50px -14px var(--glow); }
+@media (prefers-reduced-motion: reduce) {
+  .wall-card { transition: none; }
+  .wall-card:hover, .wall-card:focus-within { transform: translateY(var(--lift)) rotate(var(--rot)); }
+}
+
+.strip { overflow-x: auto; scrollbar-width: none; mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); }
+.strip::-webkit-scrollbar { display: none; }
+.strip-track { display: flex; gap: 0.75rem; width: max-content; }
+@keyframes strip-left { to { transform: translateX(-50%); } }
+@keyframes strip-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .strip[data-dir="left"] .strip-track { animation: strip-left 70s linear infinite; }
+  .strip[data-dir="right"] .strip-track { animation: strip-right 80s linear infinite; }
+  .strip:hover .strip-track { animation-play-state: paused; }
+}

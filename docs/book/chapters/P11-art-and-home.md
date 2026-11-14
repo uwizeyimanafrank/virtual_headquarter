@@ -74,7 +74,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Done when:** screenshots at 390, 768 and 1440 px; text contrast AA; with no upload the default silhouette shows; uploading a photo applies the mood filter.
 **Don't:** No real faces in the defaults; no film stills or copied images (the mood is inspired, never copied).
 
-### [ ] P11-T11 — Card wall (many floating image cards)
+### [x] P11-T11 — Card wall (many floating image cards)
 **Do:**
 - A block of many cards (image + one short line + a small type tag) in a loose overlapping layout, each with a slight tilt and offset. Hover or focus lifts and straightens the card and brightens its glow; click opens the detail panel (P12) or the linked page.
 - Cards come from the Office: Museum items, dispatches, gallery images, and hand-made "mood cards" (an image and one line, in the quiet introvert voice).

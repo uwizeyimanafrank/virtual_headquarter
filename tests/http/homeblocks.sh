@@ -44,7 +44,7 @@ echo "== reading"
 expect "read" 200 $(code $CB $B/api/admin/home-blocks)
 eqv "11 blocks, hero first" "11|hero" "$(jq_ "str(len(d['blocks']))+'|'+d['blocks'][0]['key']")"
 eqv "hero is on and required" "True|True" "$(jq_ "str(d['blocks'][0]['enabled'])+'|'+str(d['blocks'][0]['required'])")"
-eqv "only the hero is built so far" "hero" "$(jq_ "','.join(b['key'] for b in d['blocks'] if b['ready'])")"
+eqv "only the hero and the card wall are built so far" "hero,cardWall" "$(jq_ "','.join(b['key'] for b in d['blocks'] if b['ready'])")"
 eqv "every block explains itself" 0 "$(jq_ "len([b for b in d['blocks'] if len(b['description'])<10 or len(b['label'])<3])")"
 
 echo "== refusals (nothing may be saved)"
