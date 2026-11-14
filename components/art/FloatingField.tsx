@@ -8,6 +8,8 @@ type Props = {
   items?: readonly string[];
   /** How many to show (never more than 16; fewer on small screens and with Save-Data). */
   count?: number;
+  /** Keep the items between these two places across the width (percent), for example away from the text. */
+  xRange?: readonly [number, number];
   className?: string;
 };
 
@@ -18,17 +20,19 @@ const ALL = ICONS.map((i) => i.key);
  * server and browser never disagree), they drift slowly, pause off screen and when the tab is hidden, and stay
  * still for visitors who prefer reduced motion. Never blocks a click. Decorative: hidden from screen readers.
  */
-export function FloatingField({ items = ALL, count = 12, className = "" }: Props) {
+export function FloatingField({ items = ALL, count = 12, xRange, className = "" }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [list, setList] = useState<FloatItem[]>([]);
   const key = items.join("|");
+  const lo = xRange?.[0] ?? 4;
+  const hi = xRange?.[1] ?? 96;
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     const n = chooseCount(count, window.innerWidth, !!conn?.saveData);
-    setList(layoutItems(key ? key.split("|") : ALL, n, seededRandom(Math.floor(Math.random() * 2 ** 31))));
+    setList(layoutItems(key ? key.split("|") : ALL, n, seededRandom(Math.floor(Math.random() * 2 ** 31)), [lo, hi]));
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     el.dataset.motion = reduce ? "off" : "on";
@@ -42,7 +46,7 @@ export function FloatingField({ items = ALL, count = 12, className = "" }: Props
     const onVis = () => { hidden = document.hidden; sync(); };
     document.addEventListener("visibilitychange", onVis);
     return () => { io.disconnect(); document.removeEventListener("visibilitychange", onVis); };
-  }, [key, count]);
+  }, [key, count, lo, hi]);
 
   return (
     <div ref={ref} aria-hidden="true" data-motion="off" className={`ff pointer-events-none absolute inset-0 overflow-hidden ${className}`}>

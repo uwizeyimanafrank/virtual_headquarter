@@ -1,0 +1,13 @@
+/* Hero v2 (components/home/Hero.tsx). Motion only for visitors who have not asked for less. */
+@keyframes hero-aura { from { opacity: 0.6; transform: scale(1); } to { opacity: 1; transform: scale(1.07); } }
+@keyframes hero-cue { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(6px); opacity: 1; } }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-aura { animation: hero-aura 8s ease-in-out infinite alternate; }
+  .hero-cue { animation: hero-cue 2.4s ease-in-out infinite; }
+}
+
+/* The character fades with a mask chosen in code (lib/hero-style.ts). On phones it sits on top and fades downwards into the text. */
+.hero-char { -webkit-mask-image: var(--hero-mask); mask-image: var(--hero-mask); -webkit-mask-composite: source-in; mask-composite: intersect; }
+@media (max-width: 1023px) {
+  .hero-char { -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%), linear-gradient(to top, transparent 0%, #000 45%); mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%), linear-gradient(to top, transparent 0%, #000 45%); }
+}

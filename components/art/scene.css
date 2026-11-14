@@ -2,7 +2,9 @@
    Animations use `transform`; parallax uses the separate `translate` property so they never fight. */
 .scene { position: relative; overflow: hidden; }
 .scene > svg { display: block; width: 100%; height: 100%; }
-.scene [id] { transform-box: fill-box; transform-origin: center; }
+/* Only the layers that animate get a centred origin. Parts that carry their own transform attribute (the mirrored
+   suit, the enlarged hands) must keep theirs, or they would shift. */
+.scene :is([id="clouds"], [id="fog"], [id="sun"], [id="moon"], [id="aura"], [id="aura-a"], [id="aura-b"], [id="glow"], [id="screen-glow"], [id="lamp-glow"], [id="stars"], [id="bokeh"], [id="shimmer"], [id="figure"], [id="rain"], [id="lightning"]) { transform-box: fill-box; transform-origin: center; }
 
 /* depth of each layer for parallax (bigger = moves more; negative = moves the other way) */
 .scene [id="sky"], .scene [id="bg"], .scene [id="wall"] { --d: 2; }

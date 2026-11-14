@@ -56,7 +56,9 @@ export function chooseCount(requested: number, viewportWidth: number, saveData =
  * Picks random positions (x, y in percent) for the items, keeping them away from the edges and from each
  * other. Near items (depth close to 1) are bigger, brighter and move faster.
  */
-export function layoutItems(glyphs: readonly string[], count: number, rand: () => number): FloatItem[] {
+export function layoutItems(glyphs: readonly string[], count: number, rand: () => number, xRange: readonly [number, number] = [4, 96]): FloatItem[] {
+  const lo = Math.max(2, Math.min(xRange[0], xRange[1]));
+  const hi = Math.min(98, Math.max(xRange[0], xRange[1]));
   const pool = glyphs.filter((g) => ICON_BY_KEY.has(g) || isGlyphText(g));
   const n = Math.min(Math.max(0, Math.floor(count)), MAX_FLOATING);
   if (pool.length === 0 || n === 0) return [];
@@ -65,7 +67,7 @@ export function layoutItems(glyphs: readonly string[], count: number, rand: () =
   for (let i = 0; i < n; i++) {
     let x = 0, y = 0;
     for (let tries = 0; tries < 40; tries++) {
-      x = 4 + rand() * 92;
+      x = lo + rand() * (hi - lo);
       y = 6 + rand() * 88;
       if (placed.every((p) => Math.hypot(p.x - x, (p.y - y) * 0.6) >= 11)) break; // y counts less: screens are wider than tall
     }

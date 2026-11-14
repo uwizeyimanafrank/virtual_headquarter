@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T10 (Hero v2: image behind, character on the side, half in shadow)
+- **Current task:** P11-T11 (Card wall: many floating image cards)
 - **Status:** not started. P09 done in code (P08 done in code; P05-P09 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
 - **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** P11-T10: rebuild the hero block (components/home/Hero.tsx, still the 'hero' block in components/home/HomeBlocks via app/(site)/page.tsx): full-width background via <SceneImage slot="home.hero.bg"/>, the character via <SceneImage slot="home.hero.character"/> on one side (left/right switch in Office), half in shadow with gradient mask + aura, text on the other side with strong contrast, FloatingField behind, two buttons (Enter the Museum, Hire me), scroll cue; the 'Welcome | Canvas CV' tabs must keep working (HomeTabs). CSS only, 2D only. Add the mood filter settings (darken, teal tint, grain, vignette) for owner-uploaded photos. Screenshot at 390, 768 and 1440 wide and LOOK at them. Remember: when a block's component is built, add it to the components map in app/(site)/page.tsx and set ready: true in lib/home-blocks.ts.
+- **Next action (one sentence):** P11-T11: build the Card wall block (components/home/CardWall.tsx + ImageStrip.tsx), then set cardWall ready:true in lib/home-blocks.ts and add it to the components map in app/(site)/page.tsx. Loose overlapping layout of >=12 cards (image + one line + type tag), slight tilt/offset, hover/focus lifts and straightens + glow, click opens the item (detail panel comes in P12; for now link to /museum#case=<id> or open a simple in-page preview), optional two slow image strips moving in opposite directions (pause on hover, still for reduced motion); phones get a swipeable row. Cards come from Museum items (HomeData.items) + hand-made mood cards; at least 12 sample cards (use SAMPLE_ITEMS + generated mood cards) so it is never empty. All pictures via slots/items, never fixed paths. 2D only. Tests + screenshots at 390/768/1440 and LOOK at them.
 
 ## Phase board
 | Phase | Name | Status |
@@ -25,7 +25,7 @@ Update this after EVERY task. Keep it short.
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
-| P11 | Art and Home v2 | in progress (T01-T09 done) |
+| P11 | Art and Home v2 | in progress (T01-T10 done) |
 | P12 | Museum halls (glass cases) | not started |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |

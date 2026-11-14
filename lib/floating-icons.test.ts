@@ -42,6 +42,14 @@ describe("layoutItems", () => {
   it("keeps every item inside the box, away from the edges", () => {
     for (const it of items) { expect(it.x).toBeGreaterThanOrEqual(4); expect(it.x).toBeLessThanOrEqual(96); expect(it.y).toBeGreaterThanOrEqual(6); expect(it.y).toBeLessThanOrEqual(94); }
   });
+  it("can keep every item inside a horizontal range (for example away from the text)", () => {
+    for (const range of [[50, 96], [4, 45]] as const) {
+      const r = layoutItems(keys, 12, seededRandom(9), range);
+      expect(r.every((i) => i.x >= range[0] && i.x <= range[1])).toBe(true);
+    }
+    const swapped = layoutItems(keys, 6, seededRandom(9), [90, 10]); // given the wrong way round
+    expect(swapped.every((i) => i.x >= 10 && i.x <= 90)).toBe(true);
+  });
   it("spreads them out so they do not pile up", () => {
     const close = items.filter((a, i) => items.some((b, j) => j > i && Math.hypot(a.x - b.x, (a.y - b.y) * 0.6) < 6));
     expect(close.length).toBeLessThanOrEqual(1);

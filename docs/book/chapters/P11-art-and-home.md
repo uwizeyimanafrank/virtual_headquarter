@@ -63,7 +63,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Done when:** reorder and toggle in the Office changes Home; unit tests for ordering and defaults; demo mode still looks finished.
 **Don't:** No block content hardcoded in a component.
 
-### [ ] P11-T10 — Hero v2: image behind, character on the side, half in shadow
+### [x] P11-T10 — Hero v2: image behind, character on the side, half in shadow
 **Do:**
 - Full-width hero with a background image and layered gradients: a dark base gradient, a coloured glow (the "aura") behind the character, and fog and vignette at the edges.
 - The character image sits on one side (left or right, a switch in the Office), partly hidden: the bottom and the inner edge fade into the gradient so only light on the shoulders and hands shows. Text sits on the other side with strong contrast.

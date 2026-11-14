@@ -18,6 +18,6 @@ describe("HomeBlocks", () => {
   it("gives each block its own content", () => {
     const seen: string[] = [];
     render(<HomeBlocks blocks={visibleBlocks(resolveBlocks([{ key: "hero" }]))} components={{ hero: (b) => { seen.push(Object.keys(b.content).join(",")); return null; } }} />);
-    expect(seen).toEqual([""]);
+    expect(seen).toEqual(["side,darken,tint,grain,vignette"]); // the hero has a side and mood settings
   });
 });

@@ -14,7 +14,7 @@ export default async function Home() {
       <HomeBackground />
       <div className="mx-auto max-w-6xl">
         <DemoBanner show={data.demo} />
-        <HomeBlocks blocks={data.blocks} components={{ hero: () => <HomeTabs hero={<Hero data={data} />} cv={<CanvasCv data={data} />} /> }} />
+        <HomeBlocks blocks={data.blocks} components={{ hero: (b) => <HomeTabs hero={<Hero data={data} options={b.content} />} cv={<CanvasCv data={data} />} /> }} />
         <Gate />
       </div>
     </main>

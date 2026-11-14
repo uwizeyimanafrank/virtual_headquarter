@@ -16,7 +16,11 @@ export type BlockDef = {
 const f = (name: string, label: string, def: string, max = 120, long = false): BlockField => ({ name, label, max, long, default: def });
 
 export const BLOCK_DEFS: readonly BlockDef[] = [
-  { key: "hero", label: "Hero (welcome and Canvas CV)", description: "The first screen: your headline, welcome text and the Canvas CV tab. The headline and text are edited under Setup.", ready: true, required: true, defaultEnabled: true, fields: [] },
+  { key: "hero", label: "Hero (welcome and Canvas CV)", description: "The first screen: a full-width picture, your character half in shadow on one side, your headline and welcome text, and the Canvas CV tab. The headline and text are edited under Setup. The mood settings apply when you upload your own photo (the drawn scene needs none).", ready: true, required: true, defaultEnabled: true, fields: [
+    f("side", "Character side (left or right)", "right", 5),
+    f("darken", "Photo mood: darken (0 to 100)", "20", 3), f("tint", "Photo mood: cold teal tint (0 to 100)", "25", 3),
+    f("grain", "Photo mood: film grain (0 to 100)", "30", 3), f("vignette", "Photo mood: dark edges (0 to 100)", "55", 3),
+  ] },
   { key: "stats", label: "Stats strip", description: "Up to four numbers that say a lot at a glance.", ready: false, defaultEnabled: true, fields: [
     f("title", "Heading", "At a glance", 60),
     f("stat1Value", "Number 1", "2", 12), f("stat1Label", "Label 1", "Internships", 40),

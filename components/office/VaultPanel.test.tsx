@@ -91,6 +91,7 @@ describe("VaultPanel", () => {
     await openList();
     await reveal();
     await screen.findByText("Render production");
+    await act(async () => {}); // let React attach its listeners before the event (matters when the machine is busy)
     fireEvent.blur(window);
     expect(screen.queryByText("Render production")).not.toBeInTheDocument();
   }, 30000);
@@ -99,6 +100,7 @@ describe("VaultPanel", () => {
     await openList();
     await reveal();
     await screen.findByText("Render production");
+    await act(async () => {});
     Object.defineProperty(document, "hidden", { configurable: true, get: () => true });
     fireEvent(document, new Event("visibilitychange"));
     Object.defineProperty(document, "hidden", { configurable: true, get: () => false });
