@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getMuseumData } from "@/lib/museum";
+import { Backdrop } from "@/components/art/Backdrop";
 import { DemoBanner } from "@/components/site/DemoBanner";
 import { MuseumClient } from "@/components/museum/MuseumClient";
 
@@ -7,7 +8,8 @@ export default async function MuseumPage() {
   const { chapters, demo } = await getMuseumData(); // cached; refreshed right after Office edits
   const empty = chapters.every((c) => c.items.length === 0);
   return (
-    <main className="flex-1 pb-12 pt-8 sm:pb-20 sm:pt-12">
+    <main className="relative isolate flex-1 pb-12 pt-8 sm:pb-20 sm:pt-12">
+      <Backdrop slot="museum.backdrop" />
       <DemoBanner show={demo} />
       <header className="relative z-10 mx-auto mb-2 max-w-2xl px-4 text-center">
         <p className="text-xs font-medium uppercase tracking-[0.3em] text-accent">The Museum</p>

@@ -26,7 +26,7 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 | P07 | AI Twin (Gemini assistant in every Office page) | done in code (needs your Gemini key) |
 | P08 | Developer tab (watch Atlas, Cloudinary, Render and any website; storage library; system reminder; down banner) | done in code (needs a visual check) |
 | P09 | Encrypted secrets vault | done in code (not yet looked at in a real browser) |
-| P11 | Art and Home v2 (scenes, floating items, blocks, Hire door teaser) | planned |
+| P11 | Art and Home v2 (image slots, art kit, moving scenes, Home blocks, hero, card wall, backdrops, then stats/journey/featured/CV/polish) | **in progress: T01-T12 done (of 18)** |
 | P12 | Museum halls: Story Tour + Glass Cases with floating detail panel | planned |
 | P13 | Dispatches (news) and public Gallery | planned |
 | P14 | Hire me page and inbox | planned |
@@ -39,7 +39,7 @@ The live details (current task, what is waiting on you, known gaps) are always i
 
 - **Done:** P00 to P08 (about 80% of the project). New: the Developer tab, which watches your database, Cloudinary, Render and any website, keeps credentials encrypted (never shown again), shows a storage library and a system map, and puts a red banner on every Office page when something is down. Website checks cannot be aimed at private/internal addresses.
 - **Waiting on Frank:** a Gemini API key; a look at Home, Museum, Connect, the AI chat and the Developer tab in a real browser; a real Cloudinary upload and Atlas connection. See `STATE.md`.
-- **Next task:** P11-T01 (image slot registry). Read `docs/book/05-image-slots.md`, `docs/book/04-art-direction.md` and `docs/book/chapters/P11-art-and-home.md`. The plan for P11 to P15 is in `DECISIONS.md` (section "P11 to P15 plan").
+- **Next task:** P11-T13 (Stats, What I build, Journey blocks). Read `STATE.md` first, then `docs/book/chapters/P11-art-and-home.md`, `docs/book/05-image-slots.md` and `docs/book/04-art-direction.md`.
 - **Heads up:** use **Node 22**. Known gaps (including one skipped test) are under "Known bugs / debts" in `STATE.md`. Remember to revoke any GitHub token that was pasted into a chat.
 
 ---
@@ -162,3 +162,10 @@ The setup screen exists only on your own computer (development mode). On a real 
 
 ### Another AI taking over?
 Read `AGENTS.md` section **"Taking over from another AI"**, then `STATE.md`. The whole plan for the next phases is in `DECISIONS.md` ("P11 to P15 plan") and `docs/book/chapters/P11` to `P15`.
+
+## What exists today (2026-11-07)
+- **Public site:** Home (hero with a moving drawn scene behind it and the character half in shadow, Welcome and Canvas CV tabs, card wall with two slow picture strips), Museum (sideways story tour, sunset backdrop), Connect (message terminal, storm backdrop). With no database it shows finished-looking demo content.
+- **Office** (secret address): Content, **Images** (replace any picture, focus point, alt text, credit, import from a link), **Home layout** (order, show/hide, edit the words of every block), Settings, Inbox, Developer, Vault (zero-knowledge secrets), AI assistant, Setup.
+- **Local setup screen** `/setup` (development only; the terminal prints a one-time code).
+- **How the pieces fit:** every fixed picture is an **image slot** (`lib/image-slots.ts`); the Home page is a list of **blocks** (`lib/home-blocks.ts`); the drawn art is in `public/art` with named layers (`lib/art.ts`) and a generated module (`npm run build:art` after changing any art file). Guards: `npm run check:urls` and `npm run check:images` run before every build.
+- **Run the checks:** `npm test`, `npm run lint`, `npx next typegen && npx tsc --noEmit`, `npm run build`. Real HTTP tests are in `tests/http` (they need a MongoDB-compatible server; see `tests/http/README.md`).

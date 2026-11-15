@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Backdrop } from "@/components/art/Backdrop";
 import { HomeBackground } from "@/components/home/HomeBackground";
 import { ConnectTerminal } from "@/components/connect/Terminal";
 
@@ -6,8 +7,9 @@ export const metadata: Metadata = { title: "Connect", description: "Sit down and
 
 export default function ConnectPage() {
   return (
-    <main className="relative flex-1 px-4 py-12 sm:py-20">
+    <main className="relative isolate flex-1 px-4 py-12 sm:py-20">
       <HomeBackground />
+      <Backdrop slot="connect.backdrop" />
       <header className="mx-auto mb-10 max-w-2xl text-center">
         <p className="text-xs font-medium uppercase tracking-[0.3em] text-accent">Connect</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Pull up a chair</h1>

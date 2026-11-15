@@ -51,3 +51,8 @@ Files (not pictures) follow the same idea: `home.cv.pdf` (the CV download), set 
 
 ## Done means
 Every slot above is in the registry, rendered through `SlotImage`, listed in Office > Images with its location text, replaceable by upload, link or library, resettable, and covered by a test. `npm run check:images` passes.
+
+## Where each slot is used today (updated 2026-11-07)
+Used on a real page: `home.hero.bg` and `home.hero.character` (Home hero, as moving scenes), `museum.backdrop` (Museum header), `connect.backdrop` (Connect header).
+Registered and replaceable in the Office, but not placed on a page yet (their pages or blocks come later): `home.profile.photo` (Canvas CV, P11-T15), `home.journey.bg` (Journey block, P11-T13), `home.hire.band`, `hire.*` (P14), `gallery.backdrop` (P13), `dispatches.backdrop` (P13), `home.avatar.portrait` and `avatar.figure` (P15), `museum.hall.*` (P12), `site.og.*` (share previews, P10-rest: these must become real PNG or JPG files, social sites do not accept SVG), `site.favicon` and `site.notfound` (P10-rest).
+When you place a slot on a page: use `<SceneImage slot="..."/>` (moving drawn scene while default) or `<SlotImage slot="..."/>` (plain picture) from `components/art`, or `<Backdrop slot="..."/>` for a page header; then add the page to `PAGE_PATHS` in `lib/image-slots.ts` so Office > Images shows "Show on page".

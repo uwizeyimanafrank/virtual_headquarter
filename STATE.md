@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T12 (Backdrops for every public page)
-- **Status:** not started. P09 done in code (P08 done in code; P05-P09 not visually checked; Gemini key waiting on Frank; passkeys T07 of P02 deferred; P00-T07 Atlas check waiting on Frank)
-- **Last worker:** Claude (chat), 2026-11-06
-- **Next action (one sentence):** P11-T12: optional backdrop image behind the header of every public page (Museum, Connect now; Gallery, Dispatches, Hire when built) using <SceneImage slot="museum.backdrop"/> etc. with a gradient overlay and glow so titles stay readable (a shared components/art/Backdrop.tsx), Office > Images already lets the owner set or clear each (slots exist). Screenshot Museum and Connect headers and LOOK. Then T13 stats/what-I-build/journey blocks, T14 featured projects, T15 Canvas CV v2, T16 polish layer, T17 look-and-feel settings, T18 tests/docs. Remember: for each new block add its component to the components map in app/(site)/page.tsx AND set ready:true in lib/home-blocks.ts (then update the 'built so far' expectations in lib/home-blocks.test.ts and tests/http/homeblocks.sh).
+- **Current task:** P11-T13 (Stats, What I build, Journey blocks)
+- **Status:** P11 in progress, T01-T12 done and pushed (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
+- **Last worker:** Claude (chat), 2026-11-07
+- **Next action (one sentence):** P11-T13: build the Stats strip, What I build and Journey blocks (components/home/Stats.tsx, WhatIBuild.tsx, Journey.tsx), each reading its words from the block content (lib/home-blocks.ts fields already defined), each picture through an image slot (journey backdrop = home.journey.bg), then set ready:true for each, add them to the components map in app/(site)/page.tsx, update the 'built so far' expectations in lib/home-blocks.test.ts and tests/http/homeblocks.sh, LOOK at screenshots at 390/768/1440. Then T14 featured projects, T15 Canvas CV v2, T16 polish layer, T17 look-and-feel settings, T18 tests/docs. After P11: P12 museum halls, P13 dispatches and gallery, P14 hire, then P10-rest (security review, speed, share previews as real PNG/JPG, deploy, merge to main), then P15 avatar.
 
 ## Phase board
 | Phase | Name | Status |
@@ -25,7 +25,7 @@ Update this after EVERY task. Keep it short.
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
-| P11 | Art and Home v2 | in progress (T01-T11 done) |
+| P11 | Art and Home v2 | in progress (T01-T12 done) |
 | P12 | Museum halls (glass cases) | not started |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |

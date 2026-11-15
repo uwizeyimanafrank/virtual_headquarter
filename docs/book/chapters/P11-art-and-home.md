@@ -84,7 +84,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Files:** components/home/CardWall.tsx, components/home/ImageStrip.tsx
 **Done when:** 40 cards stay smooth on a mid-range phone (lazy images, blurred placeholders); keyboard reachable; reduced motion has no strips moving.
 
-### [ ] P11-T12 — Backdrops for every public page
+### [x] P11-T12 — Backdrops for every public page
 **Do:** Museum, Gallery, Dispatches, Hire and Connect each get an optional header backdrop image with gradient and glow. The Office has a "Page images" screen to set or clear each one; the default is one of the art scenes. Optional means the page still looks finished with none.
 **Files:** lib/page-backdrops.ts, components/art/Backdrop.tsx, Office page images
 **Done when:** each page shows its backdrop, passes contrast, and clearing falls back to the default art.
