@@ -14,7 +14,7 @@ export type HomeData = {
   heroTitle: string;
   heroText: string;
   chapterTitles: { about: string; certificates: string; projects: string; library: string };
-  profile: { name: string; tagline: string; bio: string; photoUrl: string };
+  profile: { name: string; tagline: string; bio: string; photoUrl: string; cvUrl?: string };
   items: HomeItem[];
   blocks: ResolvedBlock[]; // the Home blocks that are on and built, in the owner's order (lib/home-blocks.ts)
   demo?: boolean; // true when this is built-in demo content (database not connected yet)
@@ -70,7 +70,7 @@ export async function getHomeData(): Promise<HomeData> {
         projects: s?.chapterTitles?.projects ?? FALLBACK.chapterTitles.projects,
         library: s?.chapterTitles?.library ?? FALLBACK.chapterTitles.library,
       },
-      profile: { name: s?.profile?.name ?? "", tagline: s?.profile?.tagline ?? "", bio: s?.profile?.bio ?? "", photoUrl: s?.profile?.photoUrl ?? "" },
+      profile: { name: s?.profile?.name ?? "", tagline: s?.profile?.tagline ?? "", bio: s?.profile?.bio ?? "", photoUrl: s?.profile?.photoUrl ?? "", cvUrl: s?.profile?.cvUrl ?? "" },
       items: visible
         .map((d) => ({
           id: String(d._id),

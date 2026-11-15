@@ -121,7 +121,7 @@ export const settingsPatch = z.object({
     .partial()
     .optional(),
   profile: z
-    .object({ name: text(80), tagline: text(160), bio: text(2000), photoUrl: mediaUrl })
+    .object({ name: text(80), tagline: text(160), bio: text(2000), photoUrl: mediaUrl, cvUrl: z.union([httpUrl, z.literal("")]) })
     .partial()
     .optional(),
 });

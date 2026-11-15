@@ -99,7 +99,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Files:** models/MuseumItem.ts, Office item form, components/home/Featured.tsx
 **Done when:** a project saved in the Office appears on Home with the three parts; tests.
 
-### [ ] P11-T15 — Canvas CV v2
+### [x] P11-T15 — Canvas CV v2
 **Do:** experience, education, skills with levels, links; a **Download CV** button (a PDF the owner uploads in the Office) and a clean print view.
 **Files:** components/home/CanvasCv.tsx, Office settings (CV file)
 **Done when:** button hidden if no PDF; print view readable on paper.

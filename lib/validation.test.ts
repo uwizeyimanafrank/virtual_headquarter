@@ -74,3 +74,11 @@ describe("featured work fields (P11-T14)", () => {
     expect(museumItemInput.safeParse({ ...base, metadata: { skills: [], featured: "yes" } }).success).toBe(false);
   });
 });
+
+describe("CV link (P11-T15)", () => {
+  it("accepts an https link or empty, refuses anything else", () => {
+    expect(settingsPatch.safeParse({ profile: { cvUrl: "https://x.dev/cv.pdf" } }).success).toBe(true);
+    expect(settingsPatch.safeParse({ profile: { cvUrl: "" } }).success).toBe(true);
+    expect(settingsPatch.safeParse({ profile: { cvUrl: "javascript:alert(1)" } }).success).toBe(false);
+  });
+});

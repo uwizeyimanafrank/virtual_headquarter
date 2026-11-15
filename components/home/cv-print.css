@@ -1,0 +1,7 @@
+/* Print view of the Canvas CV: black on white, only the CV, no buttons, no floating art. */
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  .no-print, header, footer, nav, [data-block]:not([data-block="hero"]), [role="tablist"] { display: none !important; }
+  [data-block="hero"] * { color: #000 !important; background: transparent !important; box-shadow: none !important; animation: none !important; }
+  [data-block="hero"] section, [data-block="hero"] li, [data-block="hero"] div { break-inside: avoid; }
+}

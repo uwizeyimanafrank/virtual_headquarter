@@ -4,7 +4,7 @@ import { getSettings } from "@/lib/settings";
 export type SettingsView = {
   heroTitle: string; heroText: string; twinAvatarUrl: string;
   chapterTitles: { about: string; certificates: string; projects: string; library: string };
-  profile: { name: string; tagline: string; bio: string; photoUrl: string };
+  profile: { name: string; tagline: string; bio: string; photoUrl: string; cvUrl?: string };
   profileIsSample: boolean;
 };
 
@@ -16,7 +16,7 @@ export async function getSettingsView(): Promise<SettingsView> {
     heroText: s?.heroText ?? "",
     twinAvatarUrl: s?.twinAvatarUrl ?? "",
     chapterTitles: { about: s?.chapterTitles?.about ?? "", certificates: s?.chapterTitles?.certificates ?? "", projects: s?.chapterTitles?.projects ?? "", library: s?.chapterTitles?.library ?? "" },
-    profile: { name: s?.profile?.name ?? "", tagline: s?.profile?.tagline ?? "", bio: s?.profile?.bio ?? "", photoUrl: s?.profile?.photoUrl ?? "" },
+    profile: { name: s?.profile?.name ?? "", tagline: s?.profile?.tagline ?? "", bio: s?.profile?.bio ?? "", photoUrl: s?.profile?.photoUrl ?? "", cvUrl: s?.profile?.cvUrl ?? "" },
     profileIsSample: Boolean(s?.onboarding?.profileIsSample),
   };
 }

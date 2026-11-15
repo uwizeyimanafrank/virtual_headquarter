@@ -39,6 +39,7 @@ export function SettingsForm({ initial }: { initial: SettingsView }) {
         <div><label className={label} htmlFor="name">Name</label><input id="name" className={input} value={s.profile.name} onChange={(e) => setProfile("name", e.target.value)} maxLength={80} /></div>
         <div><label className={label} htmlFor="tagline">Tagline</label><input id="tagline" className={input} value={s.profile.tagline} onChange={(e) => setProfile("tagline", e.target.value)} maxLength={160} /></div>
         <div><label className={label} htmlFor="bio">Short bio</label><textarea id="bio" className={`${input} min-h-28`} value={s.profile.bio} onChange={(e) => setProfile("bio", e.target.value)} maxLength={2000} /></div>
+        <div><label className={label} htmlFor="cvurl">CV download link (a PDF, starts with https://)</label><input id="cvurl" className={input} value={s.profile.cvUrl ?? ""} onChange={(e) => setProfile("cvUrl", e.target.value)} maxLength={500} placeholder="Leave empty to hide the Download CV button" /></div>
       </section>
       <section className="space-y-4">
         <h2 className="text-lg font-medium">AI Twin picture</h2>

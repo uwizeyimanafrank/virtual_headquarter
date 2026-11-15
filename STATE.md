@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T15 (Canvas CV v2)
-- **Status:** P11 in progress, T01-T14 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
+- **Current task:** P11-T16 (Polish layer)
+- **Status:** P11 in progress, T01-T15 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
 - **Last worker:** Claude (chat), 2026-11-15
-- **Next action (one sentence):** P11-T15: Canvas CV v2 (experience, education, skills with levels, links; Download CV button for a PDF uploaded in the Office, hidden if none; clean print view). Then TT15 Canvas CV v2, T16 polish layer, T17 look-and-feel settings, T18 tests/docs. After P11: P12 museum halls, P13 dispatches and gallery, P14 hire, then P10-rest (security review, speed, share previews as real PNG/JPG, deploy, merge to main), then P15 avatar.
+- **Next action (one sentence):** P11-T16: polish layer (scroll progress bar, soft cursor glow on desktop only, section reveal, smooth anchors, no layout shift; record Lighthouse mobile number in LOG.md). Then TT15 Canvas CV v2, T16 polish layer, T17 look-and-feel settings, T18 tests/docs. After P11: P12 museum halls, P13 dispatches and gallery, P14 hire, then P10-rest (security review, speed, share previews as real PNG/JPG, deploy, merge to main), then P15 avatar.
 
 ## Phase board
 | Phase | Name | Status |
@@ -25,7 +25,7 @@ Update this after EVERY task. Keep it short.
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
-| P11 | Art and Home v2 | in progress (T01-T14 done) |
+| P11 | Art and Home v2 | in progress (T01-T15 done) |
 | P12 | Museum halls (glass cases) | not started |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |
@@ -60,6 +60,7 @@ Status words: not started / in progress / done.
 (empty)
 
 ## Known bugs / debts
+- P11-T15 (reduced on purpose): the CV is a LINK field (Office > Settings > CV download link, https address of a PDF, for example a Cloudinary or Drive link), not a PDF upload, because a real PDF upload to Cloudinary cannot be tested in the sandbox. The Download CV button is hidden when empty. A Print view button opens the browser print dialog; components/home/cv-print.css makes it black on white. The print look and the experience/education/skills-with-levels cards are NOT done (the CV still shows profile, credentials, projects, skills, trajectory). Not looked at in a browser or on paper.
 - P11-T14: project items got problem, whatIDid, result, featured (model, zod, Office form). Home shows up to 3 featured projects with all three parts filled in; tech chips = the project skills, live link = the project link. Tested (unit, build) but not looked at in a browser. Existing projects need the fields filled in the Office before they appear.
 - P11-T13: Stats, What I build and Journey are tested (unit, build, HTML check that all three render) but NOT looked at in a browser: no headless browser in the 2026-11-15 sandbox, so the 390/768/1440 screenshot check is still to do. tests/http/homeblocks.sh was edited (built-blocks list) but not run (needs a Mongo-compatible server).
 - Typecheck needs Next generated types: run `npx next typegen` before `npx tsc --noEmit`.

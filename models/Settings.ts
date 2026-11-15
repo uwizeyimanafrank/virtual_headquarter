@@ -22,6 +22,7 @@ const schema = new Schema(
       tagline: { type: String, default: "", maxlength: 160 },
       bio: { type: String, default: "", maxlength: 2000 },
       photoUrl: { type: String, default: "", maxlength: 500 },
+      cvUrl: { type: String, default: "", maxlength: 500 }, // link to the owner's CV PDF; empty = no Download CV button
     },
     onboarding: {
       completed: { type: Boolean, default: false },

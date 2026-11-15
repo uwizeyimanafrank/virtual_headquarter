@@ -1,5 +1,7 @@
 import type { HomeData, HomeItem } from "@/lib/home";
+import "./cv-print.css";
 import { CvCard } from "@/components/home/CvCard";
+import { PrintButton } from "@/components/home/PrintButton";
 
 const byTypeNewest = (items: HomeItem[], type: string) => items.filter((i) => i.type === type);
 
@@ -25,6 +27,10 @@ export function CanvasCv({ data }: { data: HomeData }) {
   return (
     <div>
       <h2 className="mb-6 text-center text-sm font-medium uppercase tracking-[0.3em] text-muted">Canvas CV</h2>
+      <div className="no-print mb-6 flex flex-wrap justify-center gap-3">
+        {profile.cvUrl && <a href={profile.cvUrl} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-accent px-5 py-2 text-sm font-medium text-bg">Download CV</a>}
+        <PrintButton />
+      </div>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
         <CvCard kicker="Profile" title={profile.name || "The person behind the work"} className="lg:col-span-3" delay={0}>
           {profile.tagline && <p className="mb-2 text-fg">{profile.tagline}</p>}
