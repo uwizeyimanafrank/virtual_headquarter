@@ -65,3 +65,12 @@ describe("settingsPatch", () => {
     expect(settingsPatch.safeParse({ profile: { photoUrl: "https://evil.example/me.png" } }).success).toBe(false);
   });
 });
+
+describe("featured work fields (P11-T14)", () => {
+  const base = { type: "project", title: "Shop", date: "2026-01" };
+  it("accepts problem, whatIDid, result and featured, and caps each text at 300", () => {
+    expect(museumItemInput.safeParse({ ...base, metadata: { skills: [], problem: "a", whatIDid: "b", result: "c", featured: true } }).success).toBe(true);
+    expect(museumItemInput.safeParse({ ...base, metadata: { skills: [], problem: "x".repeat(301) } }).success).toBe(false);
+    expect(museumItemInput.safeParse({ ...base, metadata: { skills: [], featured: "yes" } }).success).toBe(false);
+  });
+});

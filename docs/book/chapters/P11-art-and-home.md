@@ -94,7 +94,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Files:** components/home/Stats.tsx, WhatIBuild.tsx, Journey.tsx
 **Done when:** all three editable in the Office; samples shown when empty and marked sample.
 
-### [ ] P11-T14 — Featured projects block
+### [x] P11-T14 — Featured projects block
 **Do:** project items get `problem`, `whatIDid`, `result`, tech chips, live link. Home shows 3 featured (admin picks) as "problem → action → result" cards.
 **Files:** models/MuseumItem.ts, Office item form, components/home/Featured.tsx
 **Done when:** a project saved in the Office appears on Home with the three parts; tests.

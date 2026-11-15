@@ -26,6 +26,10 @@ const schema = new Schema(
       },
       skills: { type: [{ type: String, maxlength: 40 }], default: [] },
       howIEarnedIt: { type: String, maxlength: 2000 },
+      problem: { type: String, maxlength: 300 }, // Featured work: problem, what I did, result (projects only)
+      whatIDid: { type: String, maxlength: 300 },
+      result: { type: String, maxlength: 300 },
+      featured: { type: Boolean, default: false }, // the owner picks which projects Home features (first 3 are shown)
     },
   },
   { timestamps: true },

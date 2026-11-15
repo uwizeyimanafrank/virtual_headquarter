@@ -9,7 +9,7 @@ import { Settings } from "@/models/Settings";
 
 export const HOME_TAG = "home";
 
-export type HomeItem = { id: string; type: string; title: string; date: string; description: string; mediaUrl: string; skills: string[]; link: string };
+export type HomeItem = { id: string; type: string; title: string; date: string; description: string; mediaUrl: string; skills: string[]; link: string; problem?: string; whatIDid?: string; result?: string; featured?: boolean };
 export type HomeData = {
   heroTitle: string;
   heroText: string;
@@ -81,6 +81,10 @@ export async function getHomeData(): Promise<HomeData> {
           mediaUrl: d.mediaUrl ?? "",
           skills: d.metadata?.skills ?? [],
           link: d.metadata?.gradeOrLink ?? "",
+          problem: d.metadata?.problem ?? "",
+          whatIDid: d.metadata?.whatIDid ?? "",
+          result: d.metadata?.result ?? "",
+          featured: Boolean(d.metadata?.featured),
         }))
         .sort((a, b) => b.date.localeCompare(a.date)),
     };

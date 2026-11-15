@@ -33,11 +33,16 @@ export function ItemForm({ initial }: { initial?: AdminItem }) {
   const [link, setLink] = useState(initial?.metadata.gradeOrLink ?? "");
   const [skills, setSkills] = useState((initial?.metadata.skills ?? []).join(", "));
   const [story, setStory] = useState(initial?.metadata.howIEarnedIt ?? "");
+  const [problem, setProblem] = useState(initial?.metadata.problem ?? "");
+  const [whatIDid, setWhatIDid] = useState(initial?.metadata.whatIDid ?? "");
+  const [result, setResult] = useState(initial?.metadata.result ?? "");
+  const [featured, setFeatured] = useState(initial?.metadata.featured ?? false);
   const [errors, setErrors] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
 
   const skillList = skills.split(",").map((s) => s.trim()).filter(Boolean);
   const showSkills = type === "project" || type === "certificate";
+  const isProject = type === "project";
   const storyLabel = type === "certificate" ? "How I earned it" : type === "project" ? "How I built it / what I learned" : "";
 
   async function save(e: React.FormEvent) {
@@ -46,7 +51,7 @@ export function ItemForm({ initial }: { initial?: AdminItem }) {
     setErrors([]);
     const body = {
       type, title, description, mediaUrl, parallaxSpeed: speed, date, status,
-      metadata: { gradeOrLink: LINK_LABEL[type] ? link : "", skills: showSkills ? skillList : [], howIEarnedIt: storyLabel ? story : "" },
+      metadata: { gradeOrLink: LINK_LABEL[type] ? link : "", skills: showSkills ? skillList : [], howIEarnedIt: storyLabel ? story : "", problem: isProject ? problem : "", whatIDid: isProject ? whatIDid : "", result: isProject ? result : "", featured: isProject && featured },
     };
     try {
       if (initial) await api(`/api/admin/items/${initial.id}`, { method: "PATCH", body: JSON.stringify(body) });
@@ -89,6 +94,15 @@ export function ItemForm({ initial }: { initial?: AdminItem }) {
             <label className={label} htmlFor="story">{storyLabel}</label>
             <textarea id="story" className={`${input} min-h-24`} value={story} onChange={(e) => setStory(e.target.value)} maxLength={2000} />
           </div>
+        )}
+        {isProject && (
+          <fieldset className="space-y-3 rounded-xl border border-line p-3">
+            <legend className="px-1 text-sm text-muted">Featured work (shown on Home as problem, action, result)</legend>
+            <div><label className={label} htmlFor="problem">The problem</label><input id="problem" className={input} value={problem} onChange={(e) => setProblem(e.target.value)} maxLength={300} /></div>
+            <div><label className={label} htmlFor="didit">What I did</label><input id="didit" className={input} value={whatIDid} onChange={(e) => setWhatIDid(e.target.value)} maxLength={300} /></div>
+            <div><label className={label} htmlFor="result">The result</label><input id="result" className={input} value={result} onChange={(e) => setResult(e.target.value)} maxLength={300} /></div>
+            <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} /> Feature this project on Home (the first 3 are shown)</label>
+          </fieldset>
         )}
         {LINK_LABEL[type] && (
           <div>

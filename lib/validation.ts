@@ -50,6 +50,10 @@ const metadataFields = {
   gradeOrLink: z.union([httpUrl, z.literal("")]),
   skills: z.array(text(40).pipe(z.string().min(1))).max(20),
   howIEarnedIt: text(2000),
+  problem: text(300),
+  whatIDid: text(300),
+  result: text(300),
+  featured: z.boolean(),
 };
 
 /** Creating an item: sensible defaults for everything except type, title and date. */
@@ -67,6 +71,10 @@ export const museumItemInput = z.object({
       gradeOrLink: metadataFields.gradeOrLink.optional(),
       skills: metadataFields.skills.default([]),
       howIEarnedIt: metadataFields.howIEarnedIt.optional(),
+      problem: metadataFields.problem.optional(),
+      whatIDid: metadataFields.whatIDid.optional(),
+      result: metadataFields.result.optional(),
+      featured: metadataFields.featured.optional(),
     })
     .default({ skills: [] }),
 });
@@ -87,6 +95,10 @@ export const museumItemPatch = z.object({
       gradeOrLink: metadataFields.gradeOrLink.optional(),
       skills: metadataFields.skills.optional(),
       howIEarnedIt: metadataFields.howIEarnedIt.optional(),
+      problem: metadataFields.problem.optional(),
+      whatIDid: metadataFields.whatIDid.optional(),
+      result: metadataFields.result.optional(),
+      featured: metadataFields.featured.optional(),
     })
     .optional(),
 });

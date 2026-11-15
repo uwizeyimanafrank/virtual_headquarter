@@ -52,3 +52,15 @@ export function buildJourney(items: readonly HomeItem[]): Step[] {
     .slice(0, MAX_STEPS);
   return real.length ? real : [...SAMPLE_STEPS];
 }
+
+export type Featured = { id: string; title: string; problem: string; whatIDid: string; result: string; chips: string[]; link: string };
+export const MAX_FEATURED = 3;
+
+/** Projects the owner marked as featured, with all three parts filled in (first 3, newest first). Never invents text. */
+export function buildFeatured(items: readonly HomeItem[]): Featured[] {
+  return items
+    .filter((i) => i.type === "project" && i.featured && i.problem && i.whatIDid && i.result)
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, MAX_FEATURED)
+    .map((i) => ({ id: i.id, title: i.title, problem: i.problem!, whatIDid: i.whatIDid!, result: i.result!, chips: i.skills.slice(0, 6), link: i.link }));
+}

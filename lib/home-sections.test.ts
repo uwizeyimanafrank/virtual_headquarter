@@ -42,3 +42,19 @@ describe("buildJourney", () => {
     expect(buildJourney([item({ id: "r" })])[0].sample).toBe(false);
   });
 });
+
+import { buildFeatured } from "@/lib/home-sections";
+describe("buildFeatured", () => {
+  const full = { type: "project", featured: true, problem: "p", whatIDid: "w", result: "r" };
+  it("needs a project, picked as featured, with all three parts", () => {
+    const out = buildFeatured([item({ id: "1", ...full }), item({ id: "2", ...full, featured: false }), item({ id: "3", ...full, result: "" }), item({ id: "4", ...full, type: "story" })]);
+    expect(out.map((x) => x.id)).toEqual(["1"]);
+  });
+  it("shows at most 3, newest first, with tech chips and link", () => {
+    const many = ["2024-01", "2025-05", "2023-03", "2026-01"].map((d, i) => item({ id: `p${i}`, ...full, date: d, skills: ["React"], link: "https://x.dev" }));
+    const out = buildFeatured(many);
+    expect(out.map((x) => x.id)).toEqual(["p3", "p1", "p0"]);
+    expect(out[0]).toMatchObject({ chips: ["React"], link: "https://x.dev" });
+  });
+  it("is empty when nothing is featured", () => expect(buildFeatured([item({})])).toEqual([]));
+});
