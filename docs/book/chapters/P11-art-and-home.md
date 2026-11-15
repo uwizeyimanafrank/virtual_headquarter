@@ -89,7 +89,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Files:** lib/page-backdrops.ts, components/art/Backdrop.tsx, Office page images
 **Done when:** each page shows its backdrop, passes contrast, and clearing falls back to the default art.
 
-### [ ] P11-T13 — Stats, What I build, Journey blocks
+### [x] P11-T13 — Stats, What I build, Journey blocks
 **Do:** a stats strip (numbers set in the Office, no invented numbers), "What I build" cards, and a scrolling journey timeline (school, internships, projects) with the art as a backdrop.
 **Files:** components/home/Stats.tsx, WhatIBuild.tsx, Journey.tsx
 **Done when:** all three editable in the Office; samples shown when empty and marked sample.

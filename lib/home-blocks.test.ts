@@ -55,8 +55,8 @@ describe("resolveBlocks", () => {
 });
 
 describe("visibleBlocks", () => {
-  it("shows only blocks that are on AND built (today the hero and the card wall)", () => {
-    expect(visibleBlocks(resolveBlocks(null)).map((b) => b.key)).toEqual(["hero", "cardWall"]);
+  it("shows only blocks that are on AND built (today the hero, stats, what I build, journey and the card wall)", () => {
+    expect(visibleBlocks(resolveBlocks(null)).map((b) => b.key)).toEqual(["hero", "stats", "whatIBuild", "journey", "cardWall"]);
     const all = BLOCK_DEFS.map((b) => ({ key: b.key, enabled: true, order: 0 }));
     expect(visibleBlocks(resolveBlocks(all)).every((b) => b.ready)).toBe(true);
   });

@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T13 (Stats, What I build, Journey blocks)
-- **Status:** P11 in progress, T01-T12 done and pushed (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
-- **Last worker:** Claude (chat), 2026-11-07
-- **Next action (one sentence):** P11-T13: build the Stats strip, What I build and Journey blocks (components/home/Stats.tsx, WhatIBuild.tsx, Journey.tsx), each reading its words from the block content (lib/home-blocks.ts fields already defined), each picture through an image slot (journey backdrop = home.journey.bg), then set ready:true for each, add them to the components map in app/(site)/page.tsx, update the 'built so far' expectations in lib/home-blocks.test.ts and tests/http/homeblocks.sh, LOOK at screenshots at 390/768/1440. Then T14 featured projects, T15 Canvas CV v2, T16 polish layer, T17 look-and-feel settings, T18 tests/docs. After P11: P12 museum halls, P13 dispatches and gallery, P14 hire, then P10-rest (security review, speed, share previews as real PNG/JPG, deploy, merge to main), then P15 avatar.
+- **Current task:** P11-T14 (Featured projects block)
+- **Status:** P11 in progress, T01-T13 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
+- **Last worker:** Claude (chat), 2026-11-15
+- **Next action (one sentence):** P11-T14: Featured projects block (problem, whatIDid, result, tech chips, live link on project items; Home shows 3 admin-picked as problem > action > result cards). Then T15 Canvas CV v2, T16 polish layer, T17 look-and-feel settings, T18 tests/docs. After P11: P12 museum halls, P13 dispatches and gallery, P14 hire, then P10-rest (security review, speed, share previews as real PNG/JPG, deploy, merge to main), then P15 avatar.
 
 ## Phase board
 | Phase | Name | Status |
@@ -25,7 +25,7 @@ Update this after EVERY task. Keep it short.
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
-| P11 | Art and Home v2 | in progress (T01-T12 done) |
+| P11 | Art and Home v2 | in progress (T01-T13 done) |
 | P12 | Museum halls (glass cases) | not started |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |
@@ -60,6 +60,7 @@ Status words: not started / in progress / done.
 (empty)
 
 ## Known bugs / debts
+- P11-T13: Stats, What I build and Journey are tested (unit, build, HTML check that all three render) but NOT looked at in a browser: no headless browser in the 2026-11-15 sandbox, so the 390/768/1440 screenshot check is still to do. tests/http/homeblocks.sh was edited (built-blocks list) but not run (needs a Mongo-compatible server).
 - Typecheck needs Next generated types: run `npx next typegen` before `npx tsc --noEmit`.
 - Flaky unit test: once, 1 of 197 unit tests failed on a busy machine and passed on the immediate rerun (not identified; probably a timing-based one such as the probe time-limit test in lib/services/net.test.ts). If `npm test` fails once, rerun it before assuming a real break; if it keeps happening, find it with `npx vitest run --reporter=verbose` and make it less timing-sensitive.
 - P08: tested against fakes only. The Render adapter (`lib/services/render.ts`) and the Cloudinary usage field names (`lib/services/cloudinary.ts`) follow those services' documented answers from memory and have never talked to the real services. If a card shows odd numbers or "Could not read", adjust those two files.

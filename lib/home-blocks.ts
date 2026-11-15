@@ -21,20 +21,20 @@ export const BLOCK_DEFS: readonly BlockDef[] = [
     f("darken", "Photo mood: darken (0 to 100)", "20", 3), f("tint", "Photo mood: cold teal tint (0 to 100)", "25", 3),
     f("grain", "Photo mood: film grain (0 to 100)", "30", 3), f("vignette", "Photo mood: dark edges (0 to 100)", "55", 3),
   ] },
-  { key: "stats", label: "Stats strip", description: "Up to four numbers that say a lot at a glance.", ready: false, defaultEnabled: true, fields: [
+  { key: "stats", label: "Stats strip", description: "Up to four numbers that say a lot at a glance.", ready: true, defaultEnabled: true, fields: [
     f("title", "Heading", "At a glance", 60),
     f("stat1Value", "Number 1", "2", 12), f("stat1Label", "Label 1", "Internships", 40),
     f("stat2Value", "Number 2", "3+", 12), f("stat2Label", "Label 2", "Projects built", 40),
     f("stat3Value", "Number 3", "L5", 12), f("stat3Label", "Label 3", "Software Development", 40),
     f("stat4Value", "Number 4", "", 12), f("stat4Label", "Label 4", "", 40),
   ] },
-  { key: "whatIBuild", label: "What I build", description: "Three cards that say what you do.", ready: false, defaultEnabled: true, fields: [
+  { key: "whatIBuild", label: "What I build", description: "Three cards that say what you do.", ready: true, defaultEnabled: true, fields: [
     f("title", "Heading", "What I build", 60),
     f("card1Title", "Card 1 title", "Full-stack products", 60), f("card1Text", "Card 1 text", "From the database to the interface: React, Next.js, Node and MongoDB.", 200, true),
     f("card2Title", "Card 2 title", "Security-minded engineering", 60), f("card2Text", "Card 2 text", "Logins, secrets and hardening are handled before launch, not after.", 200, true),
     f("card3Title", "Card 3 title", "Reliable delivery", 60), f("card3Text", "Card 3 text", "Deployment and monitoring so it keeps working when nobody is watching.", 200, true),
   ] },
-  { key: "journey", label: "Journey", description: "A scrolling timeline of how you got here, drawn from your Museum stories.", ready: false, defaultEnabled: true, fields: [f("title", "Heading", "The journey so far", 60), f("intro", "Intro", "Every step was a decision to do the work.", 200, true)] },
+  { key: "journey", label: "Journey", description: "A scrolling timeline of how you got here, drawn from your Museum stories.", ready: true, defaultEnabled: true, fields: [f("title", "Heading", "The journey so far", 60), f("intro", "Intro", "Every step was a decision to do the work.", 200, true)] },
   { key: "featured", label: "Featured work", description: "Your best projects as problem, action and result.", ready: false, defaultEnabled: true, fields: [f("title", "Heading", "Selected work", 60), f("intro", "Intro", "A few projects, told as problem, action and result.", 200, true)] },
   { key: "cardWall", label: "Card wall", description: "Many floating image cards to explore, with two slow strips of pictures. Cards come from your Museum items, with mood cards in between.", ready: true, defaultEnabled: true, fields: [f("title", "Heading", "Wander around", 60), f("intro", "Intro", "Pick a card. Each one opens a small story.", 200, true)] },
   { key: "dispatches", label: "Dispatches (news)", description: "Your latest short updates.", ready: false, defaultEnabled: true, fields: [f("title", "Heading", "Latest from the HQ", 60)] },
