@@ -18,9 +18,10 @@ describe("Canvas CV download", () => {
   });
   it("hides the button with no link, but keeps the print view button", () => {
     for (const v of [undefined, ""]) {
-      const { queryByText, getByText } = render(<CanvasCv data={data(v)} />);
+      const { queryByText, getByText, unmount } = render(<CanvasCv data={data(v)} />);
       expect(queryByText("Download CV")).toBeNull();
       expect(getByText("Print view")).toBeTruthy();
+      unmount();
     }
   });
 });
