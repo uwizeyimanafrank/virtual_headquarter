@@ -104,7 +104,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Files:** components/home/CanvasCv.tsx, Office settings (CV file)
 **Done when:** button hidden if no PDF; print view readable on paper.
 
-### [ ] P11-T16 — Polish layer
+### [x] P11-T16 — Polish layer
 **Do:** scroll progress bar, soft cursor glow (desktop only), section reveal, smooth anchors; no layout shift.
 **Done when:** Lighthouse mobile performance 85+ on Home (record the number in LOG.md).
 

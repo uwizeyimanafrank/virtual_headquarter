@@ -1,3 +1,4 @@
+import "./reveal.css";
 import type { ReactNode } from "react";
 import type { ResolvedBlock } from "@/lib/home-blocks";
 

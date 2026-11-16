@@ -1,0 +1,8 @@
+/* Section reveal: a soft fade-up as a block scrolls in. Pure CSS, opacity/transform only (no layout shift).
+   Browsers without scroll-driven animations, and people who prefer reduced motion, simply see the blocks. */
+@keyframes vhq-reveal { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    [data-block]:not([data-block="hero"]) { animation: vhq-reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+  }
+}
