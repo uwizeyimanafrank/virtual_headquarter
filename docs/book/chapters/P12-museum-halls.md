@@ -16,7 +16,7 @@ Tick each task `[x]` when done. Do them in order.
 **Files:** app/(site)/museum, components/museum/HallSwitcher.tsx
 **Done when:** switching never reloads data; keyboard works.
 
-### [ ] P12-T03 — Glass case card
+### [x] P12-T03 — Glass case card
 **Do:** `GlassCase`: glass reflection, label plate (title, date, type), spotlight that follows the pointer, "lean closer" reveal of the description on hover and focus (tap on phones), small tilt.
 **Files:** components/museum/GlassCase.tsx
 **Done when:** component tests; reduced motion removes tilt and spotlight.

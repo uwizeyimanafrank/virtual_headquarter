@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P12-T03 (Glass case card)
+- **Current task:** P12-T04 (Floating detail panel)
 - **Status:** P11 in progress, T01-T17 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
 - **Last worker:** Claude (chat), 2026-11-15
-- **Next action (one sentence):** P12-T03: GlassCase card (reflection, label plate, pointer spotlight, lean-closer reveal, tilt; reduced motion removes tilt and spotlight). Then T04 DetailPanel, T05 CasesHall (then wire the HallSwitcher into the Museum page), T06 Office options, T07 video rules, T08 tests/screenshots. Leftover P11: T18 and T15 experience/education cards. After P12: P13, P14, P10-rest, P15.
+- **Next action (one sentence):** P12-T04: DetailPanel (floating elevated panel: big media or carousel, full description, skills, how it was earned, links, previous/next, Esc, focus trap, share link #case=<id>). Then T05 CasesHall (then wire HallSwitcher + halls into the Museum page), T06 Office options, T07 video rules, T08 tests/screenshots. Leftover P11: T18 and T15 experience/education cards. After P12: P13, P14, P10-rest, P15.
 
 ## Phase board
 | Phase | Name | Status |
@@ -26,7 +26,7 @@ Update this after EVERY task. Keep it short.
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
 | P11 | Art and Home v2 | in progress (T01-T17 done) |
-| P12 | Museum halls (glass cases) | in progress (T01-T02 done) |
+| P12 | Museum halls (glass cases) | in progress (T01-T03 done) |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |
 | P15 | Public avatar and AI control room | not started (after first release) |

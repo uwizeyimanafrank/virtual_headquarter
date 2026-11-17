@@ -12,3 +12,6 @@ export const MAX_GALLERY = 8;
 export const normalizeDisplay = (v: unknown): DisplayMode => (DISPLAY_MODES as readonly unknown[]).includes(v) ? (v as DisplayMode) : DEFAULT_DISPLAY;
 export const inTour = (d: DisplayMode) => d !== "case";
 export const inCases = (d: DisplayMode) => d !== "tour";
+
+/** Plain names for the label plates and filter chips. */
+export const TYPE_LABELS: Record<ItemType, string> = { certificate: "Certificate", project: "Project", story: "Story", book: "Book", reference: "Reference" };

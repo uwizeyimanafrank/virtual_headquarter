@@ -1,0 +1,8 @@
+/* Glass case card (components/museum/GlassCase.tsx). The reveal only exists where there is a real hover; touch screens always show the text. */
+.gc-reveal { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.3s ease; }
+.gc[data-reveal="hover"]:hover .gc-reveal,
+.gc[data-reveal="hover"]:focus-visible .gc-reveal { max-height: 9rem; opacity: 1; }
+.gc[data-reveal="always"] .gc-reveal { max-height: none; opacity: 1; }
+.gc-glass { background: linear-gradient(115deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.03) 38%, transparent 55%, rgba(255,255,255,0.06) 100%); }
+.gc-spot { background: radial-gradient(circle 150px at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.22), transparent 70%); }
+@media (prefers-reduced-motion: reduce) { .gc-reveal { transition: none; } }
