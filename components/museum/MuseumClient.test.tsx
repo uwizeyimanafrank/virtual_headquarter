@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { renderToString } from "react-dom/server";
 import { MuseumClient } from "@/components/museum/MuseumClient";
 import type { MuseumChapter, MuseumItemData } from "@/lib/museum";
-import { createMedia } from "@/tests/media-query";
+import { createMedia, mockMedia } from "@/tests/media-query";
 
 type Vars = {
   x?: () => number;
