@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { EFFECT_KEYS, EFFECT_LABELS } from "@/lib/effects";
 import { api, ApiError } from "@/lib/api";
 import type { SettingsView } from "@/lib/admin-settings";
 import { Uploader } from "@/components/office/Uploader";
@@ -21,7 +22,7 @@ export function SettingsForm({ initial }: { initial: SettingsView }) {
     e.preventDefault();
     setBusy(true); setMsg(""); setErrors([]);
     try {
-      const r = await api<SettingsView>("/api/admin/settings", { method: "PATCH", body: JSON.stringify({ heroTitle: s.heroTitle, heroText: s.heroText, twinAvatarUrl: s.twinAvatarUrl, chapterTitles: s.chapterTitles, profile: s.profile }) });
+      const r = await api<SettingsView>("/api/admin/settings", { method: "PATCH", body: JSON.stringify({ heroTitle: s.heroTitle, heroText: s.heroText, twinAvatarUrl: s.twinAvatarUrl, chapterTitles: s.chapterTitles, profile: s.profile, effects: s.effects }) });
       setS(r);
       setMsg("Saved.");
     } catch (err) {
@@ -40,6 +41,16 @@ export function SettingsForm({ initial }: { initial: SettingsView }) {
         <div><label className={label} htmlFor="tagline">Tagline</label><input id="tagline" className={input} value={s.profile.tagline} onChange={(e) => setProfile("tagline", e.target.value)} maxLength={160} /></div>
         <div><label className={label} htmlFor="bio">Short bio</label><textarea id="bio" className={`${input} min-h-28`} value={s.profile.bio} onChange={(e) => setProfile("bio", e.target.value)} maxLength={2000} /></div>
         <div><label className={label} htmlFor="cvurl">CV download link (a PDF, starts with https://)</label><input id="cvurl" className={input} value={s.profile.cvUrl ?? ""} onChange={(e) => setProfile("cvUrl", e.target.value)} maxLength={500} placeholder="Leave empty to hide the Download CV button" /></div>
+      </section>
+      <section className="space-y-3">
+        <h2 className="text-lg font-medium">Look and feel</h2>
+        <p className="text-sm text-muted">Switch effects on or off. Pictures are changed in Images; the Home layout page controls the blocks.</p>
+        {EFFECT_KEYS.map((k) => (
+          <label key={k} className="flex items-start gap-3 text-sm">
+            <input type="checkbox" className="mt-1" checked={s.effects[k]} onChange={(e) => setS({ ...s, effects: { ...s.effects, [k]: e.target.checked } })} />
+            <span><span className="font-medium">{EFFECT_LABELS[k].label}</span><span className="block text-muted">{EFFECT_LABELS[k].hint}</span></span>
+          </label>
+        ))}
       </section>
       <section className="space-y-4">
         <h2 className="text-lg font-medium">AI Twin picture</h2>

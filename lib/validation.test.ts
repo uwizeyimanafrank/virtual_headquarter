@@ -82,3 +82,10 @@ describe("CV link (P11-T15)", () => {
     expect(settingsPatch.safeParse({ profile: { cvUrl: "javascript:alert(1)" } }).success).toBe(false);
   });
 });
+
+describe("effect switches (P11-T17)", () => {
+  it("accepts some or all switches as booleans and refuses other values", () => {
+    expect(settingsPatch.safeParse({ effects: { cursorGlow: false } }).success).toBe(true);
+    expect(settingsPatch.safeParse({ effects: { cursorGlow: "off" } }).success).toBe(false);
+  });
+});

@@ -1,11 +1,13 @@
 import "server-only";
 import { getSettings } from "@/lib/settings";
+import { normalizeEffects, type Effects } from "@/lib/effects";
 
 export type SettingsView = {
   heroTitle: string; heroText: string; twinAvatarUrl: string;
   chapterTitles: { about: string; certificates: string; projects: string; library: string };
   profile: { name: string; tagline: string; bio: string; photoUrl: string; cvUrl?: string };
   profileIsSample: boolean;
+  effects: Effects;
 };
 
 /** Editable site settings in a plain shape (used by the settings page and the settings API). */
@@ -18,5 +20,6 @@ export async function getSettingsView(): Promise<SettingsView> {
     chapterTitles: { about: s?.chapterTitles?.about ?? "", certificates: s?.chapterTitles?.certificates ?? "", projects: s?.chapterTitles?.projects ?? "", library: s?.chapterTitles?.library ?? "" },
     profile: { name: s?.profile?.name ?? "", tagline: s?.profile?.tagline ?? "", bio: s?.profile?.bio ?? "", photoUrl: s?.profile?.photoUrl ?? "", cvUrl: s?.profile?.cvUrl ?? "" },
     profileIsSample: Boolean(s?.onboarding?.profileIsSample),
+    effects: normalizeEffects((s as { effects?: unknown } | null)?.effects),
   };
 }

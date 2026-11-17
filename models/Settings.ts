@@ -32,6 +32,7 @@ const schema = new Schema(
       profileIsSample: { type: Boolean, default: false }, // profile fields currently hold sample text
     },
     twinAvatarUrl: { type: String, default: "", maxlength: 500 }, // picture of the AI Twin bubble in the Office
+    effects: { type: Schema.Types.Mixed, default: {} }, // look-and-feel switches, see lib/effects.ts (missing = on)
     showSamples: { type: Boolean, default: true },
     autoHideSamples: { type: Boolean, default: true }, // hide samples of a type once a real item of that type is published
     theme: { type: Schema.Types.Mixed, default: {} },

@@ -116,6 +116,7 @@ export const settingsPatch = z.object({
   heroTitle: text(160).optional(),
   heroText: text(600).optional(),
   twinAvatarUrl: mediaUrl.optional(),
+  effects: z.object({ scrollProgress: z.boolean(), cursorGlow: z.boolean(), reveal: z.boolean(), floatingItems: z.boolean(), movingScenes: z.boolean() }).partial().optional(),
   chapterTitles: z
     .object({ about: text(80), certificates: text(80), projects: text(80), library: text(80) })
     .partial()

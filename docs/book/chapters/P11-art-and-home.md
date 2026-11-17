@@ -108,7 +108,7 @@ Tick each task `[x]` when done. Do them in order. One task per push.
 **Do:** scroll progress bar, soft cursor glow (desktop only), section reveal, smooth anchors; no layout shift.
 **Done when:** Lighthouse mobile performance 85+ on Home (record the number in LOG.md).
 
-### [ ] P11-T17 — Look and feel settings in the Office
+### [x] P11-T17 — Look and feel settings in the Office
 **Do:** choose the scene per section, upload own image or video instead, edit the floating items, turn effects on or off.
 **Done when:** every visual on Home can be changed or switched off from the Office.
 

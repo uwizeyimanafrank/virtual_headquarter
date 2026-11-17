@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T17 (Look and feel settings in the Office)
-- **Status:** P11 in progress, T01-T16 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
+- **Current task:** P11-T18 (Tests, screenshots, docs)
+- **Status:** P11 in progress, T01-T17 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
 - **Last worker:** Claude (chat), 2026-11-15
-- **Next action (one sentence):** P11-T17: Office > look and feel: choose the scene per section, upload own image or video instead, edit floating items, turn effects (cursor glow, scroll bar, reveal, moving scenes) on or off. Then TT15 Canvas CV v2, T16 polish layer, T17 look-and-feel settings, T18 tests/docs. After P11: P12 museum halls, P13 dispatches and gallery, P14 hire, then P10-rest (security review, speed, share previews as real PNG/JPG, deploy, merge to main), then P15 avatar.
+- **Next action (one sentence):** P11-T18: take screenshots at 390/768/1440 (needs a browser), run Lighthouse, finish the leftovers (T15 experience/education/skills cards), refresh docs. Then TT15 Canvas CV v2, T16 polish layer, T17 look-and-feel settings, T18 tests/docs. After P11: P12 museum halls, P13 dispatches and gallery, P14 hire, then P10-rest (security review, speed, share previews as real PNG/JPG, deploy, merge to main), then P15 avatar.
 
 ## Phase board
 | Phase | Name | Status |
@@ -25,7 +25,7 @@ Update this after EVERY task. Keep it short.
 | P07 | AI Twin | done in code (needs a Gemini key and a visual check) |
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
-| P11 | Art and Home v2 | in progress (T01-T16 done) |
+| P11 | Art and Home v2 | in progress (T01-T17 done) |
 | P12 | Museum halls (glass cases) | not started |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |
@@ -60,6 +60,7 @@ Status words: not started / in progress / done.
 (empty)
 
 ## Known bugs / debts
+- P11-T17 (reduced on purpose): Office > Settings > Look and feel has 5 switches (scroll bar, cursor glow, reveal, floating items, moving scenes; all on by default; stored in Settings.effects, read by components/site/SiteEffects.tsx through lib/effects-server.ts, refreshed by invalidateHome). Pictures are already replaceable in Office > Images and blocks in Home layout. NOT built: choosing a different drawn scene per section, uploading a video instead of an image, editing the list of floating icons. Not looked at in a browser.
 - P11-T16: scroll progress bar, cursor glow (mouse + no reduced motion only), CSS-only section reveal (scroll-driven animations, Chrome-type browsers; others just see the blocks), smooth anchors are built and unit-tested. The Lighthouse mobile score (target 85+) was NOT measured (no browser in the sandbox): run it on Home and write the number in LOG.md. Layout shift not checked by eye either.
 - P11-T15 (reduced on purpose): the CV is a LINK field (Office > Settings > CV download link, https address of a PDF, for example a Cloudinary or Drive link), not a PDF upload, because a real PDF upload to Cloudinary cannot be tested in the sandbox. The Download CV button is hidden when empty. A Print view button opens the browser print dialog; components/home/cv-print.css makes it black on white. The print look and the experience/education/skills-with-levels cards are NOT done (the CV still shows profile, credentials, projects, skills, trajectory). Not looked at in a browser or on paper.
 - P11-T14: project items got problem, whatIDid, result, featured (model, zod, Office form). Home shows up to 3 featured projects with all three parts filled in; tech chips = the project skills, live link = the project link. Tested (unit, build) but not looked at in a browser. Existing projects need the fields filled in the Office before they appear.
