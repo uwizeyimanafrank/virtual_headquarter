@@ -11,7 +11,7 @@ Tick each task `[x]` when done. Do them in order.
 **Files:** models/MuseumItem.ts, lib/item-types.ts, migration note in DECISIONS.md
 **Done when:** old data loads unchanged; schema tests pass.
 
-### [ ] P12-T02 — Hall switcher
+### [x] P12-T02 — Hall switcher
 **Do:** at the top of the Museum, two doors: Story Tour and Glass Cases (tabs on phones). Deep link `#cases`. Remember nothing in storage.
 **Files:** app/(site)/museum, components/museum/HallSwitcher.tsx
 **Done when:** switching never reloads data; keyboard works.
