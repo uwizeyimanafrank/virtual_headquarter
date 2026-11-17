@@ -3,6 +3,7 @@ import { cacheLife, cacheTag, revalidateTag } from "next/cache";
 import { connectDb } from "@/lib/db";
 import { demoMuseum } from "@/lib/demo";
 import { applySampleRules } from "@/lib/samples-data";
+import { normalizeDisplay, type DisplayMode } from "@/lib/item-types";
 import { MuseumItem, type ItemType } from "@/models/MuseumItem";
 import { Settings } from "@/models/Settings";
 
@@ -21,6 +22,10 @@ export type MuseumItemData = {
   link: string;
   howIEarnedIt: string;
   isSample: boolean;
+  display: DisplayMode; // which hall shows it
+  gallery: string[]; // extra pictures (Glass Cases detail panel)
+  video: string; // optional Cloudinary video, empty = none
+  featured: boolean; // shown first in the Glass Cases hall
 };
 
 export type MuseumChapterKey = "about" | "certificates" | "projects" | "library";
@@ -106,6 +111,10 @@ export async function getMuseumData(): Promise<MuseumData> {
           link: d.metadata?.gradeOrLink ?? "",
           howIEarnedIt: d.metadata?.howIEarnedIt ?? "",
           isSample: Boolean(d.isSample),
+          display: normalizeDisplay(d.display),
+          gallery: d.gallery ?? [],
+          video: d.video ?? "",
+          featured: Boolean(d.metadata?.featured),
         }));
     }
     return data;

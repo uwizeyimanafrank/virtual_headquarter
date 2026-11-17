@@ -1,6 +1,7 @@
 "use client";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { inTour } from "@/lib/item-types";
 import type { MuseumChapter } from "@/lib/museum";
 import { HorizontalTrack } from "@/components/museum/HorizontalTrack";
 import { VerticalTimeline } from "@/components/museum/VerticalTimeline";
@@ -16,6 +17,7 @@ export const WIDE_QUERY = "(min-width: 768px)";
 export function MuseumClient({ chapters }: { chapters: MuseumChapter[] }) {
   const wide = useMediaQuery(WIDE_QUERY);
   const reduced = useReducedMotion();
-  const visible = chapters.filter((c) => c.items.length > 0);
+  // The Story Tour shows items marked "tour" or "both"; "case" items live in the Glass Cases hall only.
+  const visible = chapters.map((c) => ({ ...c, items: c.items.filter((i) => inTour(i.display)) })).filter((c) => c.items.length > 0);
   return wide && !reduced ? <HorizontalTrack chapters={visible} /> : <VerticalTimeline chapters={visible} />;
 }

@@ -9,7 +9,7 @@ import { invalidateMuseum } from "@/lib/museum";
 
 const isId = (s: string) => /^[a-f0-9]{24}$/i.test(s);
 // Editing any of these means the owner is now writing their own content, so a sample stops being a sample.
-const CONTENT_KEYS = ["type", "title", "description", "mediaUrl", "parallaxSpeed", "date", "metadata"] as const;
+const CONTENT_KEYS = ["type", "title", "description", "mediaUrl", "parallaxSpeed", "display", "gallery", "video", "date", "metadata"] as const;
 
 export async function GET(request: Request, ctx: RouteContext<"/api/admin/items/[id]">) {
   const auth = await adminApi(request);

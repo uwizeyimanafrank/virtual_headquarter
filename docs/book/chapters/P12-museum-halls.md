@@ -6,7 +6,7 @@
 
 Tick each task `[x]` when done. Do them in order.
 
-### [ ] P12-T01 — Data: how an item is shown
+### [x] P12-T01 — Data: how an item is shown
 **Do:** items get `display` (`tour`, `case`, `both`), `featured`, `gallery` (several images) and an optional `video`. Keep old items working (default `both`).
 **Files:** models/MuseumItem.ts, lib/item-types.ts, migration note in DECISIONS.md
 **Done when:** old data loads unchanged; schema tests pass.

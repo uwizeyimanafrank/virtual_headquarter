@@ -32,7 +32,7 @@ vi.mock("gsap", () => {
 });
 vi.mock("gsap/ScrollTrigger", () => ({ ScrollTrigger: { create: (vars: Record<string, unknown>) => { g.created.push(vars); return {}; }, update: () => {} } }));
 
-const item = (id: string, over: Partial<MuseumItemData> = {}): MuseumItemData => ({ id, type: "project", title: `Piece ${id}`, date: "2026-02", description: "About it.", mediaUrl: "", parallaxSpeed: 0.5, skills: [], link: "", howIEarnedIt: "", isSample: false, ...over });
+const item = (id: string, over: Partial<MuseumItemData> = {}): MuseumItemData => ({ id, type: "project", title: `Piece ${id}`, date: "2026-02", description: "About it.", mediaUrl: "", parallaxSpeed: 0.5, skills: [], link: "", howIEarnedIt: "", isSample: false, display: "both", gallery: [], video: "", featured: false, ...over });
 const chapters: MuseumChapter[] = [
   { key: "about", title: "Story", items: [item("a", { type: "story", parallaxSpeed: 0.3 })] },
   { key: "certificates", title: "Proof", items: [] }, // empty: must not appear
@@ -210,5 +210,16 @@ describe("HorizontalTrack and GSAP", () => {
     render(<MuseumClient chapters={[{ key: "projects", title: "Work", items: [item("z", { mediaUrl: "/samples/project.svg" })] }]} />);
     await screen.findByTestId("horizontal-museum");
     expect(document.querySelector("img")).toHaveAttribute("loading", "lazy");
+  });
+});
+
+describe("Story Tour hall filter (P12-T01)", () => {
+  it("leaves out items that are shown only in the Glass Cases", () => {
+    mockMedia({ "min-width: 768px": false });
+    const chs: MuseumChapter[] = [{ key: "projects", title: "Work", items: [item("t", { display: "tour", title: "Tour piece" }), item("c", { display: "case", title: "Case piece" }), item("b", { display: "both", title: "Both piece" })] }];
+    const { queryByText } = render(<MuseumClient chapters={chs} />);
+    expect(queryByText("Tour piece")).not.toBeNull();
+    expect(queryByText("Both piece")).not.toBeNull();
+    expect(queryByText("Case piece")).toBeNull();
   });
 });

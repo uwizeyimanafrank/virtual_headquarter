@@ -1,12 +1,15 @@
+import { normalizeDisplay, type DisplayMode } from "@/lib/item-types";
 /** Shape of a Museum item as the Office sees it (drafts and samples included). */
 export type AdminItem = {
   id: string; type: string; title: string; description: string; mediaUrl: string; parallaxSpeed: number;
+  display: DisplayMode; gallery: string[]; video: string;
   date: string; status: "draft" | "published"; order: number; isSample: boolean;
   metadata: { gradeOrLink: string; skills: string[]; howIEarnedIt: string; problem: string; whatIDid: string; result: string; featured: boolean };
 };
 
 export const toAdminItem = (d: {
   _id: unknown; type: string; title: string; description?: string | null; mediaUrl?: string | null; parallaxSpeed?: number | null;
+  display?: string | null; gallery?: string[] | null; video?: string | null;
   date: string; status?: string | null; order?: number | null; isSample?: boolean | null;
   metadata?: { gradeOrLink?: string | null; skills?: string[] | null; howIEarnedIt?: string | null; problem?: string | null; whatIDid?: string | null; result?: string | null; featured?: boolean | null } | null;
 }): AdminItem => ({
@@ -16,6 +19,9 @@ export const toAdminItem = (d: {
   description: d.description ?? "",
   mediaUrl: d.mediaUrl ?? "",
   parallaxSpeed: d.parallaxSpeed ?? 0.5,
+  display: normalizeDisplay(d.display),
+  gallery: d.gallery ?? [],
+  video: d.video ?? "",
   date: d.date,
   status: d.status === "published" ? "published" : "draft",
   order: d.order ?? 0,

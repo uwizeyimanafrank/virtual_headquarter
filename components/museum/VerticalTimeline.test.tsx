@@ -6,7 +6,7 @@ import { VerticalTimeline } from "@/components/museum/VerticalTimeline";
 import type { MuseumChapter } from "@/lib/museum";
 import { mockMedia } from "@/tests/media-query";
 
-const entry = (over: Partial<MuseumChapter["items"][number]> = {}): MuseumChapter["items"][number] => ({ id: "1", type: "project", isSample: false, title: "Task Tracker", description: "A tracker for tasks.", mediaUrl: "", parallaxSpeed: 0.5, date: "2026-02", skills: ["Next.js"], link: "", howIEarnedIt: "Built it over a weekend.", ...over });
+const entry = (over: Partial<MuseumChapter["items"][number]> = {}): MuseumChapter["items"][number] => ({ id: "1", type: "project", isSample: false, title: "Task Tracker", description: "A tracker for tasks.", mediaUrl: "", parallaxSpeed: 0.5, date: "2026-02", skills: ["Next.js"], link: "", howIEarnedIt: "Built it over a weekend.", display: "both", gallery: [], video: "", featured: false, ...over });
 const chapters: MuseumChapter[] = [
   { key: "projects", title: "The Execution", items: [entry(), entry({ id: "2", title: "Shop Catalog", link: "https://example.org/shop", date: "2026-05" })] },
   { key: "certificates", title: "Proof", items: [entry({ id: "3", type: "certificate", title: "Web Dev Cert", link: "javascript:alert(1)" })] },

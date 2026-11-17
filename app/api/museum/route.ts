@@ -1,3 +1,4 @@
+import { normalizeDisplay } from "@/lib/item-types";
 import { connectDb } from "@/lib/db";
 import { getSettings } from "@/lib/settings";
 import { applySampleRules } from "@/lib/samples-data";
@@ -37,6 +38,9 @@ export async function GET(request: Request) {
     description: d.description,
     mediaUrl: d.mediaUrl,
     parallaxSpeed: d.parallaxSpeed,
+    display: normalizeDisplay(d.display),
+    gallery: d.gallery ?? [],
+    video: d.video ?? "",
     date: d.date,
     metadata: {
       gradeOrLink: d.metadata?.gradeOrLink ?? "",

@@ -1,6 +1,6 @@
 import { Schema, model, models, type InferSchemaType, type Model } from "mongoose";
 
-import { ITEM_TYPES, type ItemType } from "@/lib/item-types";
+import { DISPLAY_MODES, ITEM_TYPES, type ItemType } from "@/lib/item-types";
 export { ITEM_TYPES };
 export type { ItemType };
 
@@ -10,6 +10,9 @@ const schema = new Schema(
     title: { type: String, required: true, trim: true, maxlength: 120 },
     description: { type: String, default: "", maxlength: 4000 },
     mediaUrl: { type: String, default: "", maxlength: 500 },
+    display: { type: String, enum: DISPLAY_MODES, default: "both" }, // which Museum hall shows it; missing in old items = both
+    gallery: { type: [{ type: String, maxlength: 500 }], default: [] }, // extra pictures for the Glass Cases detail panel
+    video: { type: String, default: "", maxlength: 500 }, // optional Cloudinary video
     parallaxSpeed: { type: Number, default: 0.5, min: 0.1, max: 1.5 },
     date: { type: String, required: true, match: /^\d{4}-(0[1-9]|1[0-2])$/ }, // YYYY-MM
     status: { type: String, enum: ["draft", "published"], default: "draft" },

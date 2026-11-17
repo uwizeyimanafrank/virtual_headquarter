@@ -9,7 +9,7 @@ import { createMedia } from "@/tests/media-query";
 // element, which used to make React fail with "node to be removed is not a child" when the Museum
 // was removed (for example when the window is resized below 768px).
 const chapters: MuseumChapter[] = [
-  { key: "projects", title: "Work", items: [{ id: "b", type: "project", title: "Piece b", date: "2026-02", description: "x", mediaUrl: "", parallaxSpeed: 0.5, skills: [], link: "", howIEarnedIt: "", isSample: false }] },
+  { key: "projects", title: "Work", items: [{ id: "b", type: "project", title: "Piece b", date: "2026-02", description: "x", mediaUrl: "", parallaxSpeed: 0.5, skills: [], link: "", howIEarnedIt: "", isSample: false, display: "both", gallery: [], video: "", featured: false }] },
 ];
 
 beforeEach(() => {

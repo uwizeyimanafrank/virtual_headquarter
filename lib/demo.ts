@@ -42,6 +42,7 @@ export function demoMuseum(): MuseumData {
         id: `demo-${c.key}-${i}`, type: s.type as MuseumChapter["items"][number]["type"], title: s.title, date: s.date,
         description: s.description, mediaUrl: s.mediaUrl, parallaxSpeed: s.parallaxSpeed, skills: [...(meta(s).skills ?? [])],
         link: meta(s).gradeOrLink ?? "", howIEarnedIt: meta(s).howIEarnedIt ?? "", isSample: true,
+        display: "both" as const, gallery: [] as string[], video: "", featured: false,
       }))
       .sort((a, b) => b.date.localeCompare(a.date)),
   }));

@@ -89,3 +89,34 @@ describe("effect switches (P11-T17)", () => {
     expect(settingsPatch.safeParse({ effects: { cursorGlow: "off" } }).success).toBe(false);
   });
 });
+
+describe("Museum display, gallery and video (P12-T01)", () => {
+  const base = { type: "project", title: "Shop", date: "2026-01" };
+  it("old items without the new fields still validate, with safe defaults", () => {
+    const r = museumItemInput.parse(base);
+    expect(r.display).toBe("both");
+    expect(r.gallery).toEqual([]);
+    expect(r.video).toBe("");
+  });
+  it("accepts tour, case or both and refuses anything else", () => {
+    for (const d of ["tour", "case", "both"]) expect(museumItemInput.safeParse({ ...base, display: d }).success).toBe(true);
+    expect(museumItemInput.safeParse({ ...base, display: "attic" }).success).toBe(false);
+  });
+  it("gallery: up to 8 allowed picture addresses", () => {
+    const ok = "https://res.cloudinary.com/demo/image/upload/a.jpg";
+    expect(museumItemInput.safeParse({ ...base, gallery: [ok, "/samples/project.svg"] }).success).toBe(true);
+    expect(museumItemInput.safeParse({ ...base, gallery: Array(9).fill(ok) }).success).toBe(false);
+    expect(museumItemInput.safeParse({ ...base, gallery: ["https://evil.example/a.jpg"] }).success).toBe(false);
+    expect(museumItemInput.safeParse({ ...base, gallery: [""] }).success).toBe(false);
+  });
+  it("video must be a Cloudinary https address or empty", () => {
+    expect(museumItemInput.safeParse({ ...base, video: "https://res.cloudinary.com/demo/video/upload/v.mp4" }).success).toBe(true);
+    expect(museumItemInput.safeParse({ ...base, video: "" }).success).toBe(true);
+    expect(museumItemInput.safeParse({ ...base, video: "https://youtube.com/watch?v=x" }).success).toBe(false);
+    expect(museumItemInput.safeParse({ ...base, video: "javascript:alert(1)" }).success).toBe(false);
+  });
+  it("a partial update never fills these in by itself", () => {
+    expect(museumItemPatch.parse({ title: "x" })).toEqual({ title: "x" });
+    expect(museumItemPatch.parse({ display: "case" })).toEqual({ display: "case" });
+  });
+});

@@ -1,3 +1,4 @@
+import { DISPLAY_MODES, MAX_GALLERY } from "@/lib/item-types";
 import { z } from "zod";
 import { ITEM_TYPES } from "@/models/MuseumItem";
 
@@ -35,6 +36,20 @@ const mediaUrl = z
     { message: "mediaUrl must be an uploaded image (Cloudinary) or a /samples/ file" },
   );
 
+/** A video must be uploaded to Cloudinary (https). Empty means no video. */
+const videoUrl = z
+  .string()
+  .max(LIMITS.url)
+  .refine((v) => {
+    if (v === "") return true;
+    try {
+      const u = new URL(v);
+      return u.protocol === "https:" && u.hostname === "res.cloudinary.com";
+    } catch {
+      return false;
+    }
+  }, { message: "video must be an uploaded video (Cloudinary)" });
+
 // Field rules WITHOUT defaults, so the same rules serve both "create" and "partial update".
 const field = {
   type: z.enum(ITEM_TYPES),
@@ -42,6 +57,9 @@ const field = {
   description: text(LIMITS.description),
   mediaUrl,
   parallaxSpeed: z.number().min(0.1).max(1.5),
+  display: z.enum(DISPLAY_MODES),
+  gallery: z.array(mediaUrl.pipe(z.string().min(1))).max(MAX_GALLERY),
+  video: videoUrl,
   date: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, "date must be YYYY-MM"),
   status: z.enum(["draft", "published"]),
   order: z.number().int(),
@@ -63,6 +81,9 @@ export const museumItemInput = z.object({
   description: field.description.default(""),
   mediaUrl: field.mediaUrl.default(""),
   parallaxSpeed: field.parallaxSpeed.default(0.5),
+  display: field.display.default("both"),
+  gallery: field.gallery.default([]),
+  video: field.video.default(""),
   date: field.date,
   status: field.status.default("draft"),
   order: field.order.default(0),
@@ -87,6 +108,9 @@ export const museumItemPatch = z.object({
   description: field.description.optional(),
   mediaUrl: field.mediaUrl.optional(),
   parallaxSpeed: field.parallaxSpeed.optional(),
+  display: field.display.optional(),
+  gallery: field.gallery.optional(),
+  video: field.video.optional(),
   date: field.date.optional(),
   status: field.status.optional(),
   order: field.order.optional(),

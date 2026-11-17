@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P11-T18 (Tests, screenshots, docs)
+- **Current task:** P12-T02 (Hall switcher)
 - **Status:** P11 in progress, T01-T17 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
 - **Last worker:** Claude (chat), 2026-11-15
-- **Next action (one sentence):** P11-T18: take screenshots at 390/768/1440 (needs a browser), run Lighthouse, finish the leftovers (T15 experience/education/skills cards), refresh docs. Then TT15 Canvas CV v2, T16 polish layer, T17 look-and-feel settings, T18 tests/docs. After P11: P12 museum halls, P13 dispatches and gallery, P14 hire, then P10-rest (security review, speed, share previews as real PNG/JPG, deploy, merge to main), then P15 avatar.
+- **Next action (one sentence):** P12-T02: hall switcher at the top of the Museum (Story Tour door, Glass Cases door, tabs on phones, deep link #cases, no storage). Then P12-T03 GlassCase card, T04 DetailPanel, T05 CasesHall, T06 Office options, T07 video rules, T08 tests/screenshots. Leftover P11: T18 (screenshots, Lighthouse) and T15 experience/education cards (Frank to choose how items mark them). After P12: P13, P14, P10-rest, P15.
 
 ## Phase board
 | Phase | Name | Status |
@@ -26,7 +26,7 @@ Update this after EVERY task. Keep it short.
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
 | P11 | Art and Home v2 | in progress (T01-T17 done) |
-| P12 | Museum halls (glass cases) | not started |
+| P12 | Museum halls (glass cases) | in progress (T01 done) |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |
 | P15 | Public avatar and AI control room | not started (after first release) |
