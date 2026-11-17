@@ -25,3 +25,14 @@ describe("Canvas CV download", () => {
     }
   });
 });
+
+describe("Canvas CV skills", () => {
+  it("shows each skill with a level worked out from the items", () => {
+    const d = data();
+    d.items = ["a", "b"].map((id) => ({ id, type: "project", title: id, date: "2025-01", description: "", mediaUrl: "", skills: ["React"], link: "" }));
+    const { getByLabelText } = render(<CanvasCv data={d} />);
+    const list = getByLabelText("Skills with levels");
+    expect(list.textContent).toContain("React");
+    expect(list.textContent).toContain("Regular");
+  });
+});

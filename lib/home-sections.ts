@@ -64,3 +64,21 @@ export function buildFeatured(items: readonly HomeItem[]): Featured[] {
     .slice(0, MAX_FEATURED)
     .map((i) => ({ id: i.id, title: i.title, problem: i.problem!, whatIDid: i.whatIDid!, result: i.result!, chips: i.skills.slice(0, 6), link: i.link }));
 }
+
+export type SkillLevel = "Used" | "Regular" | "Core";
+export type Skill = { name: string; count: number; level: SkillLevel };
+
+/** Skill level comes only from how many published items list the skill (1 = Used, 2-3 = Regular, 4+ = Core). Never a self-rating. */
+export function skillLevel(count: number): SkillLevel {
+  return count >= 4 ? "Core" : count >= 2 ? "Regular" : "Used";
+}
+
+/** Skills most used first, with a level, capped (default 14). */
+export function buildSkills(items: readonly Pick<HomeItem, "skills">[], max = 14): Skill[] {
+  const counts = new Map<string, number>();
+  for (const i of items) for (const s of new Set(i.skills)) counts.set(s, (counts.get(s) ?? 0) + 1);
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, max)
+    .map(([name, count]) => ({ name, count, level: skillLevel(count) }));
+}

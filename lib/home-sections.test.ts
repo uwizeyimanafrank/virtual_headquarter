@@ -58,3 +58,16 @@ describe("buildFeatured", () => {
   });
   it("is empty when nothing is featured", () => expect(buildFeatured([item({})])).toEqual([]));
 });
+
+import { buildSkills, skillLevel } from "@/lib/home-sections";
+describe("skills with levels", () => {
+  it("level comes only from how many items use the skill", () => {
+    expect([1, 2, 3, 4, 9].map(skillLevel)).toEqual(["Used", "Regular", "Regular", "Core", "Core"]);
+  });
+  it("counts an item once per skill, sorts most used first, caps the list", () => {
+    const items = [{ skills: ["React", "React", "Node"] }, { skills: ["React"] }, { skills: ["Node", "Go"] }];
+    expect(buildSkills(items)).toEqual([{ name: "Node", count: 2, level: "Regular" }, { name: "React", count: 2, level: "Regular" }, { name: "Go", count: 1, level: "Used" }]);
+    expect(buildSkills(items, 1).length).toBe(1);
+  });
+  it("is empty without skills", () => expect(buildSkills([{ skills: [] }])).toEqual([]));
+});

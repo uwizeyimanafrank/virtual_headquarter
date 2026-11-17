@@ -1,6 +1,7 @@
 import type { HomeData, HomeItem } from "@/lib/home";
 import "./cv-print.css";
 import { CvCard } from "@/components/home/CvCard";
+import { buildSkills } from "@/lib/home-sections";
 import { PrintButton } from "@/components/home/PrintButton";
 
 const byTypeNewest = (items: HomeItem[], type: string) => items.filter((i) => i.type === type);
@@ -14,10 +15,7 @@ export function CanvasCv({ data }: { data: HomeData }) {
   const certificates = byTypeNewest(items, "certificate").slice(0, 4);
   const projects = byTypeNewest(items, "project").slice(0, 4);
 
-  // Skills, most used first.
-  const counts = new Map<string, number>();
-  for (const i of items) for (const s of i.skills) counts.set(s, (counts.get(s) ?? 0) + 1);
-  const skills = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 14);
+  const skills = buildSkills(items);
 
   // Trajectory: oldest to newest.
   const trajectory = [...items].sort((a, b) => a.date.localeCompare(b.date)).slice(-7);
@@ -62,7 +60,17 @@ export function CanvasCv({ data }: { data: HomeData }) {
 
         <CvCard kicker="Toolkit" title="Skills" className="lg:col-span-2 lg:mt-8" delay={1.8}>
           {skills.length === 0 ? <p className="text-sm text-muted">Add skills to your projects and they collect here.</p> : (
-            <p className="flex flex-wrap gap-1.5">{skills.map(([s, n]) => <span key={s} className="rounded-full bg-surface-strong px-2.5 py-1 text-xs" title={`used in ${n} item${n === 1 ? "" : "s"}`}>{s}</span>)}</p>
+            <ul aria-label="Skills with levels" className="space-y-1.5 text-sm">
+              {skills.map((k) => (
+                <li key={k.name} className="flex items-center justify-between gap-3">
+                  <span>{k.name}</span>
+                  <span className="flex items-center gap-2 text-xs text-muted" title={`used in ${k.count} item${k.count === 1 ? "" : "s"}`}>
+                    <span aria-hidden="true" className="flex gap-0.5">{[1, 2, 3].map((n) => <span key={n} className={`h-1.5 w-3 rounded-full ${n <= (k.level === "Core" ? 3 : k.level === "Regular" ? 2 : 1) ? "bg-accent" : "bg-line"}`} />)}</span>
+                    {k.level}
+                  </span>
+                </li>
+              ))}
+            </ul>
           )}
         </CvCard>
 
