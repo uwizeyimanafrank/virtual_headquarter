@@ -34,6 +34,8 @@ export function GlassCase({ item, onOpen }: { item: MuseumItemData; onOpen: (ite
       className={`gc group relative block w-full overflow-hidden rounded-2xl border border-line bg-surface text-left shadow-lg shadow-black/25 ${enabled ? "transition-transform duration-150 ease-out will-change-transform" : ""}`}
     >
       {item.mediaUrl ? (
+        // Address checked when saved (Cloudinary or bundled sample only).
+        // eslint-disable-next-line @next/next/no-img-element
         <img src={thumb(item.mediaUrl, 640)} alt="" loading="lazy" decoding="async" width={640} height={400} className="aspect-[16/10] w-full object-cover" />
       ) : (
         <div aria-hidden="true" className="aspect-[16/10] w-full bg-surface-strong" />

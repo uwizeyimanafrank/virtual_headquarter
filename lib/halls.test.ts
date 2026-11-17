@@ -21,3 +21,24 @@ describe("halls and the address bar", () => {
     expect(nextHall("tour", "Enter")).toBeNull();
   });
 });
+
+import { caseHash, caseIdFromHash, neighbour, panelImages } from "@/lib/halls";
+describe("share links and panel helpers", () => {
+  it("#case=<id> round trips, odd values give null", () => {
+    expect(caseIdFromHash(caseHash("64f0a1"))).toBe("64f0a1");
+    expect(caseIdFromHash(caseHash("a b/c"))).toBe("a b/c");
+    for (const h of ["", "#cases", "#case=", "#case=%E0%A4%A"]) expect(caseIdFromHash(h)).toBeNull();
+  });
+  it("panel pictures: main first, then the gallery, no blanks or repeats", () => {
+    expect(panelImages({ mediaUrl: "a", gallery: ["b", "a", "", "c"] })).toEqual(["a", "b", "c"]);
+    expect(panelImages({ mediaUrl: "", gallery: [] })).toEqual([]);
+  });
+  it("previous and next wrap around; unknown id or a single piece gives null", () => {
+    const xs = [{ id: "1" }, { id: "2" }, { id: "3" }];
+    expect(neighbour(xs, "1", -1)?.id).toBe("3");
+    expect(neighbour(xs, "3", 1)?.id).toBe("1");
+    expect(neighbour(xs, "2", 1)?.id).toBe("3");
+    expect(neighbour(xs, "9", 1)).toBeNull();
+    expect(neighbour([{ id: "1" }], "1", 1)).toBeNull();
+  });
+});

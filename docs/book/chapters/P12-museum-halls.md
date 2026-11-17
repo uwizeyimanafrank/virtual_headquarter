@@ -21,7 +21,7 @@ Tick each task `[x]` when done. Do them in order.
 **Files:** components/museum/GlassCase.tsx
 **Done when:** component tests; reduced motion removes tilt and spotlight.
 
-### [ ] P12-T04 — Floating detail panel
+### [x] P12-T04 — Floating detail panel
 **Do:** clicking a case opens a floating elevated panel: big media (image or video carousel), full description, skills, how it was earned, links, previous and next, Esc to close, focus trap, share link `#case=<id>`.
 **Files:** components/museum/DetailPanel.tsx
 **Done when:** keyboard-only use works; opens from a shared link; screen reader labels checked.
