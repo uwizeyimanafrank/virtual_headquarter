@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { CaseVideo } from "@/components/museum/CaseVideo";
 import { TYPE_LABELS } from "@/lib/item-types";
 import { caseHash, neighbour, panelImages } from "@/lib/halls";
 import { thumb } from "@/lib/media";
@@ -105,7 +106,7 @@ function PanelBody({ item, prev, next, onNavigate, onClose, closeRef }: { item: 
           </div>
           <button ref={closeRef} type="button" onClick={onClose} aria-label="Close" className="rounded-full border border-line px-3 py-1.5 text-sm hover:bg-surface-strong">Close</button>
         </div>
-        {item.video && <video src={item.video} controls preload="none" playsInline muted className="w-full rounded-2xl" aria-label={`Video: ${item.title}`} />}
+        {item.video && <CaseVideo src={item.video} title={item.title} />}
         {item.description && <p className="whitespace-pre-wrap leading-relaxed text-muted">{item.description}</p>}
         {item.howIEarnedIt && (
           <div>

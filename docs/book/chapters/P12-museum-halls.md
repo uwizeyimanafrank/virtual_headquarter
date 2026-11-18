@@ -36,7 +36,7 @@ Tick each task `[x]` when done. Do them in order.
 **Files:** Office content manager
 **Done when:** every new option saved from the Office appears in the Museum.
 
-### [ ] P12-T07 — Video and media rules
+### [x] P12-T07 — Video and media rules
 **Do:** optional video upload to Cloudinary with an auto poster image; played muted and only in view or on hover; never autoplays with reduced motion or Save-Data; images use responsive sizes and blurred placeholders.
 **Files:** lib/cloudinary.ts, components/museum/Media.tsx
 **Done when:** with Save-Data on, only the poster loads; size limit enforced in the Office.

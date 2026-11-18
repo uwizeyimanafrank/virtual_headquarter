@@ -63,12 +63,10 @@ describe("DetailPanel", () => {
     await screen.findByText("Link copied");
     expect(writeText.mock.calls[0][0]).toMatch(/#case=c$/);
   });
-  it("a video has controls, no autoplay and is muted", () => {
-    const { container } = render(<DetailPanel items={[mk("v", { video: "https://res.cloudinary.com/x/video/upload/v.mp4" })]} openId="v" onClose={() => {}} onNavigate={() => {}} returnFocusTo={null} />);
-    const v = document.querySelector("video")!;
-    expect(v.hasAttribute("controls")).toBe(true);
-    expect(v.hasAttribute("autoplay")).toBe(false);
-    expect(v.getAttribute("preload")).toBe("none");
-    expect(container).toBeTruthy();
+  it("a video is only a poster with a Play button until pressed", () => {
+    render(<DetailPanel items={[mk("v", { video: "https://res.cloudinary.com/x/video/upload/v1/clip.mp4" })]} openId="v" onClose={() => {}} onNavigate={() => {}} returnFocusTo={null} />);
+    expect(document.querySelector("video")).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Play video: Piece v" }));
+    expect(document.querySelector("video")!.hasAttribute("controls")).toBe(true);
   });
 });

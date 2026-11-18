@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P12-T07 (Video rules)
+- **Current task:** P12-T08 (Tests, screenshots, docs for the halls)
 - **Status:** P11 in progress, T01-T17 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
 - **Last worker:** Claude (chat), 2026-11-15
-- **Next action (one sentence):** P12-T07: video rules (poster frame from the Cloudinary address, no load on Save-Data or slow connections, plays only when opened, pauses when the panel closes or the piece changes). Then T08 tests/screenshots. Leftover P11: T18 and T15 experience/education cards. After P12: P13, P14, P10-rest, P15.
+- **Next action (one sentence):** P12-T08: final checks for the halls: screenshots at 390/768/1440 (needs a browser), keyboard walk-through, docs refresh. Leftover P11: T18 and T15 experience/education cards. Then P13 dispatches and gallery, P14 Hire page, P10-rest (security review, speed, deploy, merge dev to main), P15 public avatar.
 
 ## Phase board
 | Phase | Name | Status |
@@ -26,7 +26,7 @@ Update this after EVERY task. Keep it short.
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
 | P11 | Art and Home v2 | in progress (T01-T17 done) |
-| P12 | Museum halls (glass cases) | in progress (T01-T06 done) |
+| P12 | Museum halls (glass cases) | in progress (T01-T07 done) |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |
 | P15 | Public avatar and AI control room | not started (after first release) |
