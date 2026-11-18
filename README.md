@@ -27,7 +27,7 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 | P08 | Developer tab (watch Atlas, Cloudinary, Render and any website; storage library; system reminder; down banner) | done in code (needs a visual check) |
 | P09 | Encrypted secrets vault | done in code (not yet looked at in a real browser) |
 | P11 | Art and Home v2 (image slots, art kit, moving scenes, Home blocks, hero, card wall, backdrops, stats/what I build/journey/featured done, then CV/polish) | **in progress: T01-T17 done (of 18)** |
-| P12 | Museum halls: Story Tour + Glass Cases with floating detail panel | planned |
+| P12 | Museum halls: Story Tour + Glass Cases with floating detail panel | done in code (T01-T07; T08 screenshots still to do) |
 | P13 | Dispatches (news) and public Gallery | planned |
 | P14 | Hire me page and inbox | planned |
 | P15 | Public avatar and Office AI control room | planned (after first release) |
@@ -164,7 +164,7 @@ The setup screen exists only on your own computer (development mode). On a real 
 Read `AGENTS.md` section **"Taking over from another AI"**, then `STATE.md`. The whole plan for the next phases is in `DECISIONS.md` ("P11 to P15 plan") and `docs/book/chapters/P11` to `P15`.
 
 ## What exists today (2026-11-07)
-- **Public site:** Home (hero with a moving drawn scene behind it and the character half in shadow, Welcome and Canvas CV tabs, card wall with two slow picture strips), Museum (sideways story tour, sunset backdrop), Connect (message terminal, storm backdrop). With no database it shows finished-looking demo content.
+- **Public site:** Home (hero with a moving drawn scene behind it and the character half in shadow, Welcome and Canvas CV tabs, card wall with two slow picture strips), Museum (two halls: the sideways Story Tour and the Glass Cases with filters, search, a floating detail panel and share links like /museum#case=ID; sunset backdrop), Connect (message terminal, storm backdrop). With no database it shows finished-looking demo content.
 - **Office** (secret address): Content, **Images** (replace any picture, focus point, alt text, credit, import from a link), **Home layout** (order, show/hide, edit the words of every block), Settings, Inbox, Developer, Vault (zero-knowledge secrets), AI assistant, Setup.
 - **Local setup screen** `/setup` (development only; the terminal prints a one-time code).
 - **How the pieces fit:** every fixed picture is an **image slot** (`lib/image-slots.ts`); the Home page is a list of **blocks** (`lib/home-blocks.ts`); the drawn art is in `public/art` with named layers (`lib/art.ts`) and a generated module (`npm run build:art` after changing any art file). Guards: `npm run check:urls` and `npm run check:images` run before every build.

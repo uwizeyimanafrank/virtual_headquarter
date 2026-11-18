@@ -42,7 +42,7 @@ Tick each task `[x]` when done. Do them in order.
 **Done when:** with Save-Data on, only the poster loads; size limit enforced in the Office.
 **Don't:** No autoplay with sound; no giant files (limit stated in the Office).
 
-### [ ] P12-T08 — Tests, screenshots, docs
+### [x] P12-T08 — Tests, screenshots, docs
 **Done when:** all checks clean; screenshots of both halls at three sizes.
 
 ## Phase finish check

@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P12-T08 (Tests, screenshots, docs for the halls)
+- **Current task:** P13-T01 (Dispatches: data and API)
 - **Status:** P11 in progress, T01-T17 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
 - **Last worker:** Claude (chat), 2026-11-15
-- **Next action (one sentence):** P12-T08: final checks for the halls: screenshots at 390/768/1440 (needs a browser), keyboard walk-through, docs refresh. Leftover P11: T18 and T15 experience/education cards. Then P13 dispatches and gallery, P14 Hire page, P10-rest (security review, speed, deploy, merge dev to main), P15 public avatar.
+- **Next action (one sentence):** P13-T01: Dispatch data (title, body, date, picture, status), admin API and public API with validation and tests. Frank first: look at the Museum halls in a real browser (390/768/1440), keyboard-walk the Glass Cases, run Lighthouse on Home. Leftover P11: T18, T15 experience/education cards. Then P13 dispatches and gallery, P14 Hire page, P10-rest, P15.
 
 ## Phase board
 | Phase | Name | Status |
@@ -26,7 +26,7 @@ Update this after EVERY task. Keep it short.
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
 | P11 | Art and Home v2 | in progress (T01-T17 done) |
-| P12 | Museum halls (glass cases) | in progress (T01-T07 done) |
+| P12 | Museum halls (glass cases) | done in code (T08 screenshots/browser check still open) |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |
 | P15 | Public avatar and AI control room | not started (after first release) |
