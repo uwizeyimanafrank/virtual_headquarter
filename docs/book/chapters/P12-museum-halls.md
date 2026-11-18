@@ -31,7 +31,7 @@ Tick each task `[x]` when done. Do them in order.
 **Files:** components/museum/CasesHall.tsx
 **Done when:** filters and search tested; empty state shows samples.
 
-### [ ] P12-T06 — Office: display options and live preview
+### [x] P12-T06 — Office: display options and live preview
 **Do:** item form gets display choice, featured switch, several images, optional video, and a live preview of the case card.
 **Files:** Office content manager
 **Done when:** every new option saved from the Office appears in the Museum.

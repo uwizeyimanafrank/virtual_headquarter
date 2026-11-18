@@ -98,6 +98,7 @@ export function ContentManager() {
               <p className="flex flex-wrap items-center gap-2 text-sm font-medium">
                 <span className="truncate">{i.title}</span>
                 {i.isSample && <SampleBadge />}
+                <span className="text-xs text-muted" title="Where this piece appears in the Museum">{i.display === "tour" ? "Story Tour" : i.display === "case" ? "Glass Cases" : "Both halls"}{i.metadata.featured ? " · Featured" : ""}</span>
               </p>
               <p className="text-xs text-muted">{i.type} &middot; {i.date}</p>
             </div>

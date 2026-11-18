@@ -5,6 +5,9 @@ import { api, ApiError } from "@/lib/api";
 import type { AdminItem } from "@/lib/admin-items";
 import { SampleBadge } from "@/components/office/SampleBadge";
 import { Uploader } from "@/components/office/Uploader";
+import { DISPLAY_MODES, MAX_GALLERY, type DisplayMode } from "@/lib/item-types";
+
+const DISPLAY_LABELS: Record<DisplayMode, string> = { both: "Both halls", tour: "Story Tour only", case: "Glass Cases only" };
 
 const TYPES = ["project", "certificate", "story", "book", "reference"] as const;
 type T = (typeof TYPES)[number];
@@ -37,6 +40,9 @@ export function ItemForm({ initial }: { initial?: AdminItem }) {
   const [whatIDid, setWhatIDid] = useState(initial?.metadata.whatIDid ?? "");
   const [result, setResult] = useState(initial?.metadata.result ?? "");
   const [featured, setFeatured] = useState(initial?.metadata.featured ?? false);
+  const [display, setDisplay] = useState<DisplayMode>(initial?.display ?? "both");
+  const [gallery, setGallery] = useState<string[]>(initial?.gallery ?? []);
+  const [video, setVideo] = useState(initial?.video ?? "");
   const [errors, setErrors] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
 
@@ -50,8 +56,8 @@ export function ItemForm({ initial }: { initial?: AdminItem }) {
     setBusy(true);
     setErrors([]);
     const body = {
-      type, title, description, mediaUrl, parallaxSpeed: speed, date, status,
-      metadata: { gradeOrLink: LINK_LABEL[type] ? link : "", skills: showSkills ? skillList : [], howIEarnedIt: storyLabel ? story : "", problem: isProject ? problem : "", whatIDid: isProject ? whatIDid : "", result: isProject ? result : "", featured: isProject && featured },
+      type, title, description, mediaUrl, parallaxSpeed: speed, date, status, display, gallery, video: video.trim(),
+      metadata: { gradeOrLink: LINK_LABEL[type] ? link : "", skills: showSkills ? skillList : [], howIEarnedIt: storyLabel ? story : "", problem: isProject ? problem : "", whatIDid: isProject ? whatIDid : "", result: isProject ? result : "", featured },
     };
     try {
       if (initial) await api(`/api/admin/items/${initial.id}`, { method: "PATCH", body: JSON.stringify(body) });
@@ -101,7 +107,6 @@ export function ItemForm({ initial }: { initial?: AdminItem }) {
             <div><label className={label} htmlFor="problem">The problem</label><input id="problem" className={input} value={problem} onChange={(e) => setProblem(e.target.value)} maxLength={300} /></div>
             <div><label className={label} htmlFor="didit">What I did</label><input id="didit" className={input} value={whatIDid} onChange={(e) => setWhatIDid(e.target.value)} maxLength={300} /></div>
             <div><label className={label} htmlFor="result">The result</label><input id="result" className={input} value={result} onChange={(e) => setResult(e.target.value)} maxLength={300} /></div>
-            <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} /> Feature this project on Home (the first 3 are shown)</label>
           </fieldset>
         )}
         {LINK_LABEL[type] && (
@@ -119,6 +124,36 @@ export function ItemForm({ initial }: { initial?: AdminItem }) {
         <div>
           <p className={label}>Image</p>
           <Uploader folder={type} value={mediaUrl} onChange={setMediaUrl} />
+        </div>
+        <fieldset className="space-y-3 rounded-xl border border-line p-3">
+          <legend className="px-1 text-sm text-muted">In the Museum</legend>
+          <div>
+            <label className={label} htmlFor="display">Where it appears</label>
+            <select id="display" className={input} value={display} onChange={(e) => setDisplay(e.target.value as DisplayMode)}>
+              {DISPLAY_MODES.map((d) => <option key={d} value={d}>{DISPLAY_LABELS[d]}</option>)}
+            </select>
+          </div>
+          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} /> Feature this piece (first in the Glass Cases{isProject ? ", and on Home as featured work when its problem, action and result are filled in" : ""})</label>
+        </fieldset>
+        <div>
+          <p className={label}>More pictures for the Glass Cases ({gallery.length} of {MAX_GALLERY})</p>
+          {gallery.length > 0 && (
+            <ul className="mb-2 flex flex-wrap gap-2">
+              {gallery.map((g, i) => (
+                <li key={`${g}-${i}`} className="relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={g} alt={`Extra picture ${i + 1}`} className="h-16 w-24 rounded-lg border border-line object-cover" />
+                  <button type="button" aria-label={`Remove extra picture ${i + 1}`} onClick={() => setGallery(gallery.filter((_, j) => j !== i))} className="absolute -right-1.5 -top-1.5 rounded-full bg-bg px-1.5 text-xs ring-1 ring-line">×</button>
+                </li>
+              ))}
+            </ul>
+          )}
+          {gallery.length < MAX_GALLERY && <Uploader folder={type} value="" onChange={(url) => url && setGallery((g) => (g.length < MAX_GALLERY && !g.includes(url) ? [...g, url] : g))} />}
+        </div>
+        <div>
+          <label className={label} htmlFor="video">Video link (optional)</label>
+          <input id="video" className={input} value={video} onChange={(e) => setVideo(e.target.value)} maxLength={500} placeholder="https://res.cloudinary.com/…/video/upload/…" />
+          <p className="mt-1 text-xs text-muted">Upload the video in Cloudinary and paste its address here. Only Cloudinary videos are accepted. It never plays by itself.</p>
         </div>
         <div>
           <label className={label} htmlFor="speed">Floating speed in the Museum: {speed.toFixed(1)}</label>
