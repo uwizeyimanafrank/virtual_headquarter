@@ -26,7 +26,7 @@ Tick each task `[x]` when done. Do them in order.
 **Files:** components/museum/DetailPanel.tsx
 **Done when:** keyboard-only use works; opens from a shared link; screen reader labels checked.
 
-### [ ] P12-T05 — Cases hall layout, filters, search
+### [x] P12-T05 — Cases hall layout, filters, search
 **Do:** grid of cases grouped by type with chips (All, Certificates, Projects, Books, References, Other) and a search box; featured first; samples when empty.
 **Files:** components/museum/CasesHall.tsx
 **Done when:** filters and search tested; empty state shows samples.

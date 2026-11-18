@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P12-T05 (Cases hall layout, filters, search)
+- **Current task:** P12-T06 (Office options for halls)
 - **Status:** P11 in progress, T01-T17 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
 - **Last worker:** Claude (chat), 2026-11-15
-- **Next action (one sentence):** P12-T05: CasesHall (grid grouped by type, chips All/Certificates/Projects/Books/References/Other, search box, featured first, samples when empty), then wire HallSwitcher + both halls + DetailPanel + #case= deep link into the Museum page. Then T06 Office options, T07 video rules, T08 tests/screenshots. Leftover P11: T18 and T15 experience/education cards. After P12: P13, P14, P10-rest, P15.
+- **Next action (one sentence):** P12-T06: Office item form gets Display (Tour / Cases / Both), Featured for every kind, Gallery (add up to 8 pictures), Video (Cloudinary), Office list shows where each item appears. Then T07 video rules (poster, Save-Data, in-view), T08 tests/screenshots. Leftover P11: T18 and T15 experience/education cards. After P12: P13, P14, P10-rest, P15.
 
 ## Phase board
 | Phase | Name | Status |
@@ -26,7 +26,7 @@ Update this after EVERY task. Keep it short.
 | P08 | Developer tab | done in code (needs a visual check) |
 | P09 | Secrets vault | done in code |
 | P11 | Art and Home v2 | in progress (T01-T17 done) |
-| P12 | Museum halls (glass cases) | in progress (T01-T04 done) |
+| P12 | Museum halls (glass cases) | in progress (T01-T05 done) |
 | P13 | Dispatches and Gallery | not started |
 | P14 | Hire me | not started |
 | P15 | Public avatar and AI control room | not started (after first release) |
