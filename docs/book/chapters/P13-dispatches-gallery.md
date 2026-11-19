@@ -4,7 +4,7 @@
 
 **Goal:** the site feels alive. **Dispatches** are short updates from the HQ (news, what I am building now, what I am learning, a win, a note). The **Gallery** is a stylish public wall of random images Frank uploads. Both are managed in the Office.
 
-### [ ] P13-T01 — Dispatch model and public API
+### [x] P13-T01 — Dispatch model and public API
 **Do:** `Dispatch`: title, short text, kind (`news`, `building`, `learning`, `win`, `note`), optional image or video, date, pinned, publish and expire dates, published. `GET /api/dispatches` returns only published and not expired items, cached.
 **Files:** models/Dispatch.ts, app/api/dispatches/route.ts, tests
 **Done when:** scheduled items appear and expire on time (tested with a fake clock).
