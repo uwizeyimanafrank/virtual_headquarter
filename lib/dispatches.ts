@@ -32,3 +32,10 @@ export function selectLive<T extends DispatchLike>(items: T[], now: Date): T[] {
 export function parseKind(value: string | null): DispatchKind | null {
   return DISPATCH_KINDS.find((k) => k === value) ?? null;
 }
+
+export const KIND_LABELS: Record<DispatchKind, string> = { news: "News", building: "Building", learning: "Learning", win: "Win", note: "Note" };
+
+/** "20 Nov 2026" in UTC, so the server and the browser always print the same text. */
+export function formatDispatchDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+}

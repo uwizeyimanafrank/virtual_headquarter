@@ -15,6 +15,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
           <div className="flex gap-1">
             <Link href="/" className={link}>Home</Link>
             <Link href="/museum" className={link}>Museum</Link>
+            <Link href="/dispatches" className={link}>Dispatches</Link>
             <Link href="/connect" className={link}>Connect</Link>
           </div>
         </nav>

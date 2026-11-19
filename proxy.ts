@@ -7,7 +7,7 @@ import { NextResponse, type NextRequest } from "next/server";
  * This is NOT the security boundary. Every Office page and admin API route re-checks the session itself.
  */
 const COOKIE_NAME = "vhq_session";
-const RESERVED = new Set(["office", "api", "admin", "login", "museum", "connect", "_next"]);
+const RESERVED = new Set(["office", "api", "admin", "login", "museum", "connect", "dispatches", "_next"]);
 
 function slug(): string | null {
   const s = process.env.ADMIN_ROUTE_SLUG;

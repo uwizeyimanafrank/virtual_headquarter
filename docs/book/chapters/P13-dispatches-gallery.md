@@ -14,7 +14,7 @@
 **Files:** Office dispatches page
 **Done when:** a new dispatch shows on Home within the cache time.
 
-### [ ] P13-T03 — Home block, /dispatches page, feed
+### [x] P13-T03 — Home block, /dispatches page, feed
 **Do:** a ticker strip and "Latest from the HQ" (3 cards) on Home; `/dispatches` with filter by kind; `/feed.xml` (RSS).
 **Files:** components/home/Dispatches.tsx, app/(site)/dispatches, app/feed.xml/route.ts
 **Done when:** feed validates; pages have share previews.

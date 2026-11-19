@@ -6,6 +6,7 @@ import { Hero } from "@/components/home/Hero";
 import { HomeBackground } from "@/components/home/HomeBackground";
 import { CardWall } from "@/components/home/CardWall";
 import { FeaturedWork } from "@/components/home/FeaturedWork";
+import { Dispatches } from "@/components/home/Dispatches";
 import { Journey } from "@/components/home/Journey";
 import { Stats } from "@/components/home/Stats";
 import { WhatIBuild } from "@/components/home/WhatIBuild";
@@ -26,6 +27,7 @@ export default async function Home() {
           journey: (b) => <Journey items={data.items} content={b.content} />,
           featured: (b) => <FeaturedWork items={data.items} content={b.content} />,
           cardWall: (b) => <CardWall items={data.items} content={b.content} />,
+          dispatches: (b) => <Dispatches content={b.content} />,
         }} />
         <Gate />
       </div>

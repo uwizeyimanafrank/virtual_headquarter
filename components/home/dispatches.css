@@ -1,0 +1,11 @@
+/* Dispatch ticker: a slow sideways strip. Transform only. With reduced motion it does not move and can be scrolled by hand. */
+@keyframes vhq-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.vhq-ticker-track { display: flex; width: max-content; }
+@media (prefers-reduced-motion: no-preference) {
+  .vhq-ticker-track { animation: vhq-ticker 60s linear infinite; }
+  .vhq-ticker:hover .vhq-ticker-track, .vhq-ticker:focus-within .vhq-ticker-track { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vhq-ticker { overflow-x: auto; }
+  .vhq-ticker-copy[aria-hidden="true"] { display: none; }
+}
