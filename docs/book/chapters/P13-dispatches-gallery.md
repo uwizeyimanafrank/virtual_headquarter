@@ -9,7 +9,7 @@
 **Files:** models/Dispatch.ts, app/api/dispatches/route.ts, tests
 **Done when:** scheduled items appear and expire on time (tested with a fake clock).
 
-### [ ] P13-T02 — Office: Dispatches manager
+### [x] P13-T02 — Office: Dispatches manager
 **Do:** create, edit, schedule, pin, delete; three sample dispatches when none exist (marked sample).
 **Files:** Office dispatches page
 **Done when:** a new dispatch shows on Home within the cache time.

@@ -30,6 +30,7 @@ const schema = new Schema(
       tourSeen: { type: Boolean, default: false },
       samplesSeeded: { type: Boolean, default: false }, // sample content was created once, never re-created by itself
       profileIsSample: { type: Boolean, default: false }, // profile fields currently hold sample text
+      dispatchSamplesSeeded: { type: Boolean, default: false }, // sample dispatches were created once, never re-created by themselves
     },
     twinAvatarUrl: { type: String, default: "", maxlength: 500 }, // picture of the AI Twin bubble in the Office
     effects: { type: Schema.Types.Mixed, default: {} }, // look-and-feel switches, see lib/effects.ts (missing = on)

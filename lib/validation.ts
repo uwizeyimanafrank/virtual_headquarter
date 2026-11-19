@@ -1,3 +1,4 @@
+import { DISPATCH_KINDS } from "@/lib/dispatches";
 import { DISPLAY_MODES, MAX_GALLERY } from "@/lib/item-types";
 import { z } from "zod";
 import { ITEM_TYPES } from "@/models/MuseumItem";
@@ -126,6 +127,58 @@ export const museumItemPatch = z.object({
     })
     .optional(),
 });
+
+// ---- Dispatches (P13-T02) ----
+// Dates travel as text: day = YYYY-MM-DD, schedule moments = ISO time with offset (the form converts), null/empty = not set.
+const dispatchMoment = z.union([z.iso.datetime({ offset: true }), z.literal("").transform(() => null), z.null()]);
+const dispatchField = {
+  title: field.title,
+  text: text(600),
+  kind: z.enum(DISPATCH_KINDS),
+  imageUrl: mediaUrl,
+  video: videoUrl,
+  date: z.iso.date(),
+  pinned: z.boolean(),
+  publishAt: dispatchMoment,
+  expireAt: dispatchMoment,
+  published: z.boolean(),
+};
+const endsAfterStart = (v: { publishAt?: string | null; expireAt?: string | null }) =>
+  !v.publishAt || !v.expireAt || new Date(v.expireAt).getTime() > new Date(v.publishAt).getTime();
+const endsAfterStartMsg = { message: "expireAt must be after publishAt", path: ["expireAt"] };
+
+/** Creating a dispatch: only the title is needed; it starts as a draft unless you say "published". */
+export const dispatchInput = z
+  .object({
+    title: dispatchField.title,
+    text: dispatchField.text.default(""),
+    kind: dispatchField.kind.default("note"),
+    imageUrl: dispatchField.imageUrl.default(""),
+    video: dispatchField.video.default(""),
+    date: dispatchField.date.default(() => new Date().toISOString().slice(0, 10)),
+    pinned: dispatchField.pinned.default(false),
+    publishAt: dispatchField.publishAt.default(null),
+    expireAt: dispatchField.expireAt.default(null),
+    published: dispatchField.published.default(false),
+  })
+  .refine(endsAfterStart, endsAfterStartMsg);
+export type DispatchInput = z.infer<typeof dispatchInput>;
+
+/** Updating a dispatch: every field optional, NO defaults, so a partial update never wipes other fields. */
+export const dispatchPatch = z
+  .object({
+    title: dispatchField.title.optional(),
+    text: dispatchField.text.optional(),
+    kind: dispatchField.kind.optional(),
+    imageUrl: dispatchField.imageUrl.optional(),
+    video: dispatchField.video.optional(),
+    date: dispatchField.date.optional(),
+    pinned: dispatchField.pinned.optional(),
+    publishAt: dispatchField.publishAt.optional(),
+    expireAt: dispatchField.expireAt.optional(),
+    published: dispatchField.published.optional(),
+  })
+  .refine(endsAfterStart, endsAfterStartMsg);
 
 export const contactInput = z.object({
   name: text(LIMITS.name).pipe(z.string().min(1)),

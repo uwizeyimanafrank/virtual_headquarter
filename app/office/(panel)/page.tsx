@@ -14,6 +14,7 @@ export default async function Dashboard() {
 
   const cards: [string, string, string, string | null][] = [
     ["Content", "Add and edit Museum items", `${base}/content`, null],
+    ["Dispatches", "Short updates from the HQ", `${base}/dispatches`, null],
     ["Messages", unread > 0 ? `${unread} unread message${unread === 1 ? "" : "s"}` : "No new messages", `${base}/messages`, null],
     ["Settings", "Your profile and site wording", `${base}/settings`, null],
     ["AI Twin", "Talk to your assistant", "", "P07"],

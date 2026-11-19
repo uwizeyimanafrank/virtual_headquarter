@@ -1,5 +1,7 @@
 import { connectDb } from "@/lib/db";
 import { parseKind, selectLive } from "@/lib/dispatches";
+import { getSettings } from "@/lib/settings";
+import { applySampleRules } from "@/lib/samples-data";
 import { Dispatch } from "@/models/Dispatch";
 
 /** Public list of LIVE dispatches: published, already started, not expired. Drafts and scheduled items never leave the server. */
@@ -14,7 +16,14 @@ export async function GET(request: Request) {
   if (kind) filter.kind = kind;
   const docs = await Dispatch.find(filter).lean();
 
-  const items = selectLive(docs, new Date()).map((d) => ({
+  // Samples follow the Office switches, same as the Museum: hidden entirely, or hidden once a real dispatch is live.
+  const settings = await getSettings();
+  const live = applySampleRules(
+    selectLive(docs, new Date()).map((d) => ({ ...d, type: "dispatch" })),
+    { showSamples: settings?.showSamples ?? true, autoHide: settings?.autoHideSamples ?? true },
+  );
+
+  const items = live.map((d) => ({
     id: String(d._id),
     title: d.title,
     text: d.text ?? "",
