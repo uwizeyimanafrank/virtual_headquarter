@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { api, ApiError } from "@/lib/api";
+import { stripLocation } from "@/lib/strip-location";
 
 type Sign = { cloudName: string; apiKey: string; timestamp: number; folder: string; allowedFormats: string; signature: string };
 
@@ -11,7 +12,7 @@ const MAX_BYTES = 8 * 1024 * 1024;
  * Drag-and-drop image upload straight to Cloudinary.
  * The server only hands out a signature; the secret never reaches the browser.
  */
-export function Uploader({ folder, value, onChange }: { folder: "project" | "certificate" | "story" | "book" | "reference" | "profile" | "slot" | "dispatch"; value: string; onChange: (url: string) => void }) {
+export function Uploader({ folder, value, onChange }: { folder: "project" | "certificate" | "story" | "book" | "reference" | "profile" | "slot" | "dispatch" | "gallery"; value: string; onChange: (url: string) => void }) {
   const input = useRef<HTMLInputElement>(null);
   const [over, setOver] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
@@ -23,9 +24,13 @@ export function Uploader({ folder, value, onChange }: { folder: "project" | "cer
     if (file.size > MAX_BYTES) return setError("That image is bigger than 8 MB. Please shrink it first.");
     try {
       setProgress(0);
+      // Hidden data (GPS place, camera, time) is removed here, before the file leaves this device. Needs no server and cannot be skipped by the API.
+      const stripped = stripLocation(new Uint8Array(await file.arrayBuffer()));
+      if (!stripped.cleaned && folder === "gallery") throw new Error("Gallery pictures must be JPG, PNG or WebP, so their hidden location data can be removed. Please convert it first.");
+      const toSend = stripped.cleaned ? new File([stripped.bytes as BlobPart], file.name, { type: file.type }) : file;
       const sign = await api<Sign>("/api/admin/upload-sign", { method: "POST", body: JSON.stringify({ folder }) });
       const form = new FormData();
-      form.append("file", file);
+      form.append("file", toSend);
       form.append("api_key", sign.apiKey);
       form.append("timestamp", String(sign.timestamp));
       form.append("folder", sign.folder);

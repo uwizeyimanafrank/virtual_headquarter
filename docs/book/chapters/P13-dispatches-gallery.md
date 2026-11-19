@@ -19,7 +19,7 @@
 **Files:** components/home/Dispatches.tsx, app/(site)/dispatches, app/feed.xml/route.ts
 **Done when:** feed validates; pages have share previews.
 
-### [ ] P13-T04 — Gallery models
+### [x] P13-T04 — Gallery models
 **Do:** `GalleryImage` (image, caption, alt text **required**, album, taken date, order, published) and `Album`. Location data is stripped from every upload.
 **Files:** models/GalleryImage.ts, models/Album.ts, upload route
 **Done when:** a test confirms no GPS data remains in stored images; alt text required.

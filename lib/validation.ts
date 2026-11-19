@@ -180,6 +180,45 @@ export const dispatchPatch = z
   })
   .refine(endsAfterStart, endsAfterStartMsg);
 
+// ---- Gallery (P13-T04) ----
+const objectId = z.string().regex(/^[a-f0-9]{24}$/i, "not a valid id");
+const nullableId = z.union([objectId, z.literal("").transform(() => null), z.null()]);
+const takenDate = z.union([z.iso.date(), z.literal("").transform(() => null), z.null()]);
+const galleryField = {
+  imageUrl: mediaUrl.pipe(z.string().min(1, "a picture is required")).refine((v) => !v.startsWith("/samples/"), "upload a real picture"),
+  caption: text(200),
+  alt: text(200).pipe(z.string().min(1, "alt text is required")), // describes the picture for people who cannot see it
+  album: nullableId,
+  takenDate,
+  order: z.number().int(),
+  published: z.boolean(),
+};
+
+/** Adding a picture to the gallery: the picture and its alt text are required, everything else has a safe default (a draft, no album). */
+export const galleryImageInput = z.object({
+  imageUrl: galleryField.imageUrl,
+  alt: galleryField.alt,
+  caption: galleryField.caption.default(""),
+  album: galleryField.album.default(null),
+  takenDate: galleryField.takenDate.default(null),
+  order: galleryField.order.default(0),
+  published: galleryField.published.default(false),
+});
+
+/** Updating a picture: every field optional and NO defaults. Alt text can be changed but never emptied. */
+export const galleryImagePatch = z.object({
+  imageUrl: galleryField.imageUrl.optional(),
+  alt: galleryField.alt.optional(),
+  caption: galleryField.caption.optional(),
+  album: galleryField.album.optional(),
+  takenDate: galleryField.takenDate.optional(),
+  order: galleryField.order.optional(),
+  published: galleryField.published.optional(),
+});
+
+export const albumInput = z.object({ title: text(80).pipe(z.string().min(1, "a title is required")), description: text(300).default(""), order: z.number().int().default(0) });
+export const albumPatch = z.object({ title: text(80).pipe(z.string().min(1)).optional(), description: text(300).optional(), order: z.number().int().optional() });
+
 export const contactInput = z.object({
   name: text(LIMITS.name).pipe(z.string().min(1)),
   email: z.string().trim().toLowerCase().max(LIMITS.email).pipe(z.email()),

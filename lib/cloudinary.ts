@@ -23,11 +23,13 @@ function configured() {
  */
 export const ALLOWED_UPLOAD_FORMATS = "jpg,jpeg,png,webp,gif,avif";
 
-export function getUploadSignature(folder: string) {
+/** The gallery takes only formats whose hidden location data we remove in the browser first (lib/strip-location.ts). No GIF, no AVIF. */
+export const GALLERY_UPLOAD_FORMATS = "jpg,jpeg,png,webp";
+
+export function getUploadSignature(folder: string, allowedFormats: string = ALLOWED_UPLOAD_FORMATS) {
   const c = configured();
   const timestamp = Math.round(Date.now() / 1000);
   // allowed_formats is part of the signed data, so the browser cannot change it to upload other file types.
-  const allowedFormats = ALLOWED_UPLOAD_FORMATS;
   const signature = c.utils.api_sign_request({ timestamp, folder, allowed_formats: allowedFormats }, requireEnv("CLOUDINARY_API_SECRET"));
   return {
     cloudName: requireEnv("CLOUDINARY_CLOUD_NAME"),
