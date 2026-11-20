@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P14-T01 (Hire me page)
+- **Current task:** P13-T07 (Tests, screenshots, docs)
 - **Status:** P11 in progress, T01-T17 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
 - **Last worker:** Claude (chat), 2026-11-19
-- **Next action (one sentence):** P13-T06: public /gallery (masonry wall, albums, lightbox with keyboard + swipe, lazy images, a gallery cache tag refreshed by the Office); show pictures ONLY through thumb() resized links (lib/media.ts), never the raw stored link, and only published ones (the Office API already keeps order per view). Frank first: look at the Museum halls in a real browser (390/768/1440), keyboard-walk the Glass Cases, run Lighthouse on Home. Leftover P11: T18, T15 experience/education cards. Then P13 dispatches and gallery, P14 Hire page, P10-rest, P15.
+- **Next action (one sentence):** P13-T07: final check of phase 13: add HTTP suites tests/http/dispatches.sh and gallery.sh (written, to be run by Frank with Mongo), update README feature list and docs/book chapter notes, run all checks; then Frank does the phase finish check (publish a dispatch and five photos from the Office, see them on Home, /dispatches and /gallery). Frank first: look at the Museum halls in a real browser (390/768/1440), keyboard-walk the Glass Cases, run Lighthouse on Home. Leftover P11: T18, T15 experience/education cards. Then P13 dispatches and gallery, P14 Hire page, P10-rest, P15.
 
 ## Phase board
 | Phase | Name | Status |
