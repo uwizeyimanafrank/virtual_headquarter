@@ -1,7 +1,7 @@
 import { connectDb } from "@/lib/db";
 import { adminApi } from "@/lib/auth-guard";
 import { toAdminAlbum, toAdminGalleryImage } from "@/lib/admin-gallery";
-import { invalidateHome } from "@/lib/home";
+import { invalidateGallery } from "@/lib/gallery-public";
 import { galleryBatchInput } from "@/lib/validation";
 import { Album } from "@/models/Album";
 import { GalleryImage } from "@/models/GalleryImage";
@@ -34,6 +34,6 @@ export async function POST(request: Request) {
   const last = await GalleryImage.findOne({}).sort({ order: -1 }).select("order").lean();
   const base = (last?.order ?? -1) + 1;
   const created = await GalleryImage.insertMany(parsed.data.images.map((i, n) => ({ ...i, takenDate: i.takenDate ? new Date(i.takenDate) : null, order: base + n })));
-  invalidateHome();
+  invalidateGallery();
   return Response.json({ images: created.map((d) => toAdminGalleryImage(d.toObject())) }, { status: 201, headers: { "Cache-Control": "no-store" } });
 }

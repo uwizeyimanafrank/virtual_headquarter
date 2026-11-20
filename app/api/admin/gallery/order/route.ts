@@ -1,6 +1,6 @@
 import { connectDb } from "@/lib/db";
 import { adminApi } from "@/lib/auth-guard";
-import { invalidateHome } from "@/lib/home";
+import { invalidateGallery } from "@/lib/gallery-public";
 import { galleryOrderInput } from "@/lib/validation";
 import { GalleryImage } from "@/models/GalleryImage";
 
@@ -14,6 +14,6 @@ export async function PUT(request: Request) {
   const { ids } = parsed.data;
   if ((await GalleryImage.countDocuments({ _id: { $in: ids } })) !== ids.length) return Response.json({ error: "Some pictures no longer exist. Reload the page." }, { status: 400 });
   await GalleryImage.bulkWrite(ids.map((id, order) => ({ updateOne: { filter: { _id: id }, update: { $set: { order } } } })));
-  invalidateHome();
+  invalidateGallery();
   return Response.json({ ok: true });
 }

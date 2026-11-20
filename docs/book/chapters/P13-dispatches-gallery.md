@@ -28,7 +28,7 @@
 **Do:** upload many files at once, drag to reorder, captions and alt text, albums, publish switch.
 **Done when:** 10 images upload in one go and reorder.
 
-### [ ] P13-T06 — Public `/gallery`
+### [x] P13-T06 — Public `/gallery`
 **Do:** a stylish wall: scattered polaroid look on desktop (slight random tilt, lift on hover), masonry on phones, albums as chapters, lightbox with swipe and keyboard, lazy loading with blurred placeholders. A teaser strip on Home.
 **Files:** app/(site)/gallery, components/gallery/*
 **Done when:** 100 images stay smooth on a phone (lazy); keyboard lightbox works.

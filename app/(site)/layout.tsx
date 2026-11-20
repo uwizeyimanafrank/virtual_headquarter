@@ -16,6 +16,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
             <Link href="/" className={link}>Home</Link>
             <Link href="/museum" className={link}>Museum</Link>
             <Link href="/dispatches" className={link}>Dispatches</Link>
+            <Link href="/gallery" className={link}>Gallery</Link>
             <Link href="/connect" className={link}>Connect</Link>
           </div>
         </nav>

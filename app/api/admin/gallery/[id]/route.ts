@@ -2,7 +2,7 @@ import { connectDb } from "@/lib/db";
 import { adminApi, requireFreshAuth } from "@/lib/auth-guard";
 import { audit } from "@/lib/audit";
 import { toAdminGalleryImage } from "@/lib/admin-gallery";
-import { invalidateHome } from "@/lib/home";
+import { invalidateGallery } from "@/lib/gallery-public";
 import { galleryImagePatch } from "@/lib/validation";
 import { Album } from "@/models/Album";
 import { GalleryImage } from "@/models/GalleryImage";
@@ -27,7 +27,7 @@ export async function PATCH(request: Request, ctx: RouteContext<"/api/admin/gall
   if (parsed.data.album && !(await Album.exists({ _id: parsed.data.album }))) return Response.json({ error: "That album does not exist." }, { status: 400 });
   const d = await GalleryImage.findByIdAndUpdate(id, { $set }, { returnDocument: "after", runValidators: true }).lean();
   if (!d) return Response.json({ error: "Not found." }, { status: 404 });
-  invalidateHome();
+  invalidateGallery();
   return Response.json({ image: toAdminGalleryImage(d) }, { headers: { "Cache-Control": "no-store" } });
 }
 
@@ -42,7 +42,7 @@ export async function DELETE(request: Request, ctx: RouteContext<"/api/admin/gal
   await connectDb();
   const d = await GalleryImage.findByIdAndDelete(id).lean();
   if (!d) return Response.json({ error: "Not found." }, { status: 404 });
-  invalidateHome();
+  invalidateGallery();
   await audit("delete", true, request.headers, "gallery picture");
   return Response.json({ ok: true });
 }

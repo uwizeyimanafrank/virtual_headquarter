@@ -1,7 +1,7 @@
 import { connectDb } from "@/lib/db";
 import { adminApi } from "@/lib/auth-guard";
 import { toAdminAlbum } from "@/lib/admin-gallery";
-import { invalidateHome } from "@/lib/home";
+import { invalidateGallery } from "@/lib/gallery-public";
 import { albumInput } from "@/lib/validation";
 import { Album } from "@/models/Album";
 
@@ -14,6 +14,6 @@ export async function POST(request: Request) {
   await connectDb();
   const last = await Album.findOne({}).sort({ order: -1 }).select("order").lean();
   const created = await Album.create({ ...parsed.data, order: (last?.order ?? -1) + 1 });
-  invalidateHome();
+  invalidateGallery();
   return Response.json({ album: toAdminAlbum(created.toObject()) }, { status: 201, headers: { "Cache-Control": "no-store" } });
 }

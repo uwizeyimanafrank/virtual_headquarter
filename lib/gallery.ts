@@ -1,3 +1,5 @@
+import { photoUrls } from "@/lib/media";
+
 // Small pure helpers for the gallery manager (P13-T05).
 
 /** A new list with the item at `from` moved to position `to`. Out-of-range or same position returns the list unchanged. */
@@ -32,3 +34,43 @@ export function inView<T extends { album: string }>(items: readonly T[], view: "
   if (view === "none") return items.filter((i) => !i.album);
   return items.filter((i) => i.album === view);
 }
+
+// ---------------------------------------------------------------- public wall
+
+/** A picture as visitors get it: only resized links, never the stored original. */
+export type PublicPhoto = { id: string; src: string; full: string; blur: string; caption: string; alt: string; takenDate: string };
+/** A chapter of the wall. id "" = pictures that are in no album. */
+export type GalleryChapter = { id: string; title: string; description: string; photos: PublicPhoto[] };
+
+type AlbumRow = { _id: unknown; title: string; description?: string | null; order?: number | null };
+type ImageRow = { _id: unknown; imageUrl: string; caption?: string | null; alt: string; album?: unknown; takenDate?: Date | null; order?: number | null; published?: boolean | null };
+
+/**
+ * Chapters for the public wall: albums in their order (each with its published pictures in order),
+ * then the pictures with no album. Unpublished pictures never appear, and an album with nothing to show is left out.
+ * A picture whose album no longer exists counts as having no album.
+ */
+export function buildGallery(albums: readonly AlbumRow[], images: readonly ImageRow[]): GalleryChapter[] {
+  const byOrder = <T extends { order?: number | null }>(a: T, b: T) => (a.order ?? 0) - (b.order ?? 0);
+  const live = images.filter((i) => i.published).sort(byOrder);
+  const photo = (i: ImageRow): PublicPhoto => ({ id: String(i._id), ...photoUrls(i.imageUrl), caption: i.caption ?? "", alt: i.alt, takenDate: i.takenDate ? new Date(i.takenDate).toISOString().slice(0, 10) : "" });
+  const known = new Set(albums.map((a) => String(a._id)));
+  const chapters: GalleryChapter[] = [...albums].sort(byOrder)
+    .map((a) => ({ id: String(a._id), title: a.title, description: a.description ?? "", photos: live.filter((i) => i.album && String(i.album) === String(a._id)).map(photo) }))
+    .filter((c) => c.photos.length > 0);
+  const loose = live.filter((i) => !i.album || !known.has(String(i.album))).map(photo);
+  if (loose.length > 0) chapters.push({ id: "", title: "", description: "", photos: loose });
+  return chapters;
+}
+
+/** A steady number from an id: the same picture always gets the same tilt and shape (no flicker, no server/browser mismatch). */
+export function hashId(id: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < id.length; i++) { h ^= id.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
+/** Slight tilt in degrees, between -3 and 3. */
+export const tiltOf = (id: string) => (hashId(id) % 7) - 3;
+const SHAPES = ["4 / 5", "1 / 1", "4 / 3", "3 / 4"] as const;
+/** A picture shape picked from the id, so the phone layout looks like masonry and the space is reserved before the image loads. */
+export const shapeOf = (id: string) => SHAPES[(hashId(id) >>> 3) % SHAPES.length];

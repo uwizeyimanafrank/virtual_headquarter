@@ -1,0 +1,13 @@
+/* Gallery wall. Phones: two masonry columns. From 768px: scattered polaroids with a slight tilt that straightens and lifts on hover.
+   Transform and shadow only. Pictures far off screen are not drawn until needed (content-visibility), which keeps 100 pictures smooth. */
+.gallery-wall { columns: 2; column-gap: 0.75rem; }
+.gallery-card { break-inside: avoid; margin-bottom: 0.75rem; content-visibility: auto; contain-intrinsic-size: auto 260px; }
+@media (min-width: 768px) {
+  .gallery-wall { columns: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr)); gap: 2.25rem 1.75rem; padding: 0.75rem; }
+  .gallery-card { margin-bottom: 0; transform: rotate(calc(var(--tilt, 0) * 1deg)); transition: transform 0.25s ease, box-shadow 0.25s ease; }
+  .gallery-card:hover, .gallery-card:focus-within { transform: translateY(-8px) rotate(0deg) scale(1.03); box-shadow: 0 18px 40px rgb(0 0 0 / 0.35); position: relative; z-index: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery-card { transition: none; }
+  .gallery-card:hover, .gallery-card:focus-within { transform: rotate(calc(var(--tilt, 0) * 1deg)); }
+}
