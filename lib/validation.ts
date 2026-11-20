@@ -216,6 +216,11 @@ export const galleryImagePatch = z.object({
   published: galleryField.published.optional(),
 });
 
+/** Several pictures at once (10 files in one go). Each still needs its own alt text. */
+export const galleryBatchInput = z.object({ images: z.array(galleryImageInput).min(1).max(20) });
+/** The new order of the pictures in a view: ids from first to last, no repeats. */
+export const galleryOrderInput = z.object({ ids: z.array(objectId).min(1).max(500).refine((ids) => new Set(ids).size === ids.length, "an id appears twice") });
+
 export const albumInput = z.object({ title: text(80).pipe(z.string().min(1, "a title is required")), description: text(300).default(""), order: z.number().int().default(0) });
 export const albumPatch = z.object({ title: text(80).pipe(z.string().min(1)).optional(), description: text(300).optional(), order: z.number().int().optional() });
 

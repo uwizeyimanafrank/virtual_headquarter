@@ -1,18 +1,12 @@
 "use client";
 import { useRef, useState } from "react";
-import { api, ApiError } from "@/lib/api";
-import { stripLocation } from "@/lib/strip-location";
-
-type Sign = { cloudName: string; apiKey: string; timestamp: number; folder: string; allowedFormats: string; signature: string };
-
-const TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/avif"];
-const MAX_BYTES = 8 * 1024 * 1024;
+import { IMAGE_TYPES, uploadImage, type UploadFolder } from "@/lib/upload-image";
 
 /**
  * Drag-and-drop image upload straight to Cloudinary.
  * The server only hands out a signature; the secret never reaches the browser.
  */
-export function Uploader({ folder, value, onChange }: { folder: "project" | "certificate" | "story" | "book" | "reference" | "profile" | "slot" | "dispatch" | "gallery"; value: string; onChange: (url: string) => void }) {
+export function Uploader({ folder, value, onChange }: { folder: UploadFolder; value: string; onChange: (url: string) => void }) {
   const input = useRef<HTMLInputElement>(null);
   const [over, setOver] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
@@ -20,40 +14,11 @@ export function Uploader({ folder, value, onChange }: { folder: "project" | "cer
 
   async function upload(file: File) {
     setError("");
-    if (!TYPES.includes(file.type)) return setError("Please choose a JPG, PNG, WebP, GIF or AVIF image.");
-    if (file.size > MAX_BYTES) return setError("That image is bigger than 8 MB. Please shrink it first.");
     try {
       setProgress(0);
-      // Hidden data (GPS place, camera, time) is removed here, before the file leaves this device. Needs no server and cannot be skipped by the API.
-      const stripped = stripLocation(new Uint8Array(await file.arrayBuffer()));
-      if (!stripped.cleaned && folder === "gallery") throw new Error("Gallery pictures must be JPG, PNG or WebP, so their hidden location data can be removed. Please convert it first.");
-      const toSend = stripped.cleaned ? new File([stripped.bytes as BlobPart], file.name, { type: file.type }) : file;
-      const sign = await api<Sign>("/api/admin/upload-sign", { method: "POST", body: JSON.stringify({ folder }) });
-      const form = new FormData();
-      form.append("file", toSend);
-      form.append("api_key", sign.apiKey);
-      form.append("timestamp", String(sign.timestamp));
-      form.append("folder", sign.folder);
-      form.append("allowed_formats", sign.allowedFormats);
-      form.append("signature", sign.signature);
-
-      const url = await new Promise<string>((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", `https://api.cloudinary.com/v1_1/${encodeURIComponent(sign.cloudName)}/image/upload`);
-        xhr.upload.onprogress = (e) => e.lengthComputable && setProgress(Math.round((e.loaded / e.total) * 100));
-        xhr.onerror = () => reject(new Error("Upload failed. Check your connection."));
-        xhr.onload = () => {
-          try {
-            const r = JSON.parse(xhr.responseText) as { secure_url?: string; error?: { message?: string } };
-            if (xhr.status >= 200 && xhr.status < 300 && r.secure_url?.startsWith("https://res.cloudinary.com/")) resolve(r.secure_url);
-            else reject(new Error(r.error?.message ?? "Cloudinary refused the upload."));
-          } catch { reject(new Error("Unexpected answer from Cloudinary.")); }
-        };
-        xhr.send(form);
-      });
-      onChange(url);
+      onChange(await uploadImage(file, folder, setProgress));
     } catch (e) {
-      setError(e instanceof ApiError || e instanceof Error ? e.message : "Upload failed.");
+      setError(e instanceof Error ? e.message : "Upload failed.");
     } finally {
       setProgress(null);
     }
@@ -86,7 +51,7 @@ export function Uploader({ folder, value, onChange }: { folder: "project" | "cer
             <div className="h-full bg-accent transition-all" style={{ width: `${progress}%` }} />
           </div>
         )}
-        <input ref={input} type="file" accept={TYPES.join(",")} className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void upload(f); e.target.value = ""; }} />
+        <input ref={input} type="file" accept={IMAGE_TYPES.join(",")} className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void upload(f); e.target.value = ""; }} />
       </div>
       {error && <p role="alert" className="mt-2 text-sm text-red-400">{error}</p>}
     </div>

@@ -76,3 +76,28 @@ describe("upload formats", () => {
     expect(GALLERY_UPLOAD_FORMATS).not.toMatch(/gif|avif/);
   });
 });
+
+import { galleryBatchInput, galleryOrderInput } from "@/lib/validation";
+import { toAdminGalleryImage, toAdminAlbum } from "@/lib/admin-gallery";
+
+describe("galleryBatchInput / galleryOrderInput", () => {
+  const one = { imageUrl: url, alt: "x" };
+  it("takes 1 to 20 pictures, each with its own alt text", () => {
+    expect(galleryBatchInput.safeParse({ images: [] }).success).toBe(false);
+    expect(galleryBatchInput.safeParse({ images: Array.from({ length: 10 }, () => one) }).success).toBe(true);
+    expect(galleryBatchInput.safeParse({ images: Array.from({ length: 21 }, () => one) }).success).toBe(false);
+    expect(galleryBatchInput.safeParse({ images: [one, { imageUrl: url, alt: "" }] }).success).toBe(false);
+  });
+  it("the new order must be real, non-repeating ids", () => {
+    const a = "a".repeat(24), b = "b".repeat(24);
+    expect(galleryOrderInput.safeParse({ ids: [a, b] }).success).toBe(true);
+    expect(galleryOrderInput.safeParse({ ids: [a, a] }).success).toBe(false);
+    expect(galleryOrderInput.safeParse({ ids: ["nope"] }).success).toBe(false);
+    expect(galleryOrderInput.safeParse({ ids: [] }).success).toBe(false);
+  });
+  it("admin shapes are plain text and numbers", () => {
+    expect(toAdminGalleryImage({ _id: "i1", imageUrl: url, alt: "a", album: "al1", takenDate: new Date("2026-05-01T10:00:00Z"), order: 3, published: true })).toEqual({ id: "i1", imageUrl: url, caption: "", alt: "a", album: "al1", takenDate: "2026-05-01", order: 3, published: true });
+    expect(toAdminGalleryImage({ _id: "i2", imageUrl: url, alt: "a" })).toMatchObject({ album: "", takenDate: "", order: 0, published: false });
+    expect(toAdminAlbum({ _id: "al1", title: "T" })).toEqual({ id: "al1", title: "T", description: "", order: 0 });
+  });
+});

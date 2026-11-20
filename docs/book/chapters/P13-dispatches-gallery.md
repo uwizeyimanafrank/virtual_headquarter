@@ -24,7 +24,7 @@
 **Files:** models/GalleryImage.ts, models/Album.ts, upload route
 **Done when:** a test confirms no GPS data remains in stored images; alt text required.
 
-### [ ] P13-T05 — Office: gallery manager
+### [x] P13-T05 — Office: gallery manager
 **Do:** upload many files at once, drag to reorder, captions and alt text, albums, publish switch.
 **Done when:** 10 images upload in one go and reorder.
 

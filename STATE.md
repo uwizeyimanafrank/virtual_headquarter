@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P13-T05 (Office: gallery manager)
+- **Current task:** P13-T06 (Public /gallery)
 - **Status:** P11 in progress, T01-T17 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
 - **Last worker:** Claude (chat), 2026-11-19
-- **Next action (one sentence):** P13-T05: Office gallery manager (upload many at once, drag to reorder, captions + required alt text, albums, publish switch) with admin API using galleryImageInput/Patch + albumInput/Patch from lib/validation.ts; reuse components/office/Uploader.tsx logic (it already strips location) for multi-file upload. Frank first: look at the Museum halls in a real browser (390/768/1440), keyboard-walk the Glass Cases, run Lighthouse on Home. Leftover P11: T18, T15 experience/education cards. Then P13 dispatches and gallery, P14 Hire page, P10-rest, P15.
+- **Next action (one sentence):** P13-T06: public /gallery (masonry wall, albums, lightbox with keyboard + swipe, lazy images, a gallery cache tag refreshed by the Office); show pictures ONLY through thumb() resized links (lib/media.ts), never the raw stored link, and only published ones (the Office API already keeps order per view). Frank first: look at the Museum halls in a real browser (390/768/1440), keyboard-walk the Glass Cases, run Lighthouse on Home. Leftover P11: T18, T15 experience/education cards. Then P13 dispatches and gallery, P14 Hire page, P10-rest, P15.
 
 ## Phase board
 | Phase | Name | Status |
@@ -27,7 +27,7 @@ Update this after EVERY task. Keep it short.
 | P09 | Secrets vault | done in code |
 | P11 | Art and Home v2 | in progress (T01-T17 done) |
 | P12 | Museum halls (glass cases) | done in code (T08 screenshots/browser check still open) |
-| P13 | Dispatches and Gallery | in progress (T01-T04 done) |
+| P13 | Dispatches and Gallery | in progress (T01-T05 done) |
 | P14 | Hire me | not started |
 | P15 | Public avatar and AI control room | not started (after first release) |
 | P10 (rest) | Security review, speed, previews, deploy, merge to main | after P14 |
@@ -60,6 +60,7 @@ Status words: not started / in progress / done.
 (empty)
 
 ## Known bugs / debts
+- P13-T05: Office > Gallery built: upload up to 20 pictures at once (3 at a time, each needs alt text before one save), albums (create, rename, delete keeps the pictures), reorder by dragging the handle or the arrow buttons (arrows are the phone/keyboard way), caption/alt/date/album edits, publish switch, delete (fresh 2FA + audit). APIs: /api/admin/gallery (GET, POST batch), /[id] (PATCH, DELETE), /order (PUT), /api/admin/albums (POST), /[id] (PATCH, DELETE). The upload code now lives in lib/upload-image.ts (shared with Uploader). Tested with mocks (10 files in one go, order saved, drag + arrows); NOT seen in a browser, no real Cloudinary upload, HTTP suite not written/run (needs Mongo). Reordering inside an album gives that album its own 0..n order; the public wall must sort per album. Gallery changes call invalidateHome() until T06 adds a gallery tag. Deleting a picture does not delete the file in Cloudinary (same as other content).
 - P13-T04: location data is removed IN THE BROWSER by lib/strip-location.ts (JPEG, PNG, WebP: every metadata block dropped, picture data untouched, only the Orientation kept in a tiny EXIF block so upright photos stay upright; data after the end of the picture is cut; a damaged file is refused). Tested with fake photos that really carry GPS/XMP/IPTC; the Uploader test proves the file sent to Cloudinary has none. It runs for EVERY Uploader upload. GIF and AVIF are NOT cleaned: they pass through on normal uploads (site art), and are refused in the gallery (client check + signed allowed_formats jpg,jpeg,png,webp). Never tried with a real phone photo or the real Cloudinary: please upload one phone photo to the gallery later (T05) and open the stored image in an EXIF viewer. Public gallery pictures must be shown through the resized Cloudinary links (thumb() in lib/media.ts), never the raw stored link: that is T06's job. No API for gallery data yet (T05). Albums have no cover/slug yet.
 - P13-T03: Home block (ticker + 3 cards), /dispatches (kind filter, share preview tags, RSS link tag) and /feed.xml are built. Checked for real: built app answers 200, feed parses as XML (3 sample items from the no-database fallback), bad kind gives 400. NOT done: validating the feed on an outside validator (no internet), looking at the ticker/cards in a browser (390/768/1440), and an og:image (no image slot yet; add in P10 share previews). Feed links use APP_URL, or the host the visitor used. Dispatches data is cached 60 s and also refreshed by every Office change (shares the home cache tag). Reserved the word `dispatches` so it cannot be the Office slug.
 - P13-T02: Office > Dispatches (list, form, schedule, pin, publish, delete with fresh 2FA, 3 samples seeded once via Settings.onboarding.dispatchSamplesSeeded) is tested (unit, tsc, lint, build) but NOT looked at in a browser, and the HTTP suite was not run (no Mongo-compatible server). Uploader folder `dispatch` added (upload-sign enum). Schedule times are typed in your local time and shown in UTC in the list. Please try: create, schedule, pin, unpublish, delete in a real browser.
