@@ -1,4 +1,5 @@
 import { DISPATCH_KINDS } from "@/lib/dispatches";
+import { HIRE_KINDS } from "@/lib/hire-kinds";
 import { DISPLAY_MODES, MAX_GALLERY } from "@/lib/item-types";
 import { z } from "zod";
 import { ITEM_TYPES } from "@/models/MuseumItem";
@@ -231,6 +232,21 @@ export const contactInput = z.object({
   website: z.string().max(200).optional(), // honeypot: real people leave it empty
 });
 export type ContactInput = z.infer<typeof contactInput>;
+
+/** A hire request from /hire. Same care as the contact form: plain text, hard size limits, a honeypot. */
+const hireLink = z.string().trim().max(300).regex(/^https?:\/\/\S+$/i, "must be a web address starting with http:// or https://");
+export const hireRequestInput = z.object({
+  name: text(LIMITS.name).pipe(z.string().min(1)),
+  email: z.string().trim().toLowerCase().max(LIMITS.email).pipe(z.email()),
+  company: text(120).default(""),
+  kind: z.enum(HIRE_KINDS),
+  budget: text(80).default(""),
+  timeline: text(120).default(""),
+  message: text(3000).pipe(z.string().min(10, "please say a little more")),
+  links: z.array(hireLink).max(5).default([]),
+  website: z.string().max(200).optional(), // honeypot: real people leave it empty
+});
+export type HireRequestInput = z.infer<typeof hireRequestInput>;
 
 /** Site settings the owner can edit from the Office. */
 export const settingsPatch = z.object({

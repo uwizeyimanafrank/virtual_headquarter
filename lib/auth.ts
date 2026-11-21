@@ -26,7 +26,7 @@ export async function verifyPassword(password: string, storedHash: string | null
   }
 }
 
-const RESERVED = new Set(["office", "api", "admin", "login", "museum", "connect", "dispatches", "_next"]);
+const RESERVED = new Set(["office", "api", "admin", "login", "museum", "connect", "dispatches", "hire", "_next"]);
 
 /** The secret first path segment of the Office. Returns null when it is missing or unsafe (Office disabled). */
 export function getAdminSlug(): string | null {

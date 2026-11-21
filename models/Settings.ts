@@ -37,6 +37,7 @@ const schema = new Schema(
     showSamples: { type: Boolean, default: true },
     autoHideSamples: { type: Boolean, default: true }, // hide samples of a type once a real item of that type is published
     theme: { type: Schema.Types.Mixed, default: {} },
+    hire: { type: Schema.Types.Mixed, default: {} }, // content of /hire (headline, availability, services, steps, FAQ), see lib/hire.ts; missing parts use the defaults
     homeBlocks: { type: [Schema.Types.Mixed], default: [] }, // the owner's Home layout, see lib/home-blocks.ts
   },
   { timestamps: true },

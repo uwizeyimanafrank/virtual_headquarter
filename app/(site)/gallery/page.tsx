@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Backdrop } from "@/components/art/Backdrop";
 import { HomeBackground } from "@/components/home/HomeBackground";
 import { DemoBanner } from "@/components/site/DemoBanner";
 import { GalleryWall } from "@/components/gallery/GalleryWall";
@@ -17,6 +18,7 @@ export default async function GalleryPage() {
   return (
     <main className="relative isolate flex-1 px-4 py-12 sm:py-20">
       <HomeBackground />
+      <Backdrop slot="gallery.backdrop" />
       <DemoBanner show={demo} />
       <header className="mx-auto mb-10 max-w-2xl text-center">
         <p className="text-xs font-medium uppercase tracking-[0.3em] text-accent">Gallery</p>
