@@ -15,6 +15,8 @@ These shell scripts start the production server (`next start`) against a throw-a
 | `vault.sh` | the vault API (port 4044): step-up needed, only encrypted-looking payloads accepted, database holds no readable text, audit, limit, no plaintext in the server log (about 1 minute, Node 22) |
 | `slots.sh` | the image slots API (port 4046; 4045 is reserved by Next.js): login needed, only our Cloudinary pictures, alt text where required, library, audit, reset (about 1 minute) |
 | `homeblocks.sh` | the Home layout API (port 4047): login needed, strict validation, order/switches/text saved, public Home still works, reset (about 1 minute) |
+| `dispatches.sh` | dispatches (port 4048): login needed, validation, draft/scheduled/expired hidden and shown at the right moment, pinned order, partial updates, samples once, escaping, the RSS feed (well-formed, same items as the site), delete needs a fresh code, first-load JS (about 1 minute) |
+| `gallery.sh` | gallery and albums (port 4049): login needed, gallery upload signature only signs jpg/jpeg/png/webp, alt text can never be empty, 20 at a time, drafts hidden, visitors never get the stored original link, order saved, albums (empty ones hidden, deleting keeps pictures), escaping, delete needs a fresh code, first-load JS (about 1 minute) |
 | `ai.sh` | the AI Twin API against `fake-gemini.py` (a fake Google service): exactly what is sent, no secrets, limits, failures |
 
 ## How to run
@@ -28,7 +30,7 @@ These shell scripts start the production server (`next start`) against a throw-a
    (`home.sh`, `museum.sh` and `connect.sh` restore that copy before each run, because Next saves regenerated pages back into `.next`.)
 4. Run any script: `bash tests/http/connect.sh`. Every line starts with `PASS:` or `FAIL:`. Count them: `bash tests/http/connect.sh | grep -c FAIL` should print `0`.
 
-Each script uses its own port (4030-4043) and kills anything left on it. Do not run two at once.
+Each script uses its own port (4030-4049) and kills anything left on it. Do not run two at once.
 
 ## Good to know
 - They set fake secrets in the environment for the test server only. Nothing real is read or written.

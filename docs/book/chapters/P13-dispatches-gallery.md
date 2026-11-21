@@ -33,8 +33,9 @@
 **Files:** app/(site)/gallery, components/gallery/*
 **Done when:** 100 images stay smooth on a phone (lazy); keyboard lightbox works.
 
-### [ ] P13-T07 — Tests, screenshots, docs
+### [x] P13-T07 — Tests, screenshots, docs
 **Done when:** all checks clean.
+*Done 2026-11-19 (Claude, chat): unit tests, tsc, lint, check:urls and build clean; HTTP suites `tests/http/dispatches.sh` and `tests/http/gallery.sh` written (syntax-checked only: no MongoDB-compatible server in the sandbox, so Frank or the next tool runs them). No headless browser in the sandbox, so the 390/768/1440 screenshots are still open (see STATE.md).*
 
 ## Phase finish check
 Publish a dispatch and five photos from the Office; see them on Home, `/dispatches` and `/gallery`. Mark done.

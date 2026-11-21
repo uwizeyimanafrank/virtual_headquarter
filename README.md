@@ -28,7 +28,7 @@ Built with Next.js 16 (App Router), TypeScript, Tailwind CSS 4, MongoDB (Mongoos
 | P09 | Encrypted secrets vault | done in code (not yet looked at in a real browser) |
 | P11 | Art and Home v2 (image slots, art kit, moving scenes, Home blocks, hero, card wall, backdrops, stats/what I build/journey/featured done, then CV/polish) | **in progress: T01-T17 done (of 18)** |
 | P12 | Museum halls: Story Tour + Glass Cases with floating detail panel | done in code (T01-T07; T08 screenshots still to do) |
-| P13 | Dispatches (news) and public Gallery | planned |
+| P13 | Dispatches (news: ticker, `/dispatches`, RSS feed) and public Gallery (`/gallery`, albums, lightbox, location data removed from uploads) | done in code (T01-T07; needs your phase finish check in a browser) |
 | P14 | Hire me page and inbox | planned |
 | P15 | Public avatar and Office AI control room | planned (after first release) |
 | P10 (rest) | Security review, speed, share previews, deploy, merge to main | do after P14 |

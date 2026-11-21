@@ -6,10 +6,10 @@ Update this after EVERY task. Keep it short.
 
 ## Pointer
 - **Current phase:** P11 — Art and Home v2 (P10 rest comes after P14)
-- **Current task:** P13-T07 (Tests, screenshots, docs)
+- **Current task:** P14-T01 (`/hire` page)
 - **Status:** P11 in progress, T01-T17 done (image slots + Office > Images + import from link, art kit, Scene motion, FloatingField, Home blocks + Office > Home layout, Hero v2, Card wall, page backdrops, Stats, What I build, Journey, Featured). Everything verified by tests, real HTTP tests and by LOOKING at screenshots in a headless browser. NOT yet seen by Frank in his own browser. Waiting on Frank: see the list at the bottom.
 - **Last worker:** Claude (chat), 2026-11-19
-- **Next action (one sentence):** P13-T07: final check of phase 13: add HTTP suites tests/http/dispatches.sh and gallery.sh (written, to be run by Frank with Mongo), update README feature list and docs/book chapter notes, run all checks; then Frank does the phase finish check (publish a dispatch and five photos from the Office, see them on Home, /dispatches and /gallery). Frank first: look at the Museum halls in a real browser (390/768/1440), keyboard-walk the Glass Cases, run Lighthouse on Home. Leftover P11: T18, T15 experience/education cards. Then P13 dispatches and gallery, P14 Hire page, P10-rest, P15.
+- **Next action (one sentence):** P14-T01: the `/hire` page (headline, availability badge, services cards, how I work in 3 steps, 3 featured works, CV download, FAQ, request form), all text editable from the Office; reuse the patterns of /dispatches and /gallery (cached reader with a tag, demo fallback, metadata, tests). Frank first: look at the Museum halls in a real browser (390/768/1440), keyboard-walk the Glass Cases, run Lighthouse on Home. Leftover P11: T18, T15 experience/education cards. Then P13 dispatches and gallery, P14 Hire page, P10-rest, P15.
 
 ## Phase board
 | Phase | Name | Status |
@@ -27,7 +27,7 @@ Update this after EVERY task. Keep it short.
 | P09 | Secrets vault | done in code |
 | P11 | Art and Home v2 | in progress (T01-T17 done) |
 | P12 | Museum halls (glass cases) | done in code (T08 screenshots/browser check still open) |
-| P13 | Dispatches and Gallery | in progress (T01-T06 done) |
+| P13 | Dispatches and Gallery | done in code (T01-T07); phase finish check + screenshots still open for Frank |
 | P14 | Hire me | not started |
 | P15 | Public avatar and AI control room | not started (after first release) |
 | P10 (rest) | Security review, speed, previews, deploy, merge to main | after P14 |
@@ -38,6 +38,7 @@ Status words: not started / in progress / done.
 (empty)
 
 ## Waiting on Frank  ([HUMAN] tasks)
+- P13 phase finish check: in the Office publish one dispatch and five photos (Office > Dispatches, Office > Gallery, give each photo alt text), then look at them on Home, `/dispatches` and `/gallery` on your phone and your PC (try the lightbox with arrows, Esc and swiping), and tell me what looks wrong. Also run `bash tests/http/dispatches.sh` and `bash tests/http/gallery.sh` and send any FAIL lines.
 - P00-T07: create a free MongoDB Atlas cluster, make a database user, allow your IP, put the connection string in `.env` as MONGODB_URI. Then run `npm run dev`, open `/api/health` and confirm `dbReachable` is true.
 - Create a Cloudinary account and fill the three CLOUDINARY_ values in `.env`. Then confirm `cloudinaryReachable` is true in `/api/health`.
 - Run `npm install` once after unzipping (node_modules is not included).
@@ -60,6 +61,7 @@ Status words: not started / in progress / done.
 (empty)
 
 ## Known bugs / debts
+- P13-T07: HTTP suites tests/http/dispatches.sh (port 4048, about 40 checks) and tests/http/gallery.sh (port 4049, about 60 checks) were WRITTEN and syntax-checked (`bash -n`) but NEVER RUN: this sandbox has no MongoDB-compatible server, no way to download one, and no headless browser. Run both on your PC (steps in tests/http/README.md; build once without your .env first) and tell the next tool the FAIL lines, if any: expect a few small wording/timing mismatches in a never-run script, not necessarily real bugs. Still open from P13: screenshots at 390/768/1440 of Home (ticker, cards, gallery strip), /dispatches, /gallery (+ lightbox) and Office > Dispatches / Gallery; a real phone photo through the gallery upload (check no location data is left); a 100-picture smoothness check; og:image share previews (P10).
 - P13-T06: public /gallery (albums as chapters, polaroids with a steady tilt on desktop, 2-column masonry on phones, jump links, blur placeholders, lazy images, content-visibility so 100 pictures stay light), lightbox (Escape, Left/Right wrap, Home/End, Tab trap, focus returns, swipe on touch, neighbours fetched ahead), Home teaser strip (block `gallery` now ready), header link. Cached 5 min with tag `gallery`; every gallery/album Office change calls invalidateGallery(). Visitors only ever get resized Cloudinary links (photoUrls in lib/media.ts), never the stored original. A bug was found by tests and fixed: shapeOf could return undefined for large hash values. Checked for real: built app answers 200 on /gallery and Home (demo drawings, 5 lazy images, tilts, share tags, teaser). NOT done: looking at it in a browser/phone, real Cloudinary pictures, a real 100-picture smoothness check (Lighthouse/phone), og:image for share previews (P10). With a connected but empty database the page says it is being prepared and the Home teaser stays hidden (no sample pictures are seeded). Lightbox walks every picture in wall order, across albums. No pinch-zoom yet.
 - P13-T05: Office > Gallery built: upload up to 20 pictures at once (3 at a time, each needs alt text before one save), albums (create, rename, delete keeps the pictures), reorder by dragging the handle or the arrow buttons (arrows are the phone/keyboard way), caption/alt/date/album edits, publish switch, delete (fresh 2FA + audit). APIs: /api/admin/gallery (GET, POST batch), /[id] (PATCH, DELETE), /order (PUT), /api/admin/albums (POST), /[id] (PATCH, DELETE). The upload code now lives in lib/upload-image.ts (shared with Uploader). Tested with mocks (10 files in one go, order saved, drag + arrows); NOT seen in a browser, no real Cloudinary upload, HTTP suite not written/run (needs Mongo). Reordering inside an album gives that album its own 0..n order; the public wall must sort per album. Gallery changes call invalidateHome() until T06 adds a gallery tag. Deleting a picture does not delete the file in Cloudinary (same as other content).
 - P13-T04: location data is removed IN THE BROWSER by lib/strip-location.ts (JPEG, PNG, WebP: every metadata block dropped, picture data untouched, only the Orientation kept in a tiny EXIF block so upright photos stay upright; data after the end of the picture is cut; a damaged file is refused). Tested with fake photos that really carry GPS/XMP/IPTC; the Uploader test proves the file sent to Cloudinary has none. It runs for EVERY Uploader upload. GIF and AVIF are NOT cleaned: they pass through on normal uploads (site art), and are refused in the gallery (client check + signed allowed_formats jpg,jpeg,png,webp). Never tried with a real phone photo or the real Cloudinary: please upload one phone photo to the gallery later (T05) and open the stored image in an EXIF viewer. Public gallery pictures must be shown through the resized Cloudinary links (thumb() in lib/media.ts), never the raw stored link: that is T06's job. No API for gallery data yet (T05). Albums have no cover/slug yet.
